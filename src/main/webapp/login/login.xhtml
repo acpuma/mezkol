@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:at="http://xmlns.jcp.org/jsf/passthrough">
+
+<h:head>
+	<h:outputStylesheet library="css" name="core.css" />
+	<!-- Global stylesheets -->
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css"/>
+	<h:outputStylesheet library="limitless" name="css/icons/icomoon/styles.css" />
+	<h:outputStylesheet library="limitless" name="css/bootstrap.css" />
+	<h:outputStylesheet library="limitless" name="css/core.css" />
+	<h:outputStylesheet library="limitless" name="css/components.css" />
+	<h:outputStylesheet library="limitless" name="css/colors.css" />
+	<!-- /global stylesheets -->
+
+	<!-- Core JS files -->
+
+    <h:outputScript library="limitless"  name="js/plugins/loaders/pace.min.js"/>
+    <h:outputScript library="limitless"  name="js/core/libraries/jquery.min.js" />
+    <h:outputScript library="limitless"  name="js/core/libraries/bootstrap.min.js"/>
+	<h:outputScript library="limitless"  name="js/plugins/loaders/blockui.min.js"/>
+	<!-- /core JS files -->
+
+	<!-- Theme JS files -->
+    <h:outputScript library="limitless"  name="js/plugins/forms/styling/uniform.min.js"/>
+
+    <h:outputScript library="limitless"  name="js/core/app.js"/>
+    <h:outputScript library="limitless"  name="js/pages/login.js"/>
+	<!-- /theme JS files -->
+</h:head>
+<h:body styleClass="login-container login-cover">
+
+	<!-- Page container -->
+	<div class="page-container">
+
+		<!-- Page content -->
+		<div class="page-content">
+
+			<!-- Main content -->
+			<div class="content-wrapper">
+
+				<!-- Content area -->
+				<div class="content pb-20">
+
+					<!-- Tabbed form -->
+					<div class="tabbable panel login-form width-400">
+						<ul class="nav nav-tabs nav-justified">
+							<li class="active"><a href="#basic-tab1" data-toggle="tab"><h6>#{msg.login_signin}</h6></a></li>
+
+						</ul>
+
+						<div class="tab-content panel-body">
+							<div class="tab-pane fade in active" id="basic-tab1">
+								<h:form id="loginForm"  prependId="false">
+
+									<div class="text-center">
+										<div class="icon-object border-slate-300 text-slate-300"><i class="icon-reading"></i></div>
+										<h5 class="content-group">#{msg.login_account}<small class="display-block">#{msg.login_credintals}</small></h5>
+									</div>
+
+									<div class="form-group has-feedback has-feedback-left">
+										<p:inputText id="username" required="true" at:autofocus="true" placeholder="#{msg.username}"
+													 value="#{loginSer.username}" styleClass="form-control"/>
+										<div class="form-control-feedback">
+											<i class="icon-user text-muted"></i>
+										</div>
+									</div>
+
+
+									<h:outputLabel for="username" value="#{msg.username}:" rendered="false"/>
+
+									<div class="form-group has-feedback has-feedback-left">
+										<p:password id="password" required="true" styleClass="form-control" placeholder="#{msg.password}"
+													value="#{loginSer.password}">
+										</p:password>
+										<div class="form-control-feedback">
+											<i class="icon-lock2 text-muted"></i>
+										</div>
+									</div>
+
+									<div class="form-group login-options">
+										<div class="row">
+											<div class="col-sm-6">
+												<label class="checkbox-inline">
+													<input type="checkbox" class="styled" checked="checked"/>
+													#{msg.rememberme}
+												</label>
+											</div>
+
+											<div class="col-sm-6 text-right">
+												<a href="login_password_recover.html">#{msg.password_forget}</a>
+											</div>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<p:commandButton type="submit" id="login" ajax="false" styleClass="btn bg-blue btn-block" style="padding:5px; font-size: 16px;"
+														 actionListener="#{loginSer.login}" value="#{msg.login}"/>
+
+									</div>
+									<p:messages id="messages" showDetail="false" autoUpdate="true"
+												closable="false" />
+								</h:form>
+
+                                <div style="display: none">
+								<div class="content-divider text-muted form-group"><span>or sign in with</span></div>
+								<ul class="list-inline form-group list-inline-condensed text-center">
+									<li><a href="#" class="btn border-indigo text-indigo btn-flat btn-icon btn-rounded"><i class="icon-facebook"></i></a></li>
+									<li><a href="#" class="btn border-pink-300 text-pink-300 btn-flat btn-icon btn-rounded"><i class="icon-dribbble3"></i></a></li>
+									<li><a href="#" class="btn border-slate-600 text-slate-600 btn-flat btn-icon btn-rounded"><i class="icon-github"></i></a></li>
+									<li><a href="#" class="btn border-info text-info btn-flat btn-icon btn-rounded"><i class="icon-twitter"></i></a></li>
+								</ul>
+                                </div>
+
+								<span class="help-block text-center no-margin">#{msg.login_terms} <br/>
+								<br/> <h:link outcome="/index" title="ANASAYFA" immediate="true"  value="ANASAYFA"  style="margin:0 auto"/></span>
+							</div>
+
+
+						</div>
+
+
+
+					</div>
+					<!-- /tabbed form -->
+
+
+				</div>
+				<!-- /content area -->
+
+			</div>
+			<!-- /main content -->
+
+		</div>
+		<!-- /page content -->
+
+	</div>
+	<!-- /page container -->
+
+</h:body>
+</html>

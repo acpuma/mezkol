@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="LogSupport">
+    <option name="logConfigurations">
+      <ProjectLogConfigurations>
+        <option name="defaultLogConfiguration">
+          <DefaultLogConfiguration>
+            <option name="defaultFrameworkName" value="log4j-1.2" />
+            <option name="logIdName" value="Default" />
+            <option name="logIdSequenceValue" value="3140" />
+          </DefaultLogConfiguration>
+        </option>
+        <option name="targetedLogConfigurations">
+          <list>
+            <TargetedLogConfiguration>
+              <option name="logIdSequenceValue" value="3140" />
+              <option name="targetScopeName" value="Project Files" />
+            </TargetedLogConfiguration>
+          </list>
+        </option>
+      </ProjectLogConfigurations>
+    </option>
+    <option name="logIds">
+      <list />
+    </option>
+  </component>
+</project>

@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:at="http://xmlns.jcp.org/jsf/passthrough">
+
+<h:head>
+    <h:outputStylesheet library="css" name="core.css" />
+</h:head>
+<h:body style="background: #333;color:#fff;">
+
+    <h:form id="loginForm" style="margin:100px auto;height:auto;" prependId="false">
+    <p:panel header="LOGIN" footer="© Copyright 2016" style="margin:auto; width: 400px; height:auto;text-align: center" >
+        <h:graphicImage library="images" name="logo.png" height="150" rendered="false"/>
+        <div class="centeredBox">
+
+            <p:panelGrid columns="2">
+                <h:outputLabel for="username" value="#{msg.username}:" />
+                <p:inputText id="username" required="true" at:autofocus="true"
+                             value="#{loginSer.username}">
+                </p:inputText>
+
+                <h:outputLabel for="password" value="#{msg.password}:" />
+                <p:password id="password" required="true"
+                            value="#{loginSer.password}">
+                </p:password>
+
+                <h:outputText for="remember_me" value="#{msg.rememberme}" />
+                <p:selectBooleanCheckbox id="remember_me"
+                                         value="#{loginSer.rememberMe}" />
+
+                <f:facet name="footer">
+                    <p:outputPanel style="width: 100%; text-align: center;margin:8px;">
+
+                    <p:commandButton type="submit" id="login" ajax="false"
+                                     actionListener="#{loginSer.login}" value="#{msg.login}" />
+                    </p:outputPanel>
+                </f:facet>
+            </p:panelGrid>
+            <br/>
+
+        </div>
+        <p:messages id="messages" showDetail="false" autoUpdate="true"
+                    closable="false" />
+        <br/>
+            <h:link outcome="/index" title="ANASAYFA" immediate="true"  value="ANASAYFA" />
+        </p:panel>
+    </h:form>
+</h:body>
+</html>

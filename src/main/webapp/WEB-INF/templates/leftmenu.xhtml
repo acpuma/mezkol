@@ -1,0 +1,61 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:y="http://yazsoft.net/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:insert name="leftmenu">
+
+        <!-- Main sidebar -->
+        <div class="sidebar sidebar-main">
+            <div class="sidebar-content">
+                <h:form>
+                <!-- User menu -->
+                <div class="sidebar-user">
+                    <div class="category-content">
+                        <div class="media">
+                            <a href="#" class="media-left">
+                                <h:graphicImage library="limitless" name="images/image.png" styleClass="img-circle img-sm" alt=""/>
+                            </a>
+                            <div class="media-body">
+                                <span class="media-heading text-semibold">#{sessionInfo.user.name} #{sessionInfo.user.surname}</span>
+
+                                <div class="text-size-mini text-muted">
+                                    <i class="icon-pin text-size-small"></i>
+                                    <p:outputLabel id="activeSchool">
+                                        #{sessionInfo.school.name}
+                                    </p:outputLabel>
+                                </div>
+                            </div>
+<!--
+                            <div class="media-right media-middle">
+                                <ul class="icons-list">
+                                    <li>
+                                        <a href="#"><i class="icon-cog3"></i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                            -->
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /user menu -->
+
+
+                <!-- Main navigation -->
+
+
+                <y:leftMenu model="#{menusSer.model}" rendered="true"/>
+
+
+
+
+                <!-- /main navigation -->
+                </h:form>
+            </div>
+        </div>
+        <!-- /main sidebar -->
+
+    </ui:insert>
+</ui:composition>

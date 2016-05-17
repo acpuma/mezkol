@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:components="http://xmlns.jcp.org/jsf/composite/components">
+<f:view>
+    <h:head>
+        <title>#{msg.schools}</title>
+    </h:head>
+    <ui:decorate template="/WEB-INF/templates/template.xhtml">
+        <ui:param name="title" value="#{msg.schools}" />
+        #{authsDao.findAuths("/admin/schools")}
+<p:outputPanel styleClass="pageFormDiv clearfix" style="margin:0px; padding: 0px;float:left;width: 100%;" >
+    <p:outputPanel style="text-align: right;">
+        <p:commandButton icon="toolbar-add toolbar-icon"
+                         styleClass="toolbar-button" style="margin:5px;"
+                         value="#{msg.toolbar_add}"
+                         actionListener="#{schoolsDao.reset}"
+                         update="@widgetVar(pageGrid)"
+                         oncomplete="PF('pageGrid').show();"
+                         rendered="true"
+                         disabled="#{not authsDao.auths.padd}"
+        >
+        </p:commandButton>
+    </p:outputPanel>
+    <components:schoolsGrid rows="100"  scrollable="true" update=":#{p:component('formPanel')}"
+                            widgetVar="schoolsGridWidget" scrollHeight="310"/>
+    <p:dialog id="gridDialog" header="#{msg.schools_header}" widgetVar="pageGrid"
+              modal="true" resizable="true" dynamic="true" appendTo="@(body)"  >
+
+        <p:outputPanel id="formPanel" >
+            <components:inputUploadImage widgetVar="uploadLogoWidget" imageType="school" daobean="#{schoolsDao}"/>
+        <h:form id="pageForm">
+            #{citiesDao.handleCityChange()}
+
+            <p:panelGrid columns="4" id="pagePanel">
+
+                <h:outputLabel value="#{msg.schools_mebcode}:" for="mebcode" />
+                <h:inputText id="mebcode" value="#{schoolsDao.item.mebCode}" title="#{msg.schools_mebcode}"
+                             required="true"
+                             requiredMessage="#{msg.schools_mebcode} #{msg.validation_required}"/>
+
+                <h:outputLabel value="#{msg.global_name}:" for="name" />
+                <h:inputText id="name" value="#{schoolsDao.item.name}" title="#{msg.global_name}"
+                             required="true" requiredMessage="Ad alani gereklidir" size="40"/>
+
+                <h:outputLabel value="#{msg.global_city}:" for="city" />
+                <p:selectOneMenu value="#{schoolsDao.item.refCity}"  rendered="true" id="city"
+                        >
+                    <f:selectItems value="#{citiesDao.all}" var="sitem"
+                                   itemValue="#{sitem}" itemLabel="#{sitem.name}" />
+                    <p:ajax update="towns" listener="#{citiesDao.handleCityChange}"/>
+                </p:selectOneMenu>
+                <h:outputLabel value="#{msg.global_town}:" for="towns" />
+                <p:selectOneMenu value="#{schoolsDao.item.refTown}"  rendered="true" id="towns"
+                        >
+                    <f:selectItems value="#{citiesDao.towns}" var="sitem"
+                                   itemValue="#{sitem}" itemLabel="#{sitem.name}"/>
+                </p:selectOneMenu>
+                <h:outputLabel value="Kullanıcı Adı Kimlik No ?" for="usemernis" rendered="false"/>
+                <p:selectBooleanCheckbox value="#{schoolsDao.item.useMernis}" id="usemernis" rendered="false"/>
+
+            </p:panelGrid>
+            <h:inputHidden id="tid" value="#{schoolsDao.item.tid}"/>
+            <h:inputHidden id="status" value="#{schoolsDao.status}"  />
+            <h:inputHidden id="disabledelete" value="#{schoolsDao.disabledelete}" />
+            <h:messages />
+            <p:commandButton value="Aktif Kurum Yap"
+                             rendered="#{schoolsDao.item.tid!=null}"
+                             actionListener="#{sessionInfo.setSchool(schoolsDao.item)}"
+                             update=":#{p:component('activeSchool')}"
+                    />
+            <components:toolbar gridname="schoolsGrid" daobean="#{schoolsDao}" print="false" search="false" new="false"/>
+        </h:form>
+        </p:outputPanel>
+    </p:dialog>
+
+</p:outputPanel>
+    </ui:decorate>
+</f:view>
+</html>

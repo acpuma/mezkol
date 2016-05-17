@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<f:view>
+    <ui:composition template="/WEB-INF/templates/template.xhtml">
+        <h:head>
+            <h:outputScript library="js" name="charts/highcharts.js" />
+            <h:outputScript library="js" name="charts/exporting.js" />
+            <h:outputScript library="limitless" name="js/plugins/visualization/d3/d3.min.js" />
+            <h:outputScript library="limitless" name="js/plugins/visualization/d3/d3_tooltip.js" />
+            <h:outputScript library="limitless" name="js/plugins/forms/styling/switchery.min.js" />
+            <h:outputScript library="limitless" name="js/plugins/ui/moment/moment.min.js" />
+            <h:outputScript library="limitless" name="js/plugins/pickers/daterangepicker.js" />
+            <h:outputScript library="limitless" name="js/pages/dashboard.js" />
+        </h:head>
+        <ui:param name="title" value="#{msg.dashboard}" />
+<h:form>
+    <p:remoteCommand name="rc"  actionListener="#{googleAnalytics.findGraphicSessions}" autoRun="true"
+                     update="@(#container)" oncomplete="loadGraphicSessions(#{googleAnalytics.findGraphicSessions()})"/>
+    <p:remoteCommand name="rc2"  actionListener="#{googleAnalytics.findGraphicCities}" autoRun="true"
+                     update="@(#container2)" oncomplete="loadGraphicCities(#{googleAnalytics.findGraphicCities()},#{googleAnalytics.getCityNames()})"/>
+
+
+    <!-- Quick stats boxes -->
+        <div class="row">
+        <div class="col-lg-4">
+
+            <!-- Members online -->
+            <div class="panel bg-teal-400">
+                <div class="panel-body">
+                    <div class="heading-elements" style="display: none;">
+                        <span class="heading-text badge bg-teal-800">+53,6%</span>
+                    </div>
+
+                    <h3 class="no-margin">
+                        <p:outputPanel deferred="true" deferredMode="load" autoUpdate="true">
+                        #{googleAnalytics.findUsers()}
+                    </p:outputPanel>
+                    </h3>
+                    Kullanıcı
+                    <div class="text-muted text-size-small" style="display: none;">489 ort</div>
+                </div>
+
+                <div class="container-fluid">
+                    <div id="members-online"></div>
+                </div>
+            </div>
+            <!-- /members online -->
+
+        </div>
+
+        <div class="col-lg-4">
+
+            <!-- Current server load -->
+            <div class="panel bg-pink-400">
+                <div class="panel-body">
+                    <div class="heading-elements" style="display: none;">
+                        <ul class="icons-list">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-cog3"></i> <span class="caret"></span></a>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a href="#"><i class="icon-sync"></i> Update data</a></li>
+                                    <li><a href="#"><i class="icon-list-unordered"></i> Detailed log</a></li>
+                                    <li><a href="#"><i class="icon-pie5"></i> Statistics</a></li>
+                                    <li><a href="#"><i class="icon-cross3"></i> Clear list</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <h3 class="no-margin">
+                        <p:outputPanel deferred="true" deferredMode="load" autoUpdate="true">
+                            #{googleAnalytics.findSessions()}
+                        </p:outputPanel>
+                    </h3>
+                    Oturum
+                    <div class="text-muted text-size-small" style="display: none;">34.6% ort</div>
+                </div>
+
+                <div id="server-load"></div>
+            </div>
+            <!-- /current server load -->
+
+        </div>
+            <div class="col-lg-4">
+
+                <!-- Today's revenue -->
+                <div class="panel bg-blue-400">
+                    <div class="panel-body">
+                        <div class="heading-elements" style="display: none;">
+                            <ul class="icons-list">
+                                <li><a data-action="reload"></a></li>
+                            </ul>
+                        </div>
+
+                        <h3 class="no-margin">
+                            <p:outputPanel deferred="true" deferredMode="load" autoUpdate="true">
+                                #{googleAnalytics.findPageviews()}
+                            </p:outputPanel>
+                        </h3>
+                        Sayfa Gösterimi
+                        <div class="text-muted text-size-small" style="display: none;">20 bugün</div>
+                    </div>
+
+                    <div id="today-revenue"></div>
+                </div>
+                <!-- /today's revenue -->
+
+            </div>
+        </div>
+        <!-- /quick stats boxes -->
+
+
+
+
+        <!-- Main charts -->
+        <div class="row">
+            <div class="col-lg-7">
+
+                <!-- Traffic sources -->
+                <div class="panel panel-flat">
+                    <div class="panel-heading" style="display: none;">
+                        <h6 class="panel-title">Oturum Grafiği</h6>
+                        <div class="heading-elements" style="display: none;">
+                            <form class="heading-form" action="#">
+                                <div class="form-group">
+                                    <label class="checkbox-inline checkbox-switchery checkbox-right switchery-xs">
+                                        <input type="checkbox" class="switch" checked="checked"/>
+                                        Canlı Güncelleme:
+                                    </label>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="container-fluid" style="display: none;">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <ul class="list-inline text-center">
+                                    <li>
+                                        <a href="#" class="btn border-teal text-teal btn-flat btn-rounded btn-icon btn-xs valign-text-bottom"><i class="icon-plus3"></i></a>
+                                    </li>
+                                    <li class="text-left">
+                                        <div class="text-semibold">Sayfa Görünteleme</div>
+                                        <div class="text-muted">
+
+                                        </div>
+                                    </li>
+                                </ul>
+
+                                <div class="col-lg-10 col-lg-offset-1">
+                                    <div class="content-group" id="new-visitors"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <ul class="list-inline text-center">
+                                    <li>
+                                        <a href="#" class="btn border-warning-400 text-warning-400 btn-flat btn-rounded btn-icon btn-xs valign-text-bottom"><i class="icon-watch2"></i></a>
+                                    </li>
+                                    <li class="text-left">
+                                        <div class="text-semibold">Yeni oturumlar</div>
+                                        <div class="text-muted">08:20 avg</div>
+                                    </li>
+                                </ul>
+
+                                <div class="col-lg-10 col-lg-offset-1">
+                                    <div class="content-group" id="new-sessions"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <ul class="list-inline text-center">
+                                    <li>
+                                        <a href="#" class="btn border-indigo-400 text-indigo-400 btn-flat btn-rounded btn-icon btn-xs valign-text-bottom"><i class="icon-people"></i></a>
+                                    </li>
+                                    <li class="text-left">
+                                        <div class="text-semibold">Toplam online</div>
+                                        <div class="text-muted"><span class="status-mark border-success position-left"></span> 5,378 avg</div>
+                                    </li>
+                                </ul>
+
+                                <div class="col-lg-10 col-lg-offset-1">
+                                    <div class="content-group" id="total-online"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="position-relative" id="traffic-sources"></div>
+
+                    <div id="container" > </div>
+                    <p:outputPanel styleClass="chartContainer" style="min-width: 310px; min-height:300px; margin: 0 auto"
+                                   deferred="true" deferredMode="load" autoUpdate="true" rendered="false">
+                        #{googleAnalytics.findSessionsGraphic()}
+
+                    </p:outputPanel>
+                </div>
+                <!-- /traffic sources -->
+
+            </div>
+
+            <div class="col-lg-5">
+
+                <!-- Sales stats -->
+                <div class="panel panel-flat">
+                    <div class="panel-heading" style="display: none;">
+                        <h6 class="panel-title">Şehir istatistikleri</h6>
+                        <div class="heading-elements" style="display: none;">
+                            <form class="heading-form" action="#">
+                                <div class="form-group">
+                                    <select class="change-date select-sm" id="select_date">
+                                        <optgroup label=" Time period">
+                                            <option value="val1">June, 29 - July, 5</option>
+                                            <option value="val2">June, 22 - June 28</option>
+                                            <option value="val3" selected="selected">June, 15 - June, 21</option>
+                                            <option value="val4">June, 8 - June, 14</option>
+                                        </optgroup>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="container-fluid"  style="display: none">
+                        <div class="row text-center">
+                            <div class="col-md-4">
+                                <div class="content-group">
+                                    <h5 class="text-semibold no-margin">
+                                        #{googleAnalytics.getGraphicCities().get(0).get(1)}</h5>
+                                    <span class="text-muted text-size-small">#{googleAnalytics.getGraphicCities().get(0).get(0)}</span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="content-group">
+                                    <h5 class="text-semibold no-margin">
+                                        #{googleAnalytics.getGraphicCities().get(1).get(1)}</h5>
+                                    <span class="text-muted text-size-small">#{googleAnalytics.getGraphicCities().get(1).get(0)}</span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="content-group">
+                                    <h5 class="text-semibold no-margin">
+                                        #{googleAnalytics.getGraphicCities().get(2).get(1)}</h5>
+                                    <span class="text-muted text-size-small">#{googleAnalytics.getGraphicCities().get(2).get(0)}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-group-sm" id="app_sales"></div>
+                    <div id="monthly-sales-stats"></div>
+                    <div id="container2" style="width:auto; margin: 0 auto"></div>
+
+                </div>
+                <!-- /sales stats -->
+
+            </div>
+        </div>
+        <!-- /main charts -->
+</h:form>
+    </ui:composition>
+</f:view>
+</html>
