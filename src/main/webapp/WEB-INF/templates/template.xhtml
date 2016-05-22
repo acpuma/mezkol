@@ -16,7 +16,7 @@
             <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
             <meta name="viewport" content="width=device-width, initial-scale=1"/>
         </f:facet>
-        <title>Limitless - Responsive Web Application Kit by Eugene Kopyov</title>
+        <title>Mezopotamya Admin</title>
 
         <!-- Global stylesheets -->
         <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css" />
@@ -25,6 +25,7 @@
         <h:outputStylesheet library="limitless" name="css/core.css" />
         <h:outputStylesheet library="limitless" name="css/components.css" />
         <h:outputStylesheet library="limitless" name="css/colors.css" />
+        <h:outputStylesheet library="primefaces-bootstrap" name="theme.css" />
         <!-- /global stylesheets -->
 
         <!-- Core JS files -->
@@ -35,6 +36,7 @@
 
         <!-- Theme JS files -->
         <h:outputScript library="limitless" name="js/core/app.js"/>
+
         <!-- /theme JS files -->
         <h:outputScript>
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -45,6 +47,7 @@
             ga('create', 'UA-62222236-4', 'auto');
             ga('send', 'pageview');
         </h:outputScript>
+        <link rel="shortcut icon" href="resources/images/favicon.ico"/>
     </h:head>
     <h:body styleClass="navbar-top">
         <ui:debug hotkey="x" />
@@ -97,7 +100,19 @@
 
         </div>
         </div>
+        <p:ajaxExceptionHandler type="java.lang.Exception"
+                                update="exceptionDialog"
+                                onexception="PF('exceptionDialog').show();" />
 
+        <p:dialog id="exceptionDialog" header="Exception '#{pfExceptionHandler.type}' occured!" widgetVar="exceptionDialog"
+                  height="500px">
+            Message: #{pfExceptionHandler.message} <br/>
+            StackTrace: <h:outputText value="#{pfExceptionHandler.formattedStackTrace}" escape="false" /> <br />
+
+            <p:button onclick="document.location.href = document.location.href;"
+                      value="Reload!"
+                      rendered="#{pfExceptionHandler.type == 'javax.faces.application.ViewExpiredException'}" />
+        </p:dialog>
 
         <p:growl id="messages" showDetail="true" life="5000" />
         <pe:blockUI target="block"  widgetVar="blockUIWidget1"   >

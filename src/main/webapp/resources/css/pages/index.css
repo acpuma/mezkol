@@ -1,0 +1,118 @@
+.col-md-4.plan:first-child {
+    margin-right: -30px;
+    margin-left: 30px
+}
+
+.main_title {
+    text-align: center;
+    font-size: 16px;
+    margin-bottom: 30px
+}
+
+.main_title h2 {
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: -1px;
+    font-size: 30px;
+    margin-bottom: 0;
+    margin-top: 0
+}
+
+.main_title p {
+    font-family: Lato, Arial, sans-serif;
+    font-weight: 300;
+    font-size: 20px
+}
+
+.tour_container {
+    background-color: #fff;
+    -webkit-box-shadow: 0 0 5px 0 rgba(0, 0, 0, .1);
+    -moz-box-shadow: 0 0 5px 0 rgba(0, 0, 0, .1);
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, .1);
+    margin: 0 0 30px
+}
+
+.img_container {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #fff
+}
+
+.tour_container .tour_title {
+    padding: 15px;
+    position: relative
+}
+
+.tour_container .tour_title .rating {
+    font-size: 14px;
+    margin-left: -3px
+}
+
+.tour_container .tour_title h3 {
+    margin: 0;
+    font-size: 18px;
+    text-transform: uppercase
+}
+
+.col-md-4.plan:first-child {
+    margin-right: -30px;
+    margin-left: 30px
+}
+
+.col-md-4 {
+    width: 33.3333%;
+    min-height: 1px;
+    padding-left: 15px;
+    padding-right: 15px;
+    position: relative;
+    box-sizing: border-box;
+    float: left;
+
+}
+
+.hotel_container .hotel_title, .transfer_container .transfer_title {
+    padding: 15px;
+    position: relative
+}
+
+
+.box_style_3, .hotel_container {
+    -webkit-box-shadow: 0 0 5px 0 rgba(0, 0, 0, .1);
+    -moz-box-shadow: 0 0 5px 0 rgba(0, 0, 0, .1)
+}
+
+.hotel_container {
+    background-color: #fff;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, .1);
+    margin-bottom: 30px
+}
+
+.hotel_container .hotel_title .rating {
+    font-size: 14px;
+    margin-left: -3px
+}
+
+.hotel_container .hotel_title h3 {
+    margin: 0;
+    font-size: 16px;
+    text-transform: uppercase
+}
+
+.hotel_container .score span {
+    color: #fff;
+    margin-right: 5px;
+    text-align: center;
+    border: 2px solid #fff
+}
+
+.hotel_container .score {
+    font-size: 11px;
+    margin-top: 5px;
+    position: absolute;
+    bottom: 30px;
+    left: 5px
+}
+
+.hotel_container a .score {
+    color: #fff
+}

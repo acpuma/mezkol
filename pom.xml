@@ -18,16 +18,19 @@
 </properties>
 
 <repositories>
+
+  <repository>
+    <id>jaspersoft</id>
+    <name>jaspersoft repository</name>
+    <url>https://jaspersoft.artifactoryonline.com/jaspersoft/jr-ce-releases/</url>
+      <layout>default</layout>
+  </repository>
+
   <repository>
     <id>prime-repo</id>
     <name>PrimeFaces Maven Repository</name>
     <url>http://repository.primefaces.org</url>
     <layout>default</layout>
-  </repository>
-  <repository>
-    <id>project.local</id>
-    <name>project</name>
-    <url>file:${project.basedir}/repo</url>
   </repository>
 </repositories>
 
@@ -369,7 +372,7 @@
   <dependency>
     <groupId>net.sf.jasperreports</groupId>
     <artifactId>jasperreports</artifactId>
-    <version>6.0.4</version>
+    <version>6.2.2</version>
   </dependency>
   <dependency>
     <groupId>net.sf.jasperreports</groupId>
@@ -382,12 +385,13 @@
     <version>2.7</version>
   </dependency>
 
+<!--
   <dependency>
     <groupId>jasper</groupId>
     <artifactId>jasperreports-functions</artifactId>
     <version>6.0.4</version>
   </dependency>
-
+-->
 
 
   <!-- Excel -->

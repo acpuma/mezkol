@@ -34,6 +34,7 @@ public class Util implements Serializable{
 //    @Inject SettingsDao settings;
     //TODO: Get from db
     static String HOMEDIR=System.getProperty("user.home");
+    static String UPLOADFOLDER="imagesmez";
     //static final String HOMEDIR="/home/admin/";
 
     public Util() {
@@ -290,7 +291,7 @@ public class Util implements Serializable{
         //File homeDir = new File(imagesFolder);
         
         //logger.info("HOME DIR : " +homeDir.toString());
-        String dirName="frame";
+        String dirName=UPLOADFOLDER;
         File targetFolder = new File(homeDir,dirName);
 
         // if the IMAGES directory does not exist, create it

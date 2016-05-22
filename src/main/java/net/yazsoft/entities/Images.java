@@ -56,6 +56,8 @@ public class Images extends BaseEntity implements Serializable {
 
     @OneToMany(mappedBy = "refImage", fetch = FetchType.LAZY)
     private Collection<Schools> schoolsCollection;
+    @OneToMany(mappedBy = "refImage", fetch = FetchType.LAZY)
+    private Collection<Slides> slidesCollection;
     @JoinColumn(name = "ref_album", referencedColumnName = "tid")
     @ManyToOne(fetch = FetchType.LAZY)
     private Albums refAlbum;

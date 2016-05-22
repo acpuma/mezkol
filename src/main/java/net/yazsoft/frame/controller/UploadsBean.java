@@ -3,6 +3,7 @@ package net.yazsoft.frame.controller;
 import net.yazsoft.entities.*;
 import net.yazsoft.frame.controller.scopes.ViewScoped;
 import net.yazsoft.frame.utils.Util;
+import net.yazsoft.mez.controller.SlidesDao;
 import org.apache.log4j.Logger;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
@@ -52,6 +53,7 @@ public class UploadsBean extends BaseDao implements Serializable{
 
     @Inject SchoolsDao schoolsDao;
     @Inject UsersDao usersDao;
+    @Inject SlidesDao slidesDao;
 
     @PostConstruct
     public void init() {
@@ -68,6 +70,7 @@ public class UploadsBean extends BaseDao implements Serializable{
         switch (imageType){
             case IMAGE_SCHOOL: tid=schoolsDao.getItem().getTid();break;
             case IMAGE_USER: tid=usersDao.getItem().getTid();break;
+            case IMAGE_SLIDE: tid=slidesDao.getItem().getTid();break;
         }
 
         ExternalContext extContext = FacesContext.getCurrentInstance().getExternalContext();
@@ -109,6 +112,8 @@ public class UploadsBean extends BaseDao implements Serializable{
                     imagesType=(ImagesType)getSession().load(ImagesType.class,1L);break;
                 case (IMAGE_SCHOOL) :
                     imagesType=(ImagesType)getSession().load(ImagesType.class,2L);break;
+                case (IMAGE_SLIDE) :
+                    imagesType=(ImagesType)getSession().load(ImagesType.class,3L);break;
             }
 
             Images image=null;
@@ -129,6 +134,8 @@ public class UploadsBean extends BaseDao implements Serializable{
                     usersDao.getItem().setRefImage(image); usersDao.update();break;
                 case (IMAGE_SCHOOL) :
                     schoolsDao.getItem().setRefImage(image); schoolsDao.update();break;
+                case (IMAGE_SLIDE) :
+                    slidesDao.getItem().setRefImage(image); slidesDao.update();break;
             }
         } catch (Exception e) {
             logger.error("EXCEPTION: ", e);

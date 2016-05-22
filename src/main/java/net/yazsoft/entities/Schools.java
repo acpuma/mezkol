@@ -66,6 +66,9 @@ public class Schools extends BaseEntity implements Serializable {
     @OneToMany(mappedBy = "refSchool", fetch = FetchType.LAZY)
     private Collection<Images> imagesCollection;
 
+    @OneToMany(mappedBy = "refSchool", fetch = FetchType.LAZY)
+    private Collection<SchoolsMenus> schoolsMenusCollection;
+
     public Schools() {
     }
 

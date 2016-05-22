@@ -87,6 +87,22 @@ public class SchoolsDao extends BaseGridDao<Schools> implements Serializable{
         return list;
     }
 
+    public List<Schools> findOutSchools() {
+        List list=null;
+        try {
+            Criteria c = getCriteria();
+            c.add(Restrictions.eq("active", true));
+            c.add(Restrictions.ne("name","MERKEZ"));
+            //c.add(Restrictions.eq("isDeleted", false));
+            list = c.list();
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            Util.setFacesMessage(e.getMessage());
+            e.printStackTrace();
+        }
+        return list;
+    }
+
     public Schools getSelected() {
         return selected;
     }

@@ -12,7 +12,7 @@
         
     <import resource="security.xml"/>
 
-    <context:component-scan base-package="net.yazsoft.frame.controller"/>
+    <context:component-scan base-package="net.yazsoft.frame.controller,net.yazsoft.mez.controller"/>
     <context:annotation-config/>
     <context:spring-configured/>
     <tx:annotation-driven mode="proxy"/>
@@ -31,7 +31,7 @@
         <property name="driverClass" value="com.mysql.jdbc.Driver" />
         <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/mezdb?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=UTF-8" />
         <property name="user" value="mez" />
-        <property name="password" value="mez21" />
+        <property name="password" value="mezkol21" />
         <property name="maxPoolSize" value="2" />
         <property name="maxStatements" value="0" />
         <property name="minPoolSize" value="1" />

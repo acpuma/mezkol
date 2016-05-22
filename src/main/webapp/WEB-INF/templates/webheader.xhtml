@@ -1,0 +1,46 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:y="http://yazsoft.net/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:insert name="webheader">
+    <header id="main-header" class="clearfix">
+        <div id="header-full" class="clearfix">
+            <div id="header" class="clearfix">
+                <a href="#nav" class="open-menu">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+                <a href="#" id="logo">
+                    <p:graphicImage library="images" name="logo.png"
+                                    alt="Mezopotamya Okullari" />
+                </a>
+
+                <aside id="header-content">
+                    <h2 id="slogan"><i>Yeni bir güneş doğuyor</i></h2>
+                </aside>
+            </div>
+        </div>
+        <nav id="nav" class="clearfix">
+            <a href="#" class="close-menu-big">Close</a>
+            <div id="nav-container">
+                <a href="#" class="close-menu">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+                <ul id="nav-main">
+                    <ui:repeat value="#{schoolsMenusDao.findBySchool(null)}" var="schoolmenu" >
+                    <li class="current-menu-item"><a href="index.html">#{schoolmenu.refMenu.nameTr}</a></li>
+                    </ui:repeat>
+
+                </ul>
+                <a href="#" id="button-registration">KAYIT</a>
+            </div>
+        </nav>
+    </header>
+
+</ui:insert>
+</ui:composition>

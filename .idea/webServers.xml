@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="485720f9-5a3a-4e45-a7e9-3bdce6f0afa6" name="mez" url="http://www.mezopotamya.k12.tr">
+        <fileTransfer host="www.mezopotamya.k12.tr" port="22" privateKey="$USER_HOME$/.ssh/id_rsa" rootFolder="/home/admin" accessType="SFTP" username="admin" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
