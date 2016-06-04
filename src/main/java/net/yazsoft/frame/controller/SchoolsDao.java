@@ -1,5 +1,6 @@
 package net.yazsoft.frame.controller;
 
+import net.yazsoft.entities.Albums;
 import net.yazsoft.frame.hibernate.BaseGridDao;
 import net.yazsoft.frame.controller.scopes.ViewScoped;
 import net.yazsoft.frame.utils.Constants;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,10 +28,9 @@ public class SchoolsDao extends BaseGridDao<Schools> implements Serializable{
     Schools selected;
     List<Schools> userSchools;
 
-    @Inject
-    UsersDao usersDao;
-    @Inject
-    ZlogLoginDao zlogLoginDao;
+    @Inject UsersDao usersDao;
+    @Inject ZlogLoginDao zlogLoginDao;
+    @Inject AlbumsDao albumsDao;
 
     public SchoolsDao() {
         super(Schools.class);
@@ -55,12 +56,37 @@ public class SchoolsDao extends BaseGridDao<Schools> implements Serializable{
     @Transactional
     @Override
     public Long create() {
+        //create school album
+        Albums schoolAlbum=new Albums();
+        schoolAlbum.setActive(Boolean.TRUE);
+        schoolAlbum.setEditable(Boolean.FALSE);
+        schoolAlbum.setName("SCHOOL ALBUM");
+        Long albumId=albumsDao.create(schoolAlbum);
+        schoolAlbum=albumsDao.getById(albumId);
+
         getItem().setActive(Boolean.TRUE);
         getItem().setUseMernis(Boolean.FALSE);
         Long pk=super.create();
         Schools newschool=getById(pk);
+        newschool.setRefAlbum(schoolAlbum);
         newschool.setUsersCollection(usersDao.findAdmins());
         saveOrUpdate(newschool);
+
+        schoolAlbum.setRefSchool(newschool);
+        albumsDao.saveOrUpdate(schoolAlbum);
+
+        String imageFolder=Util.getImagesFolder();
+        String dirName="/"+albumId;
+        File targetFolder = new File(imageFolder+dirName);
+        // if the APP directory does not exist, create it
+        if (!targetFolder.exists()) {
+            logger.info("creating directory: " + targetFolder.toString());
+            boolean dirCreated = targetFolder.mkdir();
+
+            if(dirCreated) {
+                logger.info("DIR created");
+            }
+        }
         return pk;
     }
 

@@ -1,0 +1,52 @@
+.imageDataGridPanel{
+    text-align:center;
+    /*width:110px;*/
+    /*height:100px;*/
+    /*margin: 0px auto !important;*/
+    border:0px !important;
+    background: transparent !important;
+}
+
+.imageGridForm{
+    /*width: 850px;*/
+    /*min-height: 470px;*/
+}
+
+.imageDataGrid .ui-datagrid-content,.imageDataGrid .ui-grid-responsive {
+    border:0px !important;
+    max-height: 440px;
+}
+
+.imageDataGrid .ui-grid-row {
+    /*float:left;*/
+}
+
+.imageDataGrid .ui-paginator{
+    border:1px !important;
+}
+
+.text-truncate100 {
+  width: 100px !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+.ui-datagrid-data {
+    width: 100px !important;
+}
+
+.image150 {
+    height:60px;
+    width:60px;
+}
+
+.imageSelectPreview {
+    background:none;
+}
+
+.imageSelectPreview .ui-panel-content {
+    padding:0;
+    margin:0;
+
+}

@@ -18,6 +18,13 @@
  *  Latest update: May 25, 2015
  *
  * ---------------------------------------------------------------------------- */
+
+.noborder {
+  border: 0 none !important;
+}
+.navbar-fixed-top, .navbar-fixed-bottom {
+  z-index: 1000 !important;
+}
 .navbar-brand {
   padding:0px 20px;
 }

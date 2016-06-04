@@ -1,0 +1,167 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:components="http://xmlns.jcp.org/jsf/composite/components"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+>
+<h:outputStylesheet library="css" name="pages/imageGrid.css"/>
+    <!--Image Select Dialog-->
+    <p:dialog id="imageSelectDialog" header="#{msg.select_image}" widgetVar="imageSelectDialogWidget"
+              modal="true" resizable="true"  appendTo="@(body)" width="870" height="500" responsive="true">
+        <p:outputPanel rendered="false">
+            <h:outputText value="#{component.clientId}" />
+            <h:outputText value="#{component.clientId}" />
+            <h:outputText value="ALBUM ID : "/>
+            <h:outputText value="#{albumsDao.selected.tid}"/>
+        </p:outputPanel>
+        <h:form id="imageGridForm" styleClass="imageGridForm">
+            <p:commandButton update="@form"
+                             actionListener="#{albumsDao.setSelected(albumsDao.selected.refAlbum)}"
+                             style="padding:5px 3px; margin: 4px 0 6px;"
+                             value="#{msg.global_up}" icon="fa fa-arrow-up"
+                             disabled="#{empty albumsDao.selected.refAlbum}"
+            />
+            <p:commandButton update="@widgetVar(addAlbumDialogWidget)" actionListener="#{albumsDao.setStatus(0)}"
+                             style="padding:5px 3px;margin: 4px 0 6px;"
+                             value="#{msg.global_new} #{msg.album}" icon="fa fa-plus"
+                             oncomplete="PF('addAlbumDialogWidget').show();"
+            />
+
+            <p:commandButton
+                    style="padding:5px 3px;margin: 4px 0 6px;"
+                             value="#{msg.upload_logo}" icon="fa fa-image"
+                             oncomplete="PF('uploadImagesDialogWidget').show();"
+            />
+
+            <p:dataGrid var="item" value="#{albumsDao.findAlbumAndImages(albumsDao.selected)}" columns="6"
+                        id="imageGrid" widgetVar="imageGridWidget"
+                        rows="100" paginator="false"
+                        paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+                        rowsPerPageTemplate="500"
+                        styleClass="imageDataGrid"
+                        paginatorPosition="bottom"
+                        emptyMessage="#{msg.no_records}" layout="grid"
+            >
+                <!--ALBUM Item-->
+                <p:panel styleClass="imageDataGridPanel" rendered="#{item.isAlbum==true}">
+
+                    <p:commandLink update="@form" actionListener="#{albumsDao.setSelectedById(item.album.tid)}">
+                        <p:graphicImage library="images" name="folder-pictures.png"
+                                        style="max-width: 100px; max-height:100px; overflow: hidden; display: flex" />
+                        <p:outputLabel value="#{item.album.name}" styleClass="text-truncate100" style="display:flex;"/>
+                    </p:commandLink>
+                    <p:commandButton action="#{albumsDao.deleteAlbum(item.album)}"
+                                     update="@form :messages"
+                                     style="display:inline-block;" icon="fa fa-remove">
+                        <p:confirm header="#{msg.global_confirmation}" message="#{msg.global_sure}"
+                                   icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton actionListener="#{albumsDao.setStatus(2)}"
+                            update="@widgetVar(addAlbumDialogWidget)"
+                            icon="fa fa-edit" style="display:inline-block;"
+                            oncomplete="PF('addAlbumDialogWidget').show()">
+                        <f:setPropertyActionListener value="#{item.album}" target="#{albumsDao.item}" />
+                    </p:commandButton>
+                </p:panel>
+
+                <!--IMAGE Item-->
+                <p:panel styleClass="imageDataGridPanel" rendered="#{item.isAlbum==false}"
+                         style="height: 167px; width: 136px; ">
+                    <p:commandLink oncomplete="PF('imageSelectDialogWidget').hide()"
+                                   action="#{imagesDao.onImageSelect(item.image)}"
+                    >
+                        <p:outputPanel style="height:100px; width:100px;display: table; line-height: 100px;">
+                            <p:graphicImage
+                                    url="/images/#{imagesDao.findFolder(item.image)}/SMALL/#{item.image.tid}.#{item.image.extension}"
+                                    style="max-width: 100px; max-height:100px; overflow: hidden;"
+                                    title="#{item.image.titleTr}"/>
+                        </p:outputPanel>
+                        <p:outputLabel value="#{item.image.titleTr}" styleClass="text-truncate100"/>
+                    </p:commandLink>
+                    <p:outputPanel>
+                        <p:commandButton action="#{imagesDao.removeImage(item.image)}"
+                                         update="@widgetVar(imageSelectDialogWidget) :messages"
+                                         style="display:inline-block;" icon="fa fa-remove">
+                            <p:confirm header="#{msg.global_confirmation}" message="#{msg.global_sure}" icon="ui-icon-alert"/>
+                        </p:commandButton>
+                        <p:commandButton
+                                update=":showImageDialog"
+                                icon="fa fa-search" style="display:inline-block;"
+                                oncomplete="PF('showImageDialogWidget').show()">
+                            <f:setPropertyActionListener value="#{item.image}" target="#{imagesDao.item}" />
+                        </p:commandButton>
+                        <h:outputLabel value="#{item.image}" rendered="false" />
+                    </p:outputPanel>
+                </p:panel>
+            </p:dataGrid>
+        </h:form>
+    </p:dialog>
+
+    <!-- Image Upload Dialog -->
+    <p:dialog id="uploadImagesDialog" header="#{msg.album}" widgetVar="uploadImagesDialogWidget"
+              modal="true" resizable="true"  appendTo="@(body)" responsive="true">
+
+            <p:outputPanel id="uploadImage"  style="width: 700px; margin: auto;">
+                <h:form enctype="multipart/form-data" id="fileUploadForm">
+                    <!-- TODO: update field value -->
+                    <h:outputStylesheet library="css" name="pages/imageUpload.css" />
+                    <p:outputPanel rendered="false" >Albumid : #{albumsDao.selected.tid}</p:outputPanel>
+                    <h:inputText value="#{albumsDao.selected.tid}" id="uploadAlbumId" style="display: none"/>
+                    <p:fileUpload fileUploadListener="#{uploadBean.handleFileUpload}"
+                                  mode="advanced"
+                                  update="@widgetVar(imageGridWidget) :messages"
+                                  multiple="true"
+                                  process="fileUploadForm"
+                                  allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+                                  oncomplete="PF('uploadImagesDialogWidget').hide()"
+                    />
+                </h:form>
+            </p:outputPanel>
+
+    </p:dialog>
+
+    <!--Add Album Dialog-->
+    <p:dialog id="addAlbumDialog" header="#{msg.album}" widgetVar="addAlbumDialogWidget"
+              modal="true" resizable="true" dynamic="true" appendTo="@(body)" responsive="true">
+
+        <p:outputPanel id="addAlbumPanel">
+            <h:form id="addAlbumForm" >
+                #{albumsDao.status}
+                <p:panelGrid columns="2" id="addAlbumPanelGrid">
+                    <h:outputLabel value="#{msg.global_name}:" for="name"/>
+                    <h:inputText id="name" value="#{albumsDao.item.name}" title="#{msg.global_name}"
+                                 required="true" requiredMessage="Ad alani gereklidir" size="40"/>
+                </p:panelGrid>
+                <p:commandButton value="#{msg.send}" actionListener="#{albumsDao.addAlbum}" style="padding:5px; margin:5px;"
+                                 onsuccess="PF('addAlbumDialogWidget').hide();"
+                                 update="@widgetVar(imageGridWidget)"
+                />
+                <h:messages/>
+            </h:form>
+        </p:outputPanel>
+    </p:dialog>
+
+    <!--Show Image Dialog-->
+    <p:dialog id="showImageDialog" header="#{msg.album}" widgetVar="showImageDialogWidget" fitViewport="true" positionType="absolute"
+              modal="true" resizable="true"  appendTo="@(body)" dynamic="true" responsive="true">
+        <h:form >
+            <p:outputPanel id="showImageInfo">
+                Image : #{imagesDao.item}
+            </p:outputPanel>
+            <p:outputPanel id="showImageDialogPanel" rendered="#{imagesDao.item!=null}">
+
+                <p:graphicImage
+                        url="/images/#{imagesDao.findFolder(imagesDao.item)}/#{imagesDao.item.tid}.#{imagesDao.item.extension}"
+                        style="max-width: 900px; max-height:700px; overflow: hidden;" rendered="true"
+                />
+
+            </p:outputPanel>
+        </h:form>
+    </p:dialog>
+
+</html>

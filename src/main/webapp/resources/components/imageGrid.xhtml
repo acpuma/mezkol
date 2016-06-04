@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://java.sun.com/jsf/html" >
+
+<!-- INTERFACE -->
+<cc:interface>
+    <cc:attribute name="daobean" required="false"  default="#{imagesDao}" />
+    <cc:attribute name="albumId" required="false"  />
+    <cc:attribute name="updateField" />
+    <cc:attribute name="multiple" default="false"     required="false"     />
+    <cc:attribute name="update"  required="false"    />
+    <cc:attribute name="oncomplete" default="" required="false"    />
+    <cc:attribute name="showImage" default="true"  />
+    <cc:attribute name="input" default=""  />
+</cc:interface>
+
+<!-- IMPLEMENTATION -->
+<cc:implementation>
+    <c:set var="daobeann" value="#{cc.attrs.daobean}" />
+
+    #{albumsDao.findActiveSchoolAlbum()}
+
+    <!--Image Select Button -->
+    <p:panel widgetVar="imagePreviewWidget" styleClass="noborder imageSelectPreview"
+             style="width: 170px; height: auto;" id="imagePreview_#{cc.attrs.id}">
+        <p:outputPanel style="text-align: center" >
+            <h:outputText value="#{imagesDao.selected}" rendered="false" />
+            <p:commandButton style="padding:5px 3px;margin: 4px 0 6px;"
+                             icon="fa fa-search" value="#{msg.global_image}"
+                             oncomplete="PF('imageSelectDialogWidget').show()">
+                <p:graphicImage height="60"  width="60" style="height:60px;max-width: 60px; max-height: 60px; margin: 2px; "
+                                rendered="#{not empty imagesDao.selected}" cache="false"
+                                value="/images/#{imagesDao.findFolder(imagesDao.selected)}/#{imagesDao.selected.tid}.#{imagesDao.selected.extension}"/>
+                <f:setPropertyActionListener value="#{daobeann}" target="#{imagesDao.selectDao}" />
+                <f:setPropertyActionListener value="#{cc.attrs.update}" target="#{imagesDao.selectUpdate}" />
+            </p:commandButton>
+
+        </p:outputPanel>
+    </p:panel>
+
+</cc:implementation>
+</html>

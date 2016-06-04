@@ -8,76 +8,187 @@
       xmlns:p="http://primefaces.org/ui"
       >
 <f:view>
-    <h:outputStylesheet library="css" name="animate.min.css" />
+    <!-- RS5.0 Main Stylesheet -->
+    <link rel="stylesheet" type="text/css" href="revolution/css/settings.css" />
+    <!-- RS5.0 Layers and Navigation Styles -->
+    <link rel="stylesheet" type="text/css" href="revolution/css/layers.css" />
+    <link rel="stylesheet" type="text/css" href="revolution/css/navigation.css" />
+
     <h:outputStylesheet library="css" name="pages/index.css" />
 
-    <ui:composition template="/WEB-INF/templates/webtemplate.xhtml">
-        <div id="slideshow-tabs">
-            <div id="panel-tabs" class="clearfix">
-                <ul class="nav-tabs-slideshow">
-                    <ui:repeat value="#{slidesDao.slides}" var="slide" varStatus="vstatus">
 
-                    <li><a href="#panel-#{vstatus.index+1}"><strong>#{slide.titleTr}</strong><br />
-                        <span>#{slide.subtitleTr}</span>
-                    </a>
-                    </li>
+    <ui:composition template="/WEB-INF/templates/webtemplate.xhtml">
+        #{slidesDao.setSchool(schoolsDao.getById(1))}
+
+
+
+        <!-- START REVOLUTION SLIDER 5.0 -->
+        <div id="rev_slider_4_1_wrapper" class="rev_slider_wrapper fullwidthbanner-container" data-alias="classicslider1"
+             style="margin:0px auto;background-color:transparent;padding:0px;margin-top:0px;margin-bottom:0px;">
+            <div id="rev_slider_4_1" class="rev_slider fullwidthabanner" style="display:none;" data-version="5.0.7">
+                <ul>
+                    <ui:repeat value="#{slidesDao.slides}" var="slide">
+                        <li data-transition="fade" data-slotamount="default"
+                            data-thumb="images/#{imagesDao.findFolder(slide.refImage)}/SMALL/#{slide.refImage.tid}.#{slide.refImage.extension}"
+                            data-title="#{slide.titleTr}" data-description="#{slide.subtitleTr}">
+
+                        <p:graphicImage value="/images/#{imagesDao.findFolder(slide.refImage)}/#{slide.refImage.tid}.#{slide.refImage.extension}"
+                            />
+                        </li><!-- /slide -->
                     </ui:repeat>
                 </ul>
-            </div>
-            <ui:repeat value="#{slidesDao.slides}" var="slide" varStatus="vstatus">
-                <div class="ui-tabs-panel" id="panel-#{vstatus.index+1}"
-                     style="background:url(images/slide/#{slide.tid}.#{slide.refImage.extension}) no-repeat 50% 0">
-                    <div class="tabs-blur" style="background:url(images/slide/#{slide.tid}.#{slide.refImage.extension}) no-repeat 50% 0">
-                    </div>
-                    <div class="tabs-container" style="display: none;">
-                        <article>
-                            <p><![CDATA[Phasellus nec <mag></mag>na et eros pretium tincidunt eget nec nulla. Integer pulvinar felis vel arcu elementum dignissim. In consequat volutpat tristique.]]></p>
-                        </article>
-                    </div>
-                </div>
-            </ui:repeat>
-
-        </div>
-
+                <div class="tp-static-layers"></div>
+                <div class="tp-bannertimer" style="height: 7px; background-color: rgba(255, 255, 255, 0.25);"></div>
+            </div><!-- END REVOLUTION SLIDER -->
+        </div><!-- END OF SLIDER WRAPPER -->
 
 
         <div id="content-container">
             <div id="content" class="clearfix">
+                <div id="banner-homepage">
+                    <div class="container">
+
+                        <div class="main_title">
+                            <h2> <span style="color: #e04f67; ">OKULLARIMIZ</span> </h2>
+                            <!--<p>Quisque at tortor a libero posuere laoreet vitae sed arcu. Curabitur consequat.</p>-->
+                        </div>
 
 
+                        <div class="row" style="display: table;">
 
-                <div class="container">
+                            <ui:repeat value="#{schoolsDao.findOutSchools()}" var="school">
+                            <div class="col-md-4 wow zoomIn" data-wow-delay="0.1s">
+                                <div class="tour_container">
+                                    <div class="img_container">
+                                        <a href="">
+                                            <p:graphicImage width="360" height="240"
+                                                            value="/images/#{imagesDao.findFolder(school.refImage)}/#{school.refImage.tid}.#{school.refImage.extension}"
+                                                            styleClass="img-responsive"
+                                            />
+                                        </a>
+                                    </div>
+                                    <div class="tour_title">
+                                        <h3><strong>#{school.name}</strong></h3>
+                                    </div>
+                                </div><!-- End box tour -->
+                            </div><!-- End col-md-4 -->
+                            </ui:repeat>
 
-                    <div class="main_title">
-                        <h2> <span style="color: #e04f67;">OKULLARIMIZ</span> </h2>
-                        <!--<p>Quisque at tortor a libero posuere laoreet vitae sed arcu. Curabitur consequat.</p>-->
+                        </div><!-- End row -->
+                    </div>
+                </div>
+
+                <div id="main-content">
+
+                    <div id="sidebar-homepage-left" class="sidebar-homepage">
+                        <aside class="widget-container">
+                            <div class="widget-wrapper clearfix">
+                                <h3 class="widget-title">HABERLER</h3>
+                                <ul class="menu news-sidebar">
+                                    <ui:repeat value="#{articlesDao.findNews().subList(0,4)}" var="article">
+                                    <li class="clearfix">
+                                        <p:graphicImage width="123" height="94"
+                                                        value="/images/#{imagesDao.findFolder(article.refImage)}/#{article.refImage.tid}.#{article.refImage.extension}"
+                                                        styleClass="imgframe alignleft"
+                                        />
+                                        <h4><a href="#">#{article.titleTr}</a></h4>
+                                        <span class="date-news"><h:outputText value="#{article.date}" converter="javax.faces.DateTime"/> </span>
+                                    </li>
+                                    </ui:repeat>
+
+                                </ul>
+                                <!--<a href="newslist.html" class="button-more">Read More Blog Post</a>-->
+                            </div>
+                        </aside>
+                    </div>
+                    <div id="sidebar-homepage-middle" class="sidebar-homepage">
+                        <aside class="widget-container">
+                            <div class="widget-wrapper clearfix">
+                                <h3 class="widget-title">ETKİNLİKLER</h3>
+                                <ul class="menu event-sidebar">
+                                    <ui:repeat value="#{articlesDao.findEvents()}" var="eventt">
+                                    <li class="clearfix">
+                                        <div class="event-date-widget">
+                                            <strong>
+                                                <h:outputText value="#{eventt.date}">
+                                                    <f:convertDateTime pattern="dd" type="date" />
+                                                </h:outputText>
+                                            </strong>
+                                            <span>
+                                                <h:outputText value="#{eventt.date}">
+                                                    <f:convertDateTime pattern="MMM" type="date" />
+                                                </h:outputText>
+                                            </span>
+                                        </div>
+                                        <div class="event-content-widget">
+                                            <article>
+                                                <h4><a href="#">#{eventt.titleTr}</a></h4>
+                                                <p><h:outputText value="#{eventt.date}" converter="javax.faces.DateTime"/>
+                                                    <ui:fragment rendered="#{not empty eventt.endDate}">
+                                                    - <h:outputText value="#{eventt.endDate}" converter="javax.faces.DateTime"/>
+                                                    </ui:fragment>
+                                                    <br />
+                                                </p>
+                                                <em>#{eventt.location}</em>
+                                            </article>
+                                        </div>
+                                    </li>
+                                    </ui:repeat>
+                                </ul>
+                            </div>
+                        </aside>
                     </div>
 
-                    <div class="row">
+                    <div id="sidebar-homepage-right" class="sidebar-homepage">
+                        <ul id="nav-sidebar" class="clearfix">
+                            <li><a href="#" class="clearfix">
+                                <figure><p:graphicImage library="images" name="theme/icon-sidebar-1.png" alt="iletişim" /></figure>
+                                <strong class="title-nav-sidebar">İLETİŞİM BİLGİLERİMİZ</strong>
+                                <strong>Telefon:</strong> +90 (412) 257 2438  <strong> <br/>Email:</strong> ozelmezopotamya@hotmail.com
+                            </a></li>
+                            <li><a href="#" class="clearfix">
+                                <figure><p:graphicImage library="images" name="theme/icon-sidebar-2.png" alt="Ulaşım" /></figure>
+                                <strong class="title-nav-sidebar">Ulaşım</strong>
+                                Mezopotamya mah.288 sk. Kayapınar
+                                Diyarbakır
+                            </a></li>
+                            <li><a href="#" class="clearfix">
+                                <figure><p:graphicImage library="images" name="theme/icon-sidebar-3.png" alt="Canlı Yardım" /></figure>
+                                <strong class="title-nav-sidebar">Canlı Yardım</strong>
+                                Müşteri Hizmetlerimizle canlı konuşma için whatsapp numaramız
+                            </a></li>
+                            <li><a href="#" class="clearfix">
+                                <figure><p:graphicImage library="images" name="theme/icon-sidebar-4.png"  alt="Library and Research" /></figure>
+                                <strong class="title-nav-sidebar">ARGE</strong>
+                                Kütüphanemiz ve Laborutuarlarımız hakkında bilgiler
 
-                        <ui:repeat value="#{schoolsDao.findOutSchools()}" var="school">
-                        <div class="col-md-4 wow zoomIn" data-wow-delay="0.1s">
-                            <div class="tour_container">
-                                <div class="img_container">
-                                    <a href="">
-                                        <p:graphicImage width="360" height="240"
-                                                        value="/images/school/#{school.tid}.jpg"
-                                                        styleClass="img-responsive"
-                                        />
-                                    </a>
-                                </div>
-                                <div class="tour_title">
-                                    <h3><strong>#{school.name}</strong></h3>
-                                </div>
-                            </div><!-- End box tour -->
-                        </div><!-- End col-md-4 -->
-                        </ui:repeat>
-
-                    </div><!-- End row -->
+                            </a></li>
+                            <li><a href="#" class="clearfix">
+                                <figure><p:graphicImage library="images" name="theme/icon-sidebar-5.png"  alt="Library and Research" /></figure>
+                                <strong class="title-nav-sidebar">Kurslarımız</strong>
+                                Kurslarımız hakkında bilgi almak için tıklayın
+                            </a></li>
+                        </ul>
+                    </div>
                 </div>
 
             </div>
         </div>
+        <!-- RS5.0 Core JS Files -->
+        <script type="text/javascript" src="revolution/js/jquery.themepunch.tools.min.js?rev=5.0"></script>
+        <script type="text/javascript" src="revolution/js/jquery.themepunch.revolution.min.js?rev=5.0"></script>
+
+        <script type="text/javascript" src="revolution/js/extensions/revolution.extension.actions.min.js"></script>
+        <script type="text/javascript" src="revolution/js/extensions/revolution.extension.carousel.min.js"></script>
+        <script type="text/javascript" src="revolution/js/extensions/revolution.extension.kenburn.min.js"></script>
+        <script type="text/javascript" src="revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
+        <script type="text/javascript" src="revolution/js/extensions/revolution.extension.migration.min.js"></script>
+        <script type="text/javascript" src="revolution/js/extensions/revolution.extension.navigation.min.js"></script>
+        <script type="text/javascript" src="revolution/js/extensions/revolution.extension.parallax.min.js"></script>
+        <script type="text/javascript" src="revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
+        <script type="text/javascript" src="revolution/js/extensions/revolution.extension.video.min.js"></script>
+
+
         <h:outputScript library="js" name="scripts.js" />
     </ui:composition>
 </f:view>

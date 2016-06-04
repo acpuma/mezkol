@@ -1,5 +1,7 @@
 package net.yazsoft.mez.controller;
 
+import net.yazsoft.entities.Images;
+import net.yazsoft.entities.Schools;
 import net.yazsoft.entities.Slides;
 import net.yazsoft.frame.controller.ImagesDao;
 import net.yazsoft.frame.controller.scopes.ViewScoped;
@@ -10,6 +12,7 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.primefaces.event.ReorderEvent;
+import org.primefaces.event.SelectEvent;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -24,9 +27,13 @@ public class SlidesDao extends BaseGridDao<Slides> implements Serializable{
     Slides selected;
     List<Slides> slides;
     Boolean listChanged=true;
+    Schools school;
 
     @Inject ImagesDao imagesDao;
 
+    public void setSelectedById(Long tid) {
+        selected=getById(tid);
+    }
 
     public void onRowReorder(ReorderEvent event) {
         //Util.setFacesMessage("Row Moved From: " + event.getFromIndex() + ", To:" + event.getToIndex());
@@ -51,6 +58,7 @@ public class SlidesDao extends BaseGridDao<Slides> implements Serializable{
         temp.setTitleTr("Slide");
         temp.setTitleTr("Subtitle");
         temp.setRank(slides.size() + 1);
+        temp.setRefSchool(Util.getActiveSchool());
         create(temp);
         selected=temp;
         listChanged = true;
@@ -80,10 +88,15 @@ public class SlidesDao extends BaseGridDao<Slides> implements Serializable{
 
     public List<Slides> findSlides() {
         List list=null;
+        logger.info("SLIDE SCHOOL : " + school);
         try {
+            if (school==null) {
+                school=Util.getActiveSchool();
+            }
             Criteria c = getCriteria();
             c.add(Restrictions.eq("active", true));
             c.addOrder(Order.desc("rank"));
+            c.add(Restrictions.eq("refSchool",school));
             //c.add(Restrictions.eq("isDeleted", false));
             list = c.list();
             listChanged=false;
@@ -108,13 +121,22 @@ public class SlidesDao extends BaseGridDao<Slides> implements Serializable{
     }
 
     public List<Slides> getSlides() {
-        if (listChanged) {
+        if (listChanged || slides.isEmpty()) {
             slides = findSlides();
         }
+        logger.info("SLIDES : " + slides);
         return slides;
     }
 
     public void setSlides(List<Slides> slides) {
         this.slides = slides;
+    }
+
+    public Schools getSchool() {
+        return school;
+    }
+
+    public void setSchool(Schools school) {
+        this.school = school;
     }
 }

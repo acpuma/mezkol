@@ -34,7 +34,7 @@ public class Util implements Serializable{
 //    @Inject SettingsDao settings;
     //TODO: Get from db
     static String HOMEDIR=System.getProperty("user.home");
-    static String UPLOADFOLDER="imagesmez";
+    static String UPLOADFOLDER="uploadsmez";
     //static final String HOMEDIR="/home/admin/";
 
     public Util() {

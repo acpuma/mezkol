@@ -1,0 +1,66 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Mar 28, 2014, 10:48:41 AM
+    Author     : fec
+*/
+
+.ui-fileupload-content {
+    height: 420px;
+    overflow-y: scroll;
+}
+
+.uploadTab {
+    width: 210px;
+    height:36px;
+    text-align: center;
+    font-size: 16px !important;
+    text-transform: uppercase;
+}
+
+.imageSelectTab {
+    width:900px;
+    margin:auto;
+    min-height: 550px;
+    text-align: center;
+}
+
+.selectImagePanel{
+    text-align:center;
+    width:160px; 
+    height:150px;
+    margin: 0px auto !important;
+    border:0px !important;
+    background: transparent !important;
+}
+
+.selectImagePanel div{
+    padding:0px !important;
+    background: transparent !important;
+}
+
+.imageSelectImg {
+    max-width: 150px; 
+    max-height:130px; 
+    overflow: hidden;
+}
+.albumGridForm {
+    width: 800px;
+    min-height: 550px;
+    
+}
+
+.ui-fileupload-upload{
+    /* display:none; */
+}
+
+.ui-panelgrid td{
+    padding:1px !important;
+}
+
+.ui-tabs .ui-tabs-panel {
+    padding:1px !important;
+}

@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="width" default="700"     required="false"     />
+        <cc:attribute name="multiple" default="false"     required="false"     />
+        <cc:attribute name="update" default="@this" required="false"    />
+        <cc:attribute name="albumId" default="0" required="false"  />
+        <cc:attribute name="oncomplete" default="" required="false"    />
+        <cc:attribute name="widgetVar" default="" required="false"  />
+        <cc:attribute name="input" default=""  />
+
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <p:outputPanel id="uploadImage_#{cc.id}" layout="inline" style="width: #{cc.attrs.width}px; margin: auto;">
+            <h:form enctype="multipart/form-data" id="fileUploadForm">
+                <!-- TODO: update field value -->
+                <h:outputStylesheet library="css" name="pages/imageUpload.css" />
+                <p:outputPanel rendered="false" >Albumid : #{albumsDao.selected.tid}</p:outputPanel>
+                <h:inputText value="#{albumsDao.selected.tid}" id="uploadAlbumId" style="display: none"/>
+                <p:fileUpload fileUploadListener="#{uploadBean.handleFileUpload}"
+                                    mode="advanced"
+                                    update=":messages #{cc.attrs.update}"
+                                    multiple="#{cc.attrs.multiple}"
+                                    process="fileUploadForm"
+                                    allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+                                    oncomplete="#{cc.attrs.oncomplete}"
+                                    widgetVar="#{cc.attrs.widgetVar}"
+
+                                    />
+            </h:form>
+        </p:outputPanel>
+    </cc:implementation>
+</html>

@@ -1,3 +1,8 @@
+jQuery(document).ready(function() {
+    rc();
+    rc2();
+});
+
 function loadGraphicCities(data,names) {
     $('#container2').highcharts({
         chart: {

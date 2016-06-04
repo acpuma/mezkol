@@ -15,7 +15,8 @@
                     <div class="category-content">
                         <div class="media">
                             <a href="#" class="media-left">
-                                <h:graphicImage library="limitless" name="images/image.png" styleClass="img-circle img-sm" alt=""/>
+                                <p:graphicImage value="/images/user/#{sessionInfo.user.tid}.#{sessionInfo.user.refImage.extension}" alt=""/>
+                                <h:graphicImage library="limitless" name="images/image.png" styleClass="img-circle img-sm" alt="" rendered="false"/>
                             </a>
                             <div class="media-body">
                                 <span class="media-heading text-semibold">#{sessionInfo.user.name} #{sessionInfo.user.surname}</span>

@@ -11,70 +11,87 @@
     <h:head>
         <title>Slidelar</title>
     </h:head>
-<ui:decorate template="/WEB-INF/templates/template.xhtml">
-    <ui:param name="title" value="Slidelar" />
-    #{authsDao.findAuths("/admin/slides")}
+    <ui:decorate template="/WEB-INF/templates/template.xhtml">
+        <ui:param name="title" value="Slidelar"/>
+        #{authsDao.findAuths("/admin/slides")}
 
-    <p:outputPanel styleClass="pageFormDiv clearfix" style="margin:0px; padding: 0px;float:left;width: 100%;" >
+        <!--{slidesDao.setSelectedById(4)}-->
 
-    <p:outputPanel style="text-align: right;">
-        <p:commandButton icon="toolbar-add toolbar-icon"
-                         styleClass="toolbar-button" style="margin:5px;"
-                         value="#{msg.toolbar_add}"
-                         actionListener="#{slidesDao.addSlide}"
-                         update="@widgetVar(formDialogWidget) @widgetVar(slidesGridWidget)"
-                         rendered="true"
-                         disabled="#{not authsDao.auths.padd}"
+        <p:outputPanel styleClass="pageFormDiv clearfix" style="margin:0px; padding: 0px;float:left;width: 100%;">
+
+            <h:form>
+            <p:outputPanel id="slidePreviewImage1" rendered="false">
+                <p:outputPanel style="width: 700px; height: 275px;">
+                    <p:graphicImage height="275" width="700" style="height:275px; width: 700px;" cache="false"
+                                    rendered="true" id="slidePreview1"
+                                    value="/images/#{imagesDao.findFolder(slidesDao.item.refImage)}/#{slidesDao.item.refImage.tid}.#{slidesDao.item.refImage.extension}"
+                    />
+                </p:outputPanel>
+                <components:imageGrid update="#{p:component('slidePreview1')}"
+                                      id="sp1" daobean="#{slidesDao}" />
+            </p:outputPanel>
+            </h:form>
+            <p:outputPanel style="text-align: right;">
+                <p:commandButton icon="toolbar-add toolbar-icon"
+                                 styleClass="toolbar-button" style="margin:5px;"
+                                 value="#{msg.toolbar_add}"
+                                 actionListener="#{slidesDao.addSlide}"
+                                 update="@widgetVar(formDialogWidget) @widgetVar(slidesGridWidget)"
+                                 rendered="true"
+                                 disabled="#{not authsDao.auths.padd}"
                 >
-        </p:commandButton>
-    </p:outputPanel>
-    <components:slidesGrid rows="100"  scrollable="true" update=":#{p:component('formPanel')}"
-                            widgetVar="slidesGridWidget" scrollHeight="550" paginator="false"
-            />
-    <p:dialog id="gridDialog" header="#{msg.slide}" widgetVar="formDialogWidget"
-              modal="true" resizable="true" dynamic="true" appendTo="@(body)"
-              onHide="PF('slidesGridWidget').filter()">
-    <p:outputPanel id="formPanel" >
-        <components:inputUploadImage widgetVar="uploadImageWidget" imageType="slide" update=":#{p:component('formPanel')}"
-                                     showImage="false" daobean="#{slidesDao}"
-                                     imageWidth="1600" imageHeight="550"/>
-    <h:form id="pageForm">
-        <p:outputPanel style="width: 700px; height: 275px;">
-        <p:graphicImage height="275" width="700" style="height:275px; width: 700px;" cache="false"
-                        rendered="true"
-                        value="/images/slide/#{slidesDao.item.tid}.#{slidesDao.item.refImage.extension}"
-                />
+                </p:commandButton>
+
+            </p:outputPanel>
+
+            <components:slidesGrid rows="100" scrollable="true" update=":#{p:component('formPanel')}"
+                                   widgetVar="slidesGridWidget" scrollHeight="550" paginator="false"/>
+            <p:dialog id="gridDialog" header="#{msg.slide}" widgetVar="formDialogWidget"
+                      modal="true" resizable="true" dynamic="true" appendTo="@(body)"
+                      onHide="PF('slidesGridWidget').filter()">
+
+
+
+                <p:outputPanel id="formPanel">
+
+                    <h:form id="pageForm" >
+                        <p:outputPanel style="width: 700px; height: 275px;" id="slidePreviewImage" >
+                            <p:graphicImage height="275" width="700" style="height:275px; width: 700px;" cache="false"
+                                            rendered="true" id="slidePreview"
+                                            value="/images/#{imagesDao.findFolder(slidesDao.item.refImage)}/#{slidesDao.item.refImage.tid}.#{slidesDao.item.refImage.extension}"
+                            />
+                        </p:outputPanel>
+                        <components:imageGrid update="#{p:component('formPanel')}" daobean="#{slidesDao}"/>
+                        <p:panelGrid columns="4" id="pagePanel">
+
+                            <h:outputLabel value="#{msg.global_title} :" for="titletr"/>
+                            <h:inputText id="titletr" value="#{slidesDao.item.titleTr}" size="50"
+                                         requiredMessage="#{msg.global_title} #{msg.validation_required}"/>
+                            <h:outputLabel value="#{msg.global_rank} :" for="rank"/>
+                            <h:inputText id="rank" value="#{slidesDao.item.rank}"
+                                         requiredMessage="#{msg.global_rank} #{msg.validation_required}"/>
+
+                            <h:outputLabel value="#{msg.global_subtitle} :" for="subtitletr"/>
+                            <h:inputText id="subtitletr" value="#{slidesDao.item.subtitleTr}" size="50"/>
+                            <h:outputLabel value="#{msg.url} :" for="url"/>
+                            <h:inputText id="url" value="#{slidesDao.item.url}" size="50"/>
+
+                        </p:panelGrid>
+                        <h:inputHidden id="tid" value="#{slidesDao.item.tid}"/>
+                        <h:inputHidden id="status" value="#{slidesDao.status}"/>
+                        <h:inputHidden id="disabledelete" value="#{slidesDao.disabledelete}"/>
+                        <h:messages/>
+                        <components:toolbar gridname="slidesGrid" daobean="#{slidesDao}"
+                                            print="false" new="false" search="false"
+                                            oncomplete="PF('formDialogWidget').hide()"
+                        />
+                    </h:form>
+                </p:outputPanel>
+            </p:dialog>
+            <p:outputPanel style="font-size: 11px;">
+                Minumum Resim Çözünürlükleri : 1450 x 620
+            </p:outputPanel>
         </p:outputPanel>
-        <p:panelGrid columns="4" id="pagePanel">
-
-            <h:outputLabel value="#{msg.global_title} :" for="titletr" />
-            <h:inputText id="titletr" value="#{slidesDao.item.titleTr}" size="50"
-                         requiredMessage="#{msg.global_title} #{msg.validation_required}"/>
-            <h:outputLabel value="#{msg.global_rank} :" for="rank" />
-            <h:inputText id="rank" value="#{slidesDao.item.rank}"
-                         requiredMessage="#{msg.global_rank} #{msg.validation_required}"/>
-
-            <h:outputLabel value="#{msg.global_subtitle} :" for="subtitletr" />
-            <h:inputText id="subtitletr" value="#{slidesDao.item.subtitleTr}" size="50"/>
-            <h:outputLabel value="#{msg.url} :" for="url" />
-            <h:inputText id="url" value="#{slidesDao.item.url}" size="50"/>
-
-        </p:panelGrid>
-        <h:inputHidden id="tid" value="#{slidesDao.item.tid}"/>
-        <h:inputHidden id="status" value="#{slidesDao.status}"  />
-        <h:inputHidden id="disabledelete" value="#{slidesDao.disabledelete}" />
-        <h:messages />
-        <components:toolbar gridname="slidesGrid" daobean="#{slidesDao}"
-                            print="false" new="false" search="false"
-                            oncomplete="PF('formDialogWidget').hide()"
-                />
-    </h:form>
-</p:outputPanel>
-</p:dialog>
-    <p:outputPanel style="font-size: 11px;">
-        Minumum Resim Çözünürlükleri : 1450 x 620
-    </p:outputPanel>
-</p:outputPanel>
-</ui:decorate>
+    </ui:decorate>
 </f:view>
 </html>

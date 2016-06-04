@@ -6,7 +6,7 @@
 .main_title {
     text-align: center;
     font-size: 16px;
-    margin-bottom: 30px
+    margin:20px auto 30px
 }
 
 .main_title h2 {
@@ -40,7 +40,8 @@
 
 .tour_container .tour_title {
     padding: 15px;
-    position: relative
+    position: relative;
+    text-align: center;
 }
 
 .tour_container .tour_title .rating {
@@ -115,4 +116,11 @@
 
 .hotel_container a .score {
     color: #fff
+}
+
+.zoomIn {
+    transition: all .2s ease-in-out;
+}
+.zoomIn:hover {
+    transform: scale(1.1);
 }

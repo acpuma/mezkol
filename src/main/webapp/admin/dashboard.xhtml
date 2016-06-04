@@ -20,10 +20,6 @@
         </h:head>
         <ui:param name="title" value="#{msg.dashboard}" />
 <h:form>
-    <p:remoteCommand name="rc"  actionListener="#{googleAnalytics.findGraphicSessions}" autoRun="true"
-                     update="@(#container)" oncomplete="loadGraphicSessions(#{googleAnalytics.findGraphicSessions()})"/>
-    <p:remoteCommand name="rc2"  actionListener="#{googleAnalytics.findGraphicCities}" autoRun="true"
-                     update="@(#container2)" oncomplete="loadGraphicCities(#{googleAnalytics.findGraphicCities()},#{googleAnalytics.getCityNames()})"/>
 
 
     <!-- Quick stats boxes -->
@@ -265,6 +261,11 @@
             </div>
         </div>
         <!-- /main charts -->
+    <p:remoteCommand name="rc"  actionListener="#{googleAnalytics.findGraphicSessions}" rendered="true"
+                     update="@(#container)" oncomplete="loadGraphicSessions(#{googleAnalytics.findGraphicSessions()})"/>
+    <p:remoteCommand name="rc2"  actionListener="#{googleAnalytics.findGraphicCities}" rendered="true"
+                     update="@(#container2)" oncomplete="loadGraphicCities(#{googleAnalytics.findGraphicCities()},#{googleAnalytics.getCityNames()})"/>
+
 </h:form>
     </ui:composition>
 </f:view>

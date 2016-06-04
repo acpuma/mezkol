@@ -33,7 +33,7 @@
 
                     <li class="dropdown dropdown-user">
                         <a class="dropdown-toggle" data-toggle="dropdown">
-                            <h:graphicImage library="limitless" name="images/image.png" alt=""/>
+                            <p:graphicImage value="/images/user/#{sessionInfo.user.tid}.#{sessionInfo.user.refImage.extension}" alt=""/>
                             <span>#{sessionInfo.user.name}</span>
                             <!--<i class="caret"></i>-->
                         </a>

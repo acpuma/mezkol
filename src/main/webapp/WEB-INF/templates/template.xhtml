@@ -26,6 +26,7 @@
         <h:outputStylesheet library="limitless" name="css/components.css" />
         <h:outputStylesheet library="limitless" name="css/colors.css" />
         <h:outputStylesheet library="primefaces-bootstrap" name="theme.css" />
+        <h:outputStylesheet library="css" name="core.css" />
         <!-- /global stylesheets -->
 
         <!-- Core JS files -->
@@ -114,12 +115,18 @@
                       rendered="#{pfExceptionHandler.type == 'javax.faces.application.ViewExpiredException'}" />
         </p:dialog>
 
-        <p:growl id="messages" showDetail="true" life="5000" />
+        <p:growl id="messages" showDetail="true" life="5000" widgetVar="messagesWidget"/>
         <pe:blockUI target="block"  widgetVar="blockUIWidget1"   >
             <p:graphicImage library="images" name="loading.gif"  />
             <p:spacer height="0" width="15" />
             <h:outputText value="#{msg.global_loading}" style="white-space: nowrap;"/>
         </pe:blockUI>
+
+        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+            <p:commandButton value="#{msg.global_yes}" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+            <p:commandButton value="#{msg.global_no}" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+        </p:confirmDialog>
+        <ui:include src="/admin/imageGridContent.xhtml" />
     </h:body>
 </ui:composition>
 

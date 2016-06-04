@@ -69,6 +69,13 @@ public class Schools extends BaseEntity implements Serializable {
     @OneToMany(mappedBy = "refSchool", fetch = FetchType.LAZY)
     private Collection<SchoolsMenus> schoolsMenusCollection;
 
+    @JoinColumn(name = "ref_album", referencedColumnName = "tid")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Albums refAlbum;
+
+    @OneToMany(mappedBy = "refSchool", fetch = FetchType.LAZY)
+    private Collection<Slides> slidesCollection;
+
     public Schools() {
     }
 
@@ -217,6 +224,22 @@ public class Schools extends BaseEntity implements Serializable {
         this.imagesCollection = imagesCollection;
     }
 
+
+    public Albums getRefAlbum() {
+        return refAlbum;
+    }
+
+    public void setRefAlbum(Albums refAlbum) {
+        this.refAlbum = refAlbum;
+    }
+
+    public Collection<Slides> getSlidesCollection() {
+        return slidesCollection;
+    }
+
+    public void setSlidesCollection(Collection<Slides> slidesCollection) {
+        this.slidesCollection = slidesCollection;
+    }
 
     @Override
     public int hashCode() {

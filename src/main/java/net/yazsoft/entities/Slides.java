@@ -54,6 +54,9 @@ public class Slides extends BaseEntity implements Serializable {
     @JoinColumn(name = "ref_image", referencedColumnName = "tid")
     @ManyToOne(fetch = FetchType.LAZY)
     private Images refImage;
+    @JoinColumn(name = "ref_school", referencedColumnName = "tid")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Schools refSchool;
 
     public Slides() {
     }
@@ -162,6 +165,14 @@ public class Slides extends BaseEntity implements Serializable {
 
     public void setSubtitleEn(String subtitleEn) {
         this.subtitleEn = subtitleEn;
+    }
+
+    public Schools getRefSchool() {
+        return refSchool;
+    }
+
+    public void setRefSchool(Schools refSchool) {
+        this.refSchool = refSchool;
     }
 
     @Override

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:components="http://xmlns.jcp.org/jsf/composite/components"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+<f:view>
+    <h:head>
+        <title>#{msg.upload_file}</title>
+        <h:outputStylesheet library="limitless" name="css/icons/icomoon/styles.css" />
+        <h:outputStylesheet library="limitless" name="css/bootstrap.css" />
+        <h:outputStylesheet library="limitless" name="css/core.css" />
+        <h:outputStylesheet library="limitless" name="css/components.css" />
+        <h:outputStylesheet library="limitless" name="css/colors.css" />
+        <h:outputStylesheet library="primefaces-bootstrap" name="theme.css" />
+
+    </h:head>
+<h:body>
+
+    <p:panel widgetVar="imagePreviewWidget" styleClass="noborder imageSelectPreview"
+             style="width: 170px; height: auto;" id="imagePreview">
+        <p:outputPanel style="text-align: center" >
+            <h:outputText value="#{imagesDao.selected}" rendered="false" />
+            <p:commandButton style="padding:5px 3px;margin: 4px 0 6px;"
+                             icon="fa fa-search" value="#{msg.global_image}"
+                             oncomplete="PF('imageSelectDialogWidget').show()">
+                <p:graphicImage height="60"  width="60" style="height:60px;max-width: 60px; max-height: 60px; margin: 2px; "
+                                rendered="#{not empty imagesDao.selected}" cache="false"
+                                value="/images/#{imagesDao.findFolder(imagesDao.selected)}/#{imagesDao.selected.tid}.#{imagesDao.selected.extension}"/>
+            </p:commandButton>
+
+        </p:outputPanel>
+    </p:panel>
+    <ui:include src="imageGridContent.xhtml" />
+
+    <p:growl id="messages" showDetail="true" life="5000" />
+
+
+    <h:outputScript >
+
+        function setSelectedFile(tid,extension) {
+        console.log('File : '+tid + extension);
+        var funcNum = '#{param.CKEditorFuncNum}';
+        var fileUrl = '#{request.contextPath}/files/'+tid + '.'+ extension;
+        window.opener.CKEDITOR.tools.callFunction( funcNum, fileUrl );
+        }
+
+
+    </h:outputScript>
+
+
+</h:body>
+</f:view>
+</html>

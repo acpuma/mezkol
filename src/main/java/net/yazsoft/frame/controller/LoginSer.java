@@ -106,7 +106,7 @@ public class LoginSer implements Serializable{
 
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         ec.invalidateSession();
-        ec.redirect(ec.getRequestContextPath() + "/index.html");
+        ec.redirect(ec.getRequestContextPath() + "/");
     }
 
     public String cancel() {
