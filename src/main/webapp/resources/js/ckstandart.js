@@ -9,6 +9,8 @@ CKEDITOR.editorConfig = function( config ) {
     // config.toolbar= 'Basic';
     config.filebrowserBrowseUrl= 'admin/browseImage.html'
     //config.filebrowserUploadUrl= 'uploader/upload.php?type=Files';
+    config.extraPlugins = 'youtube,addimage';
+    //config.extraPlugins = 'addimage';
   config.toolbarGroups = [
         {name: 'clipboard', groups: ['clipboard', 'undo']},
         {name: 'editing', groups: ['find', 'selection', 'spellchecker']},
@@ -21,6 +23,8 @@ CKEDITOR.editorConfig = function( config ) {
         {name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align']},
         {name: 'styles'}
     ];
+
+    //config.toolbar = [{ name: 'insert', items: ['Image', 'Youtube']}];
 };
 
 $(function () {

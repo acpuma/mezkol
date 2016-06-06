@@ -34,7 +34,22 @@ public class AlbumsDao extends BaseGridDao<Albums> implements Serializable{
 
     @Inject ImagesDao imagesDao;
     @Inject ImagesTypeDao imagesTypeDao;
-    
+
+    public List<Albums> findSchoolAlbums() {
+        List<Albums> list=null;
+        try {
+            Criteria c = getCriteria();
+            c.add(Restrictions.eq("refSchool", Util.getActiveSchool()));
+            c.add(Restrictions.eq("active", true));
+            //c.add(Restrictions.eq("isDeleted", false));
+            list = c.list();
+        } catch (Exception e) {
+            Util.catchException(e);
+        }
+        return list;
+    }
+
+
     public AlbumsDao() {
         super(Albums.class);
     }

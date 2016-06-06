@@ -35,7 +35,7 @@
                              oncomplete="PF('imageSelectDialogWidget').show()">
                 <p:graphicImage height="60"  width="60" style="height:60px;max-width: 60px; max-height: 60px; margin: 2px; "
                                 rendered="#{not empty imagesDao.selected}" cache="false"
-                                value="/images/#{imagesDao.findFolder(imagesDao.selected)}/#{imagesDao.selected.tid}.#{imagesDao.selected.extension}"/>
+                                value="#{imagesDao.findImagePath(imagesDao.selected)}"/>
                 <f:setPropertyActionListener value="#{daobeann}" target="#{imagesDao.selectDao}" />
                 <f:setPropertyActionListener value="#{cc.attrs.update}" target="#{imagesDao.selectUpdate}" />
             </p:commandButton>

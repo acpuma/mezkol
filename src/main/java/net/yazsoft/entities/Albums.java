@@ -60,6 +60,9 @@ public class Albums extends BaseEntity implements Serializable {
     @OneToMany(mappedBy = "refAlbum", fetch = FetchType.LAZY)
     private Collection<Schools> schoolsCollection;
 
+    @OneToMany(mappedBy = "refAlbum", fetch = FetchType.LAZY)
+    private Collection<Articles> articlesCollection;
+
     public Albums() {
     }
 
@@ -184,6 +187,14 @@ public class Albums extends BaseEntity implements Serializable {
 
     public void setSchoolsCollection(Collection<Schools> schoolsCollection) {
         this.schoolsCollection = schoolsCollection;
+    }
+
+    public Collection<Articles> getArticlesCollection() {
+        return articlesCollection;
+    }
+
+    public void setArticlesCollection(Collection<Articles> articlesCollection) {
+        this.articlesCollection = articlesCollection;
     }
 
     @Override

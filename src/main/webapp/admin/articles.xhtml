@@ -19,9 +19,10 @@
 
         <p:outputPanel styleClass="pageFormDiv clearfix" style="margin:0px; padding: 0px;float:left;width: 100%;" >
 
-    <p:outputPanel style="text-align: right;">
+
+            <p:outputPanel style="text-align: right;">
         <p:commandButton icon="toolbar-add toolbar-icon"
-                         styleClass="toolbar-button" style="padding:1px 5px;"
+                         styleClass="toolbar-button" style="margin:5px;"
                          value="#{msg.toolbar_add}"
                          actionListener="#{articlesDao.reset}"
                          update="@widgetVar(formDialogWidget)"
@@ -45,8 +46,7 @@
                 <p:outputPanel style="width: 200px; height: 120px;" id="slidePreviewImage" >
                     <p:graphicImage height="120" width="200" style="height:120px; width: 200px;" cache="false"
                                     rendered="true" id="slidePreview"
-                                    value="/images/#{imagesDao.findFolder(articlesDao.item.refImage)}/#{articlesDao.item.refImage.tid}.#{articlesDao.item.refImage.extension}"
-                    />
+                                    value="#{imagesDao.findImagePath(articlesDao.item.refImage)}"/>
                 </p:outputPanel>
                 <components:imageGrid update="#{p:component('slidePreviewImage')}" daobean="#{articlesDao}"/>
             </p:outputPanel>
@@ -69,11 +69,19 @@
                 <h:inputText id="location" value="#{articlesDao.item.location}" size="25" />
                 <h:outputLabel value="#{msg.publish} :" for="publish" styleClass="bold" />
                 <p:selectBooleanCheckbox id="publish" value="#{articlesDao.item.publish}" />
+                <p:outputLabel value="#{msg.album} :" for="album" />
+                <p:selectOneMenu value="#{articlesDao.item.refAlbum}" id="album">
+                    <f:selectItem itemValue="" itemLabel="#{msg.global_select}" />
+                    <f:selectItems value="#{albumsDao.findSchoolAlbums()}" var="sitem"
+                                   itemValue="#{sitem}" itemLabel="#{sitem.name}" />
+                </p:selectOneMenu>
+                <h:outputText value=""/>
+                <h:outputText value=""/>
 
             </p:panelGrid>
             <p:outputPanel style="height:410px; width: 1000px; margin: 20px 0 5px; clear: both; ">
 
-                <pe:ckEditor id="ckeditor1" value="#{articlesDao.content.contentTr}" rendered="true" widgetVar="ckeditor1"
+                <pe:ckEditor id="ckeditor" value="#{articlesDao.content.contentTr}" rendered="true" widgetVar="ckeditor"
                              customConfig="resources/js/ckstandart.js" height="300" width="99%"/>
             </p:outputPanel>
             <h:inputHidden id="tid" value="#{articlesDao.item.tid}"/>
@@ -86,28 +94,12 @@
                     />
         </p:outputPanel>
     </h:form>
+
 </p:outputPanel>
 </p:dialog>
 
 </p:outputPanel>
 
-        <h:outputScript>
-            $(function () {
-                /*
-                PrimeFacesExt.widgets['ckeditor1'].addCommand("mySimpleCommand", {
-                    exec: function (edt) {
-                        alert(edt.getData());
-                    }
-                });
-                PrimeFacesExt.widgets['ckeditor1'].ui.addButton('SuperButton', {
-                    label: "Click me",
-                    command: 'mySimpleCommand',
-                    toolbar: 'insert',
-                    icon: 'resources/images/icon-home.png'
-                });
-                        */
-            });
-        </h:outputScript>
 </ui:decorate>
 </f:view>
 </html>

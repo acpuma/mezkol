@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+>
+<f:view>
+    <ui:composition template="/WEB-INF/templates/webtemplate.xhtml">
+
+        <div id="content-container">
+        <div id="content" class="clearfix">
+        <div id="full-width">
+            <div id="breadcrumbs" class="clearfix">
+                <div>
+                    <a href="index.html" itemprop="url" class="icon-home">
+                        <span itemprop="title">Anasayfa</span>
+                    </a> <span class="arrow">&gt;</span>
+                </div>
+                    <span class="last-breadcrumbs">
+                        ETKİNLİKLER
+                    </span>
+            </div>
+            <div id="slider-event" class="flexslider">
+                <ul class="slides">
+                    <ui:repeat value="#{articlesDao.findEvents5()}" var="eventt">
+                    <li>
+                        <div class="panel-slider-event clearfix">
+                            <h:link outcome="/pages/event">
+                            <f:param name="aid" value="#{eventt.tid}" />
+                            <h2 style="color:white;">#{eventt.titleTr}</h2>
+                            <time datetime="#{eventt.date}"><strong>
+                                <h:outputText value="#{eventt.date}">
+                                    <f:convertDateTime pattern="dd" type="date" />
+                                </h:outputText>
+                            </strong><br /><span>
+                                <h:outputText value="#{eventt.date}">
+                                        <f:convertDateTime pattern="MMM.yyyy" type="date" />
+                                </h:outputText>
+                            </span></time>
+                            <ul class="list-event-slider">
+                                <!--<li class="hour-slider">9:00 AM - 10:00 PM</li>-->
+                                <li class="location-slider"><em>#{eventt.location}</em></li>
+                            </ul>
+                            </h:link>
+                        </div>
+                        <p:graphicImage value="#{imagesDao.findImagePath(eventt.refImage)}"/>
+                    </li>
+                    </ui:repeat>
+                </ul>
+            </div>
+            <article class="static-page">
+                <h1 id="main-title" class="event-title">ETKİNLİKLER</h1> <h3 id="title-month"></h3>
+                <nav id="nav-event" class="clearfix">
+                    <ul>
+                        <ui:repeat value="#{articlesDao.archives}" var="archives">
+                        <!--<li><a href="#">#{archives.monthname} #{archives.year}</a></li>-->
+                        </ui:repeat>
+                    </ul>
+
+                </nav>
+                <div class="accordion">
+                    <ui:repeat value="#{articlesDao.archives}" var="archives">
+
+                    <h3 class="title-event">#{archives.monthname} #{archives.year} - <em></em></h3>
+
+                    <div class="content-event clearfix">
+                        <ui:repeat value="#{articlesDao.findArchive(archives.month,archives.year)}" var="eventt">
+                        <div class="event-container clearfix" style="margin: 5px;">
+                            <h:link outcome="/pages/event" >
+                            <f:param name="aid" value="#{eventt.tid}" />
+                                <p:graphicImage value="#{imagesDao.findImagePath(eventt.refImage)}"/>
+                            <h4 itemprop="summary">#{eventt.titleTr}</h4>
+                            <div class="panel-event-info">
+                                <ul class="list-event-slider">
+                                    <li class="time-slider"><time itemprop="startDate" datetime="#{eventt.date}">
+                                        <h:outputText value="#{eventt.date}">
+                                            <f:convertDateTime pattern="dd.MMM.yyyy" type="date" />
+                                        </h:outputText>
+                                    </time></li>
+                                    <!--<li class="hour-slider">9:00 AM - 10:00 PM</li>-->
+                                    <li class="location-slider" itemprop="location"><em itemprop="address" >#{eventt.location}</em></li>
+                                </ul>
+                                <span class="button-detail">Detay Göster</span>
+                            </div>
+                            </h:link>
+                        </div>
+                        </ui:repeat>
+                    </div>
+
+                    </ui:repeat>
+                </div>
+            </article>
+        </div>
+        </div>
+        </div>
+
+        <h:outputScript library="js" src="jquery.flexslider.js" />
+        <h:outputScript library="js" src="jquery.prettyPhoto.js"/>
+        <h:outputScript library="js" src="jquery.retina.js" />
+        <!--<h:outputScript library="js" name="scripts.js" />-->
+        <h:outputScript>
+            $('#slider-event.flexslider').flexslider({
+                animation: "slide",
+                pauseOnAction: true
+            });
+            $( ".accordion" ).accordion({
+                heightStyle: "content"
+            });
+        </h:outputScript>
+    </ui:composition>
+</f:view>
+</html>
+

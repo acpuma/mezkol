@@ -92,7 +92,7 @@
                 <p:outputPanel style="height: 100px; width:300px;">
                     <p:graphicImage height="100" width="300" style="height:100px; width: 300px;" cache="false"
                                 rendered="true"
-                                value="/images/#{imagesDao.findFolder(slidesVar.refImage)}/#{slidesVar.refImage.tid}.#{slidesVar.refImage.extension}"
+                                value="#{imagesDao.findImagePath(slidesVar.refImage)}"
 
                         />
                 </p:outputPanel>

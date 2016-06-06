@@ -21,6 +21,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.text.DateFormatSymbols;
 import java.util.*;
 
 @Named
@@ -36,6 +37,7 @@ public class ArticlesDao extends BaseGridDao<Articles> implements Serializable {
     List<Integer> pages;
     Integer month,year;
     Long articleId;
+    List<Archives> archives;
 
     @Inject ContentsDao contentsDao;
     @Inject ArticlesTypeDao articlesTypeDao;
@@ -55,9 +57,63 @@ public class ArticlesDao extends BaseGridDao<Articles> implements Serializable {
         webitems=new ArrayList<>();
     }
 
+    public List<Articles> findArchive(Integer month, Integer year) {
+        List list=null;
+        try {
+            String hql = "SELECT A FROM Articles A " + " where month(date)=:month and year(date)=:year"
+                    + " and publish=true and refArticleType=" + Constants.ARTICLETYPE_EVENTS
+                    +" order by date";
+            Query query = getSession().createQuery(hql);
+            query.setInteger("month",month);
+            query.setInteger("year",year);
+            list=query.list();
+            webitems=list;
+        } catch (Exception e) {
+            Util.catchException(e);
+        }
+        return list;
+    }
+
+    public void findArchives() {
+        archives = new ArrayList<>();
+        try {
+            String hql = "SELECT month(date), year(date) " +  //,count(A.date),monthname(date)
+                     "FROM Articles A " +
+                    "WHERE publish=true and refArticleType=" + Constants.ARTICLETYPE_EVENTS +
+                    " GROUP BY month(date),year(date) " +
+                    " order by year(date) desc,month(date) desc";
+            Query query = getSession().createQuery(hql);
+            for (Iterator it = query.iterate(); it.hasNext(); ) {
+                Object[] row = (Object[]) it.next();
+                Archives month = new Archives();
+                month.month = (Integer) row[0];
+                month.year = (Integer) row[1];
+                //month.count = (Long) row[2];
+                month.monthname= new DateFormatSymbols(new Locale("TR")).getMonths()[month.month-1];
+                //month.monthname = (String) row[3];
+                logger.info("LOG02400: MONTHNAME :" + month.monthname);
+                archives.add(month);
+                logger.info("LOG02380: MONTH : " + month);
+            }
+        } catch (Exception e) {
+            Util.catchException(e);
+        }
+
+    }
+
+
     public List<Articles> findNews() {
         ArticlesType atype=articlesTypeDao.getById(Constants.ARTICLETYPE_NEWS);
         return findArticlesByType(atype);
+    }
+
+    public List<Articles> findNews5() {
+        ArticlesType atype=articlesTypeDao.getById(Constants.ARTICLETYPE_NEWS);
+        List<Articles> list=findArticlesByType(atype);
+        if (list.size()>5) {
+            return list.subList(0,4);
+        }
+        return list;
     }
 
     public List<Articles> findEvents() {
@@ -66,7 +122,11 @@ public class ArticlesDao extends BaseGridDao<Articles> implements Serializable {
     }
     public List<Articles> findEvents5() {
         ArticlesType atype=articlesTypeDao.getById(Constants.ARTICLETYPE_EVENTS);
-        return findArticlesByType(atype).subList(0,4);
+        List<Articles> list=findArticlesByType(atype);
+        if (list.size()>5) {
+            return list.subList(0,4);
+        }
+        return list;
     }
 
     public List<Articles> findArticlesByType(ArticlesType articleType) {
@@ -279,5 +339,15 @@ public class ArticlesDao extends BaseGridDao<Articles> implements Serializable {
 
     public void setArticleId(Long articleId) {
         this.articleId = articleId;
+    }
+    public List<Archives> getArchives() {
+        if (archives==null) {
+            findArchives();
+        }
+        return archives;
+    }
+
+    public void setArchives(List<Archives> archives) {
+        this.archives = archives;
     }
 }

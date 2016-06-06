@@ -33,6 +33,31 @@ public class ImagesDao extends BaseGridDao<Images> implements Serializable{
     String selectUpdate;
     BaseGridDao selectDao;
 
+    public void findImagePathJs() {
+        RequestContext reqCtx = RequestContext.getCurrentInstance();
+        String ctxPath=FacesContext.getCurrentInstance().getExternalContext().getApplicationContextPath();
+        reqCtx.addCallbackParam("selectedImagePathStr", ctxPath +findImagePath(selected));
+    }
+    public String findImagePath(Images image) {
+        String path = "";
+        if (image!=null) {
+            path= "/images/" + findFolder(image) + "/" + image.getTid() + "." + image.getExtension();
+            logger.info("IMAGE :" + image + " PATH : " + path);
+            return path;
+        }
+        return path;
+    }
+
+    public String findImageSmallPath(Images image) {
+        String path = "";
+        if (image!=null) {
+            path= "/images/" + findFolder(image) + "/SMALL/" + image.getTid() + "." + image.getExtension();
+            logger.info("IMAGE :" + image + " PATH : " + path);
+            return path;
+        }
+        return path;
+    }
+
     public void onImageSelect(Images image) {
         try {
             selected=image;
@@ -49,7 +74,9 @@ public class ImagesDao extends BaseGridDao<Images> implements Serializable{
             logger.info("SELECTED IMAGE : " + image);
             logger.info("UPDATING : " + selectUpdate);
             logger.info("SELECT DAO : " + selectDao);
-            RequestContext.getCurrentInstance().update(selectUpdate);
+            if (selectUpdate!=null) {
+                RequestContext.getCurrentInstance().update(selectUpdate);
+            }
             //Util.setFacesMessage("SELECTED IMAGE : " + image);
         } catch (Exception e) {
             Util.catchException(e);

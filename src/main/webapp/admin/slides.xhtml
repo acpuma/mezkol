@@ -58,7 +58,7 @@
                         <p:outputPanel style="width: 700px; height: 275px;" id="slidePreviewImage" >
                             <p:graphicImage height="275" width="700" style="height:275px; width: 700px;" cache="false"
                                             rendered="true" id="slidePreview"
-                                            value="/images/#{imagesDao.findFolder(slidesDao.item.refImage)}/#{slidesDao.item.refImage.tid}.#{slidesDao.item.refImage.extension}"
+                                            value="#{imagesDao.findImagePath(slidesDao.item.refImage)}"
                             />
                         </p:outputPanel>
                         <components:imageGrid update="#{p:component('formPanel')}" daobean="#{slidesDao}"/>

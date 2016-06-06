@@ -55,6 +55,9 @@ public class Articles extends BaseEntity implements Serializable {
     @JoinColumn(name = "ref_image", referencedColumnName = "tid")
     @ManyToOne(fetch = FetchType.LAZY)
     private Images refImage;
+    @JoinColumn(name = "ref_album", referencedColumnName = "tid")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Albums refAlbum;
 
     public Articles() {
     }
@@ -188,6 +191,14 @@ public class Articles extends BaseEntity implements Serializable {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public Albums getRefAlbum() {
+        return refAlbum;
+    }
+
+    public void setRefAlbum(Albums refAlbum) {
+        this.refAlbum = refAlbum;
     }
 
     @Override

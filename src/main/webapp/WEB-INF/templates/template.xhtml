@@ -37,6 +37,7 @@
 
         <!-- Theme JS files -->
         <h:outputScript library="limitless" name="js/core/app.js"/>
+        <h:outputScript library="limitless" name="js/admin.js"/>
 
         <!-- /theme JS files -->
         <h:outputScript>
@@ -86,12 +87,9 @@
                 <div class="content">
                     <ui:insert />
 
-                    <!-- Footer -->
-
-                    <div class="footer text-muted">
-                        &copy; 2016. WebAdmin by <a href="http://www.yazsoft.net/" target="_blank">Yazsoft</a>
-                    </div>
-                    <!-- /footer -->
+                    <ui:insert name="footer">
+                        <ui:include src="footer.xhtml" />
+                    </ui:insert>
                 </div>
                 </p:outputPanel>
                 <!-- /content area -->
@@ -127,6 +125,11 @@
             <p:commandButton value="#{msg.global_no}" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
         </p:confirmDialog>
         <ui:include src="/admin/imageGridContent.xhtml" />
+        <h:form id="selectedImage">
+        <p:remoteCommand name="selectedImagePath" actionListener="#{imagesDao.findImagePathJs()}"
+                         action="#{imagesDao.setSelectUpdate(null)}"
+                         oncomplete="editorInsertImage(xhr, status, args);"/>
+        </h:form>
     </h:body>
 </ui:composition>
 
