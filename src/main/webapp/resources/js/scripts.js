@@ -130,6 +130,11 @@ tpj(document).ready(function() {
 			social_tools: false
 		});
 
+    $('#slider-news.flexslider').flexslider({
+        animation: "slide",
+        pauseOnAction: true
+    });
+
 
         //$('#slideshow-tabs').tabs({ show: { effect: "fade", duration: 200 }, hide: { effect: "fade", duration: 300 },event: "mouseover" });
 

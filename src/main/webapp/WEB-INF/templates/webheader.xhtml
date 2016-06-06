@@ -33,7 +33,13 @@
                 </a>
                 <ul id="nav-main">
                     <ui:repeat value="#{schoolsMenusDao.findBySchool(null)}" var="schoolmenu" >
-                    <li class="current-menu-item"><a href="index.html">#{schoolmenu.refMenu.nameTr}</a></li>
+                        <ui:fragment rendered="#{schoolmenu.refMenu.form eq view.viewId.substring(0, view.viewId.length()-6)}">
+                            <li class="current-menu-item"><h:link outcome="#{schoolmenu.refMenu.form}">#{schoolmenu.refMenu.nameTr}</h:link></li>
+                        </ui:fragment>
+                        <ui:fragment rendered="#{schoolmenu.refMenu.form ne view.viewId.substring(0, view.viewId.length()-6)}">
+                            <li ><h:link outcome="#{schoolmenu.refMenu.form}">#{schoolmenu.refMenu.nameTr}</h:link></li>
+                        </ui:fragment>
+
                     </ui:repeat>
 
                 </ul>

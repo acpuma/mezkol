@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+>
+<f:view>
+    <ui:composition template="/WEB-INF/templates/webtemplate.xhtml">
+
+        <div id="content-container">
+        <div id="content" class="clearfix" >
+            <div id="main-content" style="width: 1125px;">
+                <div id="breadcrumbs" class="clearfix">
+                    <div >
+                        <a href="index.html" class="icon-home">
+                            <span >Anasayfa</span>
+                        </a> <span class="arrow">&gt;</span>
+                    </div>
+                    <span class="last-breadcrumbs">
+                        Haberler
+                    </span>
+                </div>
+                <div id="slider-news" class="flexslider"
+                     style="width: 900px;  margin-left:auto; margin-right: auto">
+                    <ul class="slides">
+                        <ui:repeat value="#{articlesDao.findNews5()}" var="article">
+                        <li>
+                            <div class="slider-news-content" style="max-height: 400px;">
+                                <p:graphicImage value="#{imagesDao.findImagePath(article.refImage)}"
+                                style="max-height: 400px; overflow: hidden;"/>
+
+                                <div class="panel-slider-news">
+                                    <ul class="category-slider clearfix">
+                                        <!--<li><a href="#">Science &amp; Health</a></li>-->
+                                        <!--<li><a href="#">Student Achievement</a></li>-->
+                                    </ul>
+                                    <h2>
+                                        <h:link outcome="/pages/article" styleClass="">
+                                            <f:param name="aid" value="#{article.tid}" />
+                                            #{article.titleTr}
+                                        </h:link>
+                                    </h2>
+                                </div>
+                            </div>
+                        </li>
+                        </ui:repeat>
+                    </ul>
+                </div>
+                <ui:repeat value="#{articlesDao.findNews()}" var="article">
+                <!--<div class="news-group clearfix">-->
+                    <article class="news-container static-page" style="width: 325px; margin: 0px 20px 40px 25px;">
+                        <figure>
+                            <p:graphicImage value="#{imagesDao.findImagePath(article.refImage)}"/>
+                        </figure>
+                        <header>
+                            <!--<p><a href="#" rel="category tag">Science</a>, <a href="#" rel="category tag">Student Story</a></p>-->
+                            <h2 class="title-news">
+                                <h:link outcome="/pages/article" styleClass="">
+                                    <f:param name="aid" value="#{article.tid}" />
+                                    #{article.titleTr}
+                                </h:link>
+                            </h2>
+                            <time datetime="#{article.date}"><h:outputText value="#{article.date}" converter="javax.faces.DateTime"/> </time>
+
+                        </header>
+                        <p><h:outputText value="#{article.refContent.contentTr}" escape="false"/> </p>
+                    </article>
+                <!--</div>-->
+                </ui:repeat>
+
+            </div>
+        </div>
+        </div>
+
+        <h:outputScript library="js" src="jquery.flexslider.js" />
+        <h:outputScript library="js" src="jquery.prettyPhoto.js"/>
+        <h:outputScript library="js" src="jquery.retina.js" />
+        <!--<h:outputScript library="js" name="scripts.js" />-->
+        <h:outputScript>
+            $('#slider-news.flexslider').flexslider({
+                animation: "slide",
+                pauseOnAction: true
+            });
+        </h:outputScript>
+    </ui:composition>
+</f:view>
+</html>
+
