@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+>
+<f:view>
+
+    <ui:composition template="/WEB-INF/templates/webtemplate.xhtml">
+
+        <div id="content-container">
+        <div id="content" class="clearfix">
+            <div id="breadcrumbs" class="clearfix">
+                <div >
+                    <a href="index.html" itemprop="url" class="icon-home">
+                        <span itemprop="title">ANASAYFA</span>
+                    </a> <span class="arrow">&gt;</span>
+                </div>
+                <div >
+                    <a href="#" itemprop="url">
+                        <span itemprop="title">İLETİŞİM</span>
+                    </a>
+                </div>
+            </div>
+        <div id="main-content">
+
+            <article class="static-page">
+                <h1 id="main-title">İletişim</h1>
+
+                <div class="clear"></div>
+
+                <!--
+                    <div class="errordiv">
+                        Please type your email address!!
+                    </div>
+                    <div class="correctdiv">
+                        Thanks, we will reply your message immediately.
+                    </div>
+                -->
+                <h2>Bize Ulaşın</h2>
+                <!--
+                <h:form id="form-contactt" prependId="false" styleClass="clearfix">
+                    <div>
+                        <label for="text-name">Ad Soyad <span>*</span></label>
+                        <input type="text" name="name" class="input" id="text-name" /><br />
+                        <label for="text-email">Email</label>
+                        <input type="text" name="email" class="input" id="text-email" /><br />
+                        <label for="text-phone">Telefon</label>
+                        <input type="text" name="phone" class="input" id="text-phone" /><br />
+
+                        <label for="text-comment">Mesaj <span>*</span></label>
+                        <textarea cols="10" rows="20" class="input textarea" id="text-comment"></textarea><br />
+
+                        <input type="submit" name="submitcontact" class="button" value="GÖNDER" />
+                    </div>
+                </h:form>
+                -->
+                <h:form id="form-contact"  prependId="false" styleClass="clearfix">
+
+                        <p:outputLabel for="text-name" style="border: none;">Ad Soyad<span>*</span></p:outputLabel>
+                        <p:inputText aria-required="true" tabindex="1" size="30" styleClass="input"
+                                     value="#{contactFormsDao.item.name}" id="text-name" name="text-name" />
+                        <label for="text-email" >Email<span class="red-clr bold">*</span></label>
+                        <p:inputText type="email" aria-required="true" tabindex="2" size="30" styleClass="input"
+                                     value="#{contactFormsDao.item.email}" id="text-email" name="text-email" />
+                        <label for="text-phone"  >#{msg.global_phone}</label>
+                        <p:inputText  tabindex="3" size="30" id="text-phone" name="text-phone" styleClass="input"
+                                      value="#{contactFormsDao.item.phone}"/>
+                    <br/>
+                    <label for="text-comment">Mesaj <span>*</span></label>
+                        <p:inputTextarea tabindex="4" rows="10" cols="20" styleClass="input textarea"
+                                         id="text-comment" name="text-comment" placeholder="Mesajınızı buraya yazın ..."
+                                         value="#{contactFormsDao.item.message}"/>
+                    <p>
+                        <p:commandButton value="#{msg.send}" actionListener="#{contactFormsDao.sendMessage}"
+                                         class="button"
+                                         onstart="PF('blockUIWidget1').block()"
+                                         oncomplete="PF('blockUIWidget1').unblock(); "
+                                         update="form-contact :messages">
+                            <p:confirm header="#{msg.global_confirmation}"
+                                       message="MESAJ GÖNDERİLSİNMİ?" icon="ui-icon-alert"/>
+                        </p:commandButton>
+                    </p>
+                </h:form>
+            </article>
+        </div>
+            <div id="sidebar" style="width: 500px; background: none">
+                <div class="clear"></div>
+
+                <div class="colhalf static-page">
+                    <h3>İletişim Bilgilerimiz </h3>
+                    <p><strong>Telefon :</strong>+90 (412) 257 2438 <br/>
+                        <strong>Faks :</strong> +90 (412) 257 2438 <br/>
+                        <strong>Email :</strong> ozelmezopotamya@hotmail.com <br/>
+                        <strong>Adres :</strong> Mezopotamya mah.288 sk. KAYAPINAR / DİYARBAKIR
+                    </p>
+
+                </div>
+
+                <div class="clear"></div>
+                <div class="colhalf static-page">
+                    <h3>Lokasyon</h3>
+                    <article class="text-widget ">
+                        <iframe class="map-area" style="width: 500px; height:350px;"
+                                src="http://maps.google.com/?ie=UTF8&amp;ll=37.9435372,40.1683929&amp;spn=11.79095,12.150879&amp;t=m&amp;z=16&amp;output=embed">
+                        </iframe><br />
+                    </article>
+                </div>
+            </div>
+
+        </div>
+        </div>
+        <p:confirmDialog global="true" style="background: white;">
+            <p:commandButton value="#{msg.global_yes}" type="button"
+                             styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+            <p:commandButton value="#{msg.global_no}" type="button"
+                             styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+        </p:confirmDialog>
+    </ui:composition>
+</f:view>
+</html>
+

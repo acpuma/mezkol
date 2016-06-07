@@ -6,6 +6,7 @@
 	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	  xmlns:p="http://primefaces.org/ui"
 	  xmlns:f="http://xmlns.jcp.org/jsf/core"
+	  xmlns:pe="http://primefaces.org/ui/extensions"
 >
 
 <ui:composition >
@@ -56,14 +57,20 @@
 	<ui:insert name="webheader">
 		<ui:include src="webheader.xhtml"/>
 	</ui:insert>
-
+	<p:outputPanel id="block" layout="block" style="height:100%;">
 	<ui:insert/>
+	</p:outputPanel>
 
 	<ui:insert name="webfooter">
 		<ui:include src="webfooter.xhtml"/>
 	</ui:insert>
 
-
+	<p:growl id="messages" showDetail="true" life="5000" />
+	<pe:blockUI target="block"  widgetVar="blockUIWidget1"   >
+		<p:graphicImage library="images" name="loading.gif"  />
+		<p:spacer height="0" width="15" />
+		<h:outputText value="#{msg.global_loading}" style="white-space: nowrap;"/>
+	</pe:blockUI>
 
 </h:body>
 </ui:composition>

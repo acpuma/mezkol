@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="3856569707">
+  <component name="DataSourceManagerImpl" format="xml" hash="2123901133">
     <data-source source="LOCAL" name="mezdb" uuid="644a9c19-5d72-483e-9a1b-02f08e6cd244">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
