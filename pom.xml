@@ -320,7 +320,7 @@
   <dependency>
     <groupId>org.omnifaces</groupId>
     <artifactId>omnifaces</artifactId>
-    <version>1.10</version>
+    <version>1.13</version>
   </dependency>
 
   <dependency>
