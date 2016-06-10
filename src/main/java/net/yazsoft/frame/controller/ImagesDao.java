@@ -1,12 +1,10 @@
 package net.yazsoft.frame.controller;
 
-import net.yazsoft.entities.Albums;
-import net.yazsoft.entities.Schools;
+import net.yazsoft.entities.*;
 import net.yazsoft.frame.hibernate.BaseGridDao;
 import net.yazsoft.frame.controller.scopes.ViewScoped;
 import net.yazsoft.frame.utils.Util;
-import net.yazsoft.entities.Images;
-import net.yazsoft.entities.ImagesType;
+import net.yazsoft.mez.controller.CoursesDao;
 import net.yazsoft.mez.controller.SlidesDao;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -70,6 +68,9 @@ public class ImagesDao extends BaseGridDao<Images> implements Serializable{
             } else if (selectDao instanceof ArticlesDao) {
                 logger.info("image select articlesdao : " + selectDao);
                 ((ArticlesDao) selectDao).getItem().setRefImage(image);
+            } else if (selectDao instanceof CoursesDao) {
+                logger.info("image select coursesdao : " + selectDao);
+                ((CoursesDao) selectDao).getItem().setRefImage(image);
             }
             logger.info("SELECTED IMAGE : " + image);
             logger.info("UPDATING : " + selectUpdate);

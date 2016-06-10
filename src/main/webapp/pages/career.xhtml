@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+>
+<f:view>
+
+    <h:outputStylesheet library="primefaces-bootstrap" name="theme.css" rendered="true"/>
+    <h:outputStylesheet library="css" name="core.css" rendered="true"/>
+    <ui:composition template="/WEB-INF/templates/webtemplate.xhtml">
+
+
+        <div id="content-container">
+        <div id="content" class="clearfix">
+        <div id="main-content" style="width: 1125px;">
+            <div id="breadcrumbs" class="clearfix">
+                <div >
+                    <a href="index.html" itemprop="url" class="icon-home">
+                        <span itemprop="title">Anasayfa</span>
+                    </a> <span class="arrow">&gt;</span>
+                </div>
+                <div >
+                    <a href="#" itemprop="url">
+                        <span itemprop="title">KARİYER</span>
+                    </a> <span class="arrow">&gt;</span>
+                </div>
+                <span class="last-breadcrumbs">
+                    #{coursesDao.selected.titleTr}
+                </span>
+            </div>
+            <div class="static-page">
+            <h:form id="form-contact" styleClass="clearfix">
+                <div class="widget-wrapper clearfix">
+                <h2 style="text-align: center">Kariyer</h2>
+
+                <h3 style="text-align: left;">
+                    Kişisel Bilgiler
+                </h3>
+                <p:separator rendered="false"/>
+                <p:panelGrid columns="6" layout="grid" columnClasses="width15,width20,width15,width20,width15,width20">
+                    <p:outputLabel value="Kimlik No:" for="mernisno" />
+                    <p:inputText id="mernisno" value="#{careersDao.item.mernisno}" title="Mernisno" size="11"
+                                 required="true" requiredMessage="Kimlik Numaranızı yazınız."/>
+                    <p:outputLabel value="Ad :" for="name" />
+                    <p:inputText id="name" value="#{careersDao.item.name}" title="Name"
+                                 required="true" requiredMessage="Ad alanını doldurunuz."/>
+                    <p:outputLabel value="Soyad:" for="surname" />
+                    <p:inputText id="surname" value="#{careersDao.item.surname}" title="Surname"
+                                 required="true" requiredMessage="Soyad alanını doldurunuz."/>
+
+                    <p:outputLabel value="Doğum Tarihi:" for="birthDate" />
+                    <p:calendar id="birthDate" value="#{careersDao.item.birthDate}"
+                                showOn="button" size="10" navigator="true" />
+
+                    <p:outputLabel value="Doğum Yeri:" for="birthPlace" />
+                    <p:inputText id="birthPlace" value="#{careersDao.item.birthPlace}" title="BirthPlace" />
+                    <p:outputLabel value="Cinsiyet:" for="statusGender" />
+                    <p:selectOneRadio id="statusGender" value="#{careersDao.item.statusGender}" >
+                        <f:selectItem itemLabel="Erkek" itemValue="0" />
+                        <f:selectItem itemLabel="Kadın" itemValue="1" />
+                    </p:selectOneRadio>
+                    <p:outputLabel value="Medeni Durumu :" for="statusMarial" />
+                    <p:selectOneRadio id="statusMarial" value="#{careersDao.item.statusMarial}" >
+                        <f:selectItem itemLabel="Bekar" itemValue="0" />
+                        <f:selectItem itemLabel="Evli" itemValue="1" />
+                    </p:selectOneRadio>
+
+                    <p:outputLabel value="Çocuk Sayısı :" for="kids" />
+                    <p:inputText id="kids" value="#{careersDao.item.kids}" title="Kids" />
+                    <p:outputLabel value="Askerlik Durumu:" for="statusMilitary" />
+                    <p:selectOneRadio id="statusMilitary" value="#{careersDao.item.statusMilitary}" >
+                        <f:selectItem itemLabel="Yaptım" itemValue="0" />
+                        <f:selectItem itemLabel="Yapmadım" itemValue="1" />
+                    </p:selectOneRadio>
+                </p:panelGrid>
+                    <h3>
+                    İletişim Bilgileri
+                    </h3>
+                <p:separator rendered="false"/>
+                <p:panelGrid columns="6" layout="grid">
+                    <p:outputLabel value="Email :" for="email" />
+                    <p:inputText id="email" value="#{careersDao.item.email}" title="Email" />
+                    <p:outputLabel value="Ev Telefonu :" for="phoneHome" />
+                    <p:inputText id="phoneHome" value="#{careersDao.item.phoneHome}" title="PhoneHome" />
+                    <p:outputLabel value="Cep Telefonu :" for="phoneCell" />
+                    <p:inputText id="phoneCell" value="#{careersDao.item.phoneCell}" title="PhoneCell" />
+                    <p:outputLabel value="Adres :" for="address" />
+                    <p:inputTextarea id="address" value="#{careersDao.item.address}" title="Address" />
+                    <p:outputLabel value="İlçe :" for="street" />
+                    <p:inputText id="street" value="#{careersDao.item.street}" title="Street" />
+                    <p:outputLabel value="Şehir :" for="city" />
+                    <p:inputText id="city" value="#{careersDao.item.city}" title="City" />
+
+                </p:panelGrid>
+                    <h3>
+                    Eğitim Bilgileri
+                    </h3>
+                <p:separator rendered="false"/>
+                <p:panelGrid columns="6" layout="grid" columnClasses="width15,width20,width10,width20,width15,width20">
+                    <p:outputLabel value="Lise :" for="highschoolName" />
+                    <p:inputText id="highschoolName" value="#{careersDao.item.highschoolName}" title="HighschoolName" />
+                    <p:outputLabel value="Bölüm :" for="highschoolBranch" />
+                    <p:inputText id="highschoolBranch" value="#{careersDao.item.highschoolBranch}" title="HighschoolBranch" />
+                    <p:outputLabel value="Mezuniyet Tarihi :" for="highschoolDate" />
+                    <p:calendar id="highschoolDate" value="#{careersDao.item.highschoolDate}" showOn="button" size="15"
+                                 navigator="true" />
+                    <p:outputLabel value="Yüksekokul :" for="academyName" />
+                    <p:inputText id="academyName" value="#{careersDao.item.academyName}" title="AcademyName" />
+                    <p:outputLabel value="Bölüm :" for="academyBranch" />
+                    <p:inputText id="academyBranch" value="#{careersDao.item.academyBranch}" title="AcademyBranch" />
+                    <p:outputLabel value="Mezuniyet Tarihi :" for="academyDate" />
+                    <p:calendar id="academyDate" value="#{careersDao.item.academyDate}" showOn="button" size="15"
+                                 navigator="true" />
+                    <p:outputLabel value="Üniversite :" for="universityName" />
+                    <p:inputText id="universityName" value="#{careersDao.item.universityName}" title="UniversityName" />
+                    <p:outputLabel value="Bölüm :" for="universityBranch" />
+                    <p:inputText id="universityBranch" value="#{careersDao.item.universityBranch}" title="UniversityBranch" />
+                    <p:outputLabel value="Mezuniyet Tarihi :" for="universityDate" />
+                    <p:calendar id="universityDate" value="#{careersDao.item.universityDate}" showOn="button" size="15"
+                                navigator="true" />
+                    <p:outputLabel value="Yüksek Lisans:" for="masterName" />
+                    <p:inputText id="masterName" value="#{careersDao.item.masterName}" title="MasterName" />
+                    <p:outputLabel value="Bölümü :" for="masterBranch" />
+                    <p:inputText id="masterBranch" value="#{careersDao.item.masterBranch}" title="MasterBranch" />
+                    <p:outputLabel value="Mezuniyet Tarihi :" for="masterDate" />
+                    <p:calendar id="masterDate" value="#{careersDao.item.masterDate}" showOn="button" size="15"
+                                 navigator="true" />
+                    <p:outputLabel value="Doktora :" for="doctorName" />
+                    <p:inputText id="doctorName" value="#{careersDao.item.doctorName}" title="DoctorName" />
+                    <p:outputLabel value="Bölümü :" for="doctorBranch" />
+                    <p:inputText id="doctorBranch" value="#{careersDao.item.doctorBranch}" title="DoctorBranch" />
+                    <p:outputLabel value="Mezuniyet Tarihi :" for="doctorDate" />
+                    <p:calendar id="doctorDate" value="#{careersDao.item.doctorDate}" showOn="button" size="15"
+                                navigator="true" />
+                </p:panelGrid>
+                    <h3>
+                    Yabancı Dil
+                    </h3>
+                <p:separator rendered="false"/>
+                <p:panelGrid columns="2" layout="grid" columnClasses="width25,width60">
+                    <p:outputLabel value="İngilizce Konuşma :" for="englishSpeak" />
+                    <p:selectOneRadio id="englishSpeak" value="#{careersDao.item.englishSpeak}" >
+                        <f:selectItem itemLabel="Yok" itemValue="0" />
+                        <f:selectItem itemLabel="Baslangic" itemValue="1" />
+                        <f:selectItem itemLabel="Orta" itemValue="2" />
+                        <f:selectItem itemLabel="İyi" itemValue="3" />
+                        <f:selectItem itemLabel="Mükemmel" itemValue="4" />
+                    </p:selectOneRadio>
+                    <p:outputLabel value="İngilizce Okuma / Yazma :" for="englishWrite" />
+                    <p:selectOneRadio id="englishWrite" value="#{careersDao.item.englishWrite}" >
+                        <f:selectItem itemLabel="Yok" itemValue="0" />
+                        <f:selectItem itemLabel="Baslangic" itemValue="1" />
+                        <f:selectItem itemLabel="Orta" itemValue="2" />
+                        <f:selectItem itemLabel="İyi" itemValue="3" />
+                        <f:selectItem itemLabel="Mükemmel" itemValue="4" />
+                    </p:selectOneRadio>
+
+                    <p:outputLabel value="İkinci Dil :" for="secondLanguage" />
+                    <p:inputText id="secondLanguage" value="#{careersDao.item.secondLanguage}" title="SecondLanguage" />
+
+                    <p:outputLabel value="İkinci Dil Konuşma :" for="secondSpeak" />
+                    <p:selectOneRadio id="secondSpeak" value="#{careersDao.item.secondSpeak}" >
+                        <f:selectItem itemLabel="Yok" itemValue="0" />
+                        <f:selectItem itemLabel="Baslangic" itemValue="1" />
+                        <f:selectItem itemLabel="Orta" itemValue="2" />
+                        <f:selectItem itemLabel="İyi" itemValue="3" />
+                        <f:selectItem itemLabel="Mükemmel" itemValue="4" />
+                    </p:selectOneRadio>
+                    <p:outputLabel value="İkinci Dil Okuma / Yazma :" for="secondWrite" />
+                    <p:selectOneRadio id="secondWrite" value="#{careersDao.item.secondWrite}" >
+                        <f:selectItem itemLabel="Yok" itemValue="0" />
+                        <f:selectItem itemLabel="Baslangic" itemValue="1" />
+                        <f:selectItem itemLabel="Orta" itemValue="2" />
+                        <f:selectItem itemLabel="İyi" itemValue="3" />
+                        <f:selectItem itemLabel="Mükemmel" itemValue="4" />
+                    </p:selectOneRadio>
+                </p:panelGrid>
+                    <h3>
+                    Çalıştığınız Kurumlar
+                    </h3>
+                <p:separator rendered="false"/>
+                <p:panelGrid columns="3" layout="grid">
+                    <p:outputLabel value="Kurum :"  />
+                    <p:outputLabel value="Bölüm :" />
+                    <p:outputLabel value="Dönem :" />
+                    <p:inputText id="job1Company" value="#{careersDao.item.job1Company}"  />
+                    <p:inputText id="job1Department" value="#{careersDao.item.job1Department}"  />
+                    <p:inputText id="job1Date" value="#{careersDao.item.job1Date}" />
+                    <p:inputText id="job2Company" value="#{careersDao.item.job2Company}"  />
+                    <p:inputText id="job2Department" value="#{careersDao.item.job2Department}"  />
+                    <p:inputText id="job2Date" value="#{careersDao.item.job2Date}" />
+                    <p:inputText id="job3Company" value="#{careersDao.item.job3Company}"  />
+                    <p:inputText id="job3Department" value="#{careersDao.item.job3Department}"  />
+                    <p:inputText id="job3Date" value="#{careersDao.item.job3Date}" />
+                </p:panelGrid>
+
+                    <h3>
+                    Sosyal
+                    </h3>
+                <p:separator rendered="false"/>
+                <p:panelGrid columns="2" layout="grid" columnClasses="width25,width25">
+                    <p:outputLabel value="Sabıka Kaydınız varmı ? " for="statusPrison" />
+                    <p:selectOneRadio id="statusPrison" value="#{careersDao.item.statusPrison}" >
+                        <f:selectItem itemLabel="Yok" itemValue="0" />
+                        <f:selectItem itemLabel="Var" itemValue="1" />
+                    </p:selectOneRadio>
+                    <p:outputLabel value="Mesleki Soruşturma geçirdinizmi ?" for="statusLawyer" />
+                    <p:selectOneRadio id="statusLawyer" value="#{careersDao.item.statusLawyer}" >
+                        <f:selectItem itemLabel="Hayır" itemValue="0" />
+                        <f:selectItem itemLabel="Evet" itemValue="1" />
+                    </p:selectOneRadio>
+                    <p:outputLabel value="Sağlık Sorununuz varmı?" for="statusHealth" />
+                    <p:selectOneRadio id="statusHealth" value="#{careersDao.item.statusHealth}" >
+                        <f:selectItem itemLabel="Yok" itemValue="0" />
+                        <f:selectItem itemLabel="Var" itemValue="1" />
+                    </p:selectOneRadio>
+
+                </p:panelGrid>
+                    <h3>
+                    Mesajınız
+                    </h3>
+                <p:inputTextarea id="message" value="#{careersDao.item.message}" rows="5" cols="70"/>
+                <br/> <br/>
+
+                <p:outputPanel style="text-align: center; margin: 0 auto;">
+                    <p:commandButton  styleClass="button" value="KAYDET"
+                                     action="#{careersDao.save}" style="width: 130px; height: 40px;"
+                                     update=":#{p:component('form-contact')}  :messages"
+                                      onsuccess="alert('Kayıt Edildi');"
+                                     process="@form" partialSubmit="true">
+                        <p:confirm header="#{msg['global_confirmation']}"
+                                   message="Başvurunuz kayıt edilecek, onaylıyormusunuz?" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                </p:outputPanel>
+
+                <p:confirmDialog global="true">
+                    <p:commandButton value="#{msg['global_yes']}" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+                    <p:commandButton value="#{msg['global_no']}" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+                </p:confirmDialog>
+
+                </div>
+            </h:form>
+</div>
+
+
+        </div>
+        </div>
+        </div>
+
+        <h:outputStylesheet>
+            #form-contact table tbody td {
+                text-align: left !important;
+            }
+            #form-contact label {
+                font-weight: 500;
+                margin:0px;
+            }
+
+            table {
+                margin:0;
+            }
+        </h:outputStylesheet>
+    </ui:composition>
+</f:view>
+</html>
+

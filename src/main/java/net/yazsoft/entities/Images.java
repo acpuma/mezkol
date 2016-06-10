@@ -60,6 +60,9 @@ public class Images extends BaseEntity implements Serializable {
     private Collection<Slides> slidesCollection;
     @OneToMany(mappedBy = "refImage", fetch = FetchType.LAZY)
     private Collection<Articles> articlesCollection;
+    @OneToMany(mappedBy = "refImage", fetch = FetchType.LAZY)
+    private Collection<Courses> coursesCollection;
+
     @JoinColumn(name = "ref_album", referencedColumnName = "tid")
     @ManyToOne(fetch = FetchType.LAZY)
     private Albums refAlbum;
@@ -230,6 +233,14 @@ public class Images extends BaseEntity implements Serializable {
 
     public void setArticlesCollection(Collection<Articles> articlesCollection) {
         this.articlesCollection = articlesCollection;
+    }
+
+    public Collection<Courses> getCoursesCollection() {
+        return coursesCollection;
+    }
+
+    public void setCoursesCollection(Collection<Courses> coursesCollection) {
+        this.coursesCollection = coursesCollection;
     }
 
     @Override

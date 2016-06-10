@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+>
+<f:view>
+    <h:outputStylesheet library="css" name="pages/index.css" />
+    <ui:composition template="/WEB-INF/templates/webtemplate.xhtml">
+
+        <div id="content-container">
+        <div id="content" class="clearfix">
+        <div id="main-content">
+            <div id="breadcrumbs" class="clearfix">
+                <div >
+                    <a href="index.html" itemprop="url" class="icon-home">
+                        <span itemprop="title">ANASAYFA</span>
+                    </a> <span class="arrow">&gt;</span>
+                </div>
+                <div >
+                    <a href="#" itemprop="url">
+                        <span itemprop="title">KURSLAR</span>
+                    </a>
+                </div>
+            </div>
+
+            <div id="banner-homepage">
+                <div class="container">
+
+                    <div class="main_title">
+                        <h2> <span style="color: #1A237E; ">KURSLARIMIZ</span> </h2>
+                        <!--<p>Quisque at tortor a libero posuere laoreet vitae sed arcu. Curabitur consequat.</p>-->
+                    </div>
+
+
+                    <div class="row" style="display: table;">
+
+                        <ui:repeat value="#{coursesDao.webitems}" var="course">
+                            <div class="col-md-4 wow zoomIn" data-wow-delay="0.1s">
+                                <div class="tour_container">
+                                    <h:link outcome="/pages/course">
+                                        <f:param name="cid" value="#{course.tid}" />
+                                    <div class="img_container">
+
+                                            <p:graphicImage width="360" height="240"
+                                                            value="#{imagesDao.findImagePath(course.refImage)}"
+                                                            styleClass="img-responsive"
+                                            />
+
+                                    </div>
+                                    <div class="tour_title">
+                                        <h3><strong>#{course.titleTr}</strong></h3>
+                                    </div>
+                                    </h:link>
+                                </div><!-- End box tour -->
+                            </div><!-- End col-md-4 -->
+                        </ui:repeat>
+
+                    </div><!-- End row -->
+                </div>
+            </div>
+
+        </div>
+        </div>
+        </div>
+    </ui:composition>
+</f:view>
+</html>
+
