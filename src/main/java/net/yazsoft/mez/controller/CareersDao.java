@@ -38,13 +38,13 @@ public class CareersDao extends BaseGridDao<Careers> implements Serializable {
             getItem().setActive(Boolean.TRUE);
             getItem().setCreated(Util.getNow());
             getItem().setReaden(Boolean.FALSE);
-
+            String mail=getItem().getEmail();
             String body=" Sayın " + getItem().getName() + " " + getItem().getSurname() + ","
                     + "\n\nBaşvurunuz alınmıştır olumlu olursa geri dönüş yapacağız. "
                     +"\n\n MEZOPOTAMYA EĞİTİM KURUMLARI";
 
             pk=super.save();
-            email.sendMail(getItem().getEmail(), "Mezopotamya Eğitim Kurumları Kariyer Başvurusu",body);
+            email.sendMail(mail, "Mezopotamya Eğitim Kurumları Kariyer Başvurusu",body);
         } catch (Exception e) {
             Util.catchException(e);
         }

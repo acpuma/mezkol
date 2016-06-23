@@ -85,8 +85,8 @@
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl" >
         <property name="host" value="smtp-mail.outlook.com" />
         <property name="port" value="587" />
-        <property name="username" value="cumanji@hotmail.com" />
-        <property name="password" value="Cj9512acpuma0234"/>
+        <property name="username" value="mezopotamyakoleji@hotmail.com" />
+        <property name="password" value="dersar2324"/>
         <property name="javaMailProperties">
             <props>
                 <prop key="mail.transport.protocol">smtp</prop>

@@ -34,6 +34,7 @@
             </div>
             <div class="static-page">
             <h:form id="form-contact" styleClass="clearfix">
+                <p:outputPanel id="block" layout="block" style="height:100%;">
                 <div class="widget-wrapper clearfix">
                 <h2 style="text-align: center">Kariyer</h2>
 
@@ -243,6 +244,7 @@
                 </p:confirmDialog>
 
                 </div>
+                </p:outputPanel>
             </h:form>
 </div>
 
@@ -264,6 +266,8 @@
                 margin:0;
             }
         </h:outputStylesheet>
+
+        <p:ajaxStatus  onstart="PF('blockUIWidget1').block()" oncomplete="PF('blockUIWidget1').unblock();" />
     </ui:composition>
 </f:view>
 </html>
