@@ -26,24 +26,29 @@ public class MenusDao extends BaseDao<Menus> implements Serializable{
     private static final Logger logger = Logger.getLogger(MenusDao.class);
 
     @Inject protected SessionFactory sessionFactory;
+    @Inject MenusTypeDao menusTypeDao;
 
     public MenusDao() {
         super(Menus.class);
     }
 
     public List<Menus> getSubmenus(Long menuid) {
-        final Session session = sessionFactory.getCurrentSession();
+        //final Session session = sessionFactory.getCurrentSession();
         Criteria query;
         List list=null;
         try {
-            session.flush();
-            //session.clear(); //clear cache
-            query = session.createCriteria(Menus.class);
-            query.add(Restrictions.eq("mainId", new Menus(menuid)));
-            query.add(Restrictions.eq("active", 1));
-            query.addOrder(Order.asc("rank"));
-            //query.setProjection(Projections.rowCount());
-            list = query.list();
+            if (menuid!=null) {
+                //session.flush();
+                query = getCriteria();
+                //session.clear(); //clear cache
+                //query = session.createCriteria(Menus.class);
+                query.add(Restrictions.eq("mainId", getById(menuid)));
+                query.add(Restrictions.eq("active", true));
+                query.addOrder(Order.asc("rank"));
+                //query.setProjection(Projections.rowCount());
+                list = query.list();
+                logger.info(" MAIN MENU : " + menuid + " LIST : " + list);
+            }
         } catch (HibernateException ex) {
             ex.printStackTrace();
         }
@@ -61,7 +66,7 @@ public class MenusDao extends BaseDao<Menus> implements Serializable{
             if (user!=null) {
                 query.add(Restrictions.eq("refUser",user));
             }
-            query.add(Restrictions.eq("refMenutype", new MenusType(menutype)));
+            query.add(Restrictions.eq("refMenutype",menusTypeDao.getById(menutype)));
             query.add(Restrictions.eq("active", true));
             query.addOrder(Order.asc("rank"));
             //query.setProjection(Projections.rowCount());

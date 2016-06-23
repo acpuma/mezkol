@@ -83,7 +83,8 @@
                 <p:separator rendered="false"/>
                 <p:panelGrid columns="6" layout="grid">
                     <p:outputLabel value="Email :" for="email" />
-                    <p:inputText id="email" value="#{careersDao.item.email}" title="Email" />
+                    <p:inputText id="email" value="#{careersDao.item.email}" title="Email"
+                                 required="true" requiredMessage="Email adresinizi yazınız."/>
                     <p:outputLabel value="Ev Telefonu :" for="phoneHome" />
                     <p:inputText id="phoneHome" value="#{careersDao.item.phoneHome}" title="PhoneHome" />
                     <p:outputLabel value="Cep Telefonu :" for="phoneCell" />
@@ -230,7 +231,6 @@
                     <p:commandButton  styleClass="button" value="KAYDET"
                                      action="#{careersDao.save}" style="width: 130px; height: 40px;"
                                      update=":#{p:component('form-contact')}  :messages"
-                                      onsuccess="alert('Kayıt Edildi');"
                                      process="@form" partialSubmit="true">
                         <p:confirm header="#{msg['global_confirmation']}"
                                    message="Başvurunuz kayıt edilecek, onaylıyormusunuz?" icon="ui-icon-alert"/>

@@ -2,6 +2,7 @@ package net.yazsoft.frame.controller;
 
 
 import net.yazsoft.frame.controller.scopes.ViewScoped;
+import net.yazsoft.frame.utils.Constants;
 import net.yazsoft.frame.utils.Util;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
@@ -21,7 +22,7 @@ public class Email {
     {
         try {
             SimpleMailMessage message = new SimpleMailMessage();
-            message.setFrom("info@ortaksinav.com.tr");  // dont send without from address
+            message.setFrom("cumanji@hotmail.com");  // dont send without from address
             message.setTo(to);
             message.setSubject(subject);
             message.setText(body);

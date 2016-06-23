@@ -22,7 +22,9 @@ public class CustomSpringViewScope implements Scope {
 		
 		Map<String, Object> viewMap = new HashMap<String, Object>();
 		try {
-			viewMap = FacesContext.getCurrentInstance().getViewRoot().getViewMap();
+			if (FacesContext.getCurrentInstance()!=null) {
+				viewMap = FacesContext.getCurrentInstance().getViewRoot().getViewMap();
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

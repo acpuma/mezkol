@@ -8,6 +8,7 @@
 <cc:interface>
     <cc:attribute default="false"     required="false"   name="disabledSelection"  />
     <cc:attribute default="false"     required="false"   name="draggableColumns" />
+    <cc:attribute default="false"     required="false"   name="draggableRows" />
     <cc:attribute default="false"     required="false"   name="editable" />
     <cc:attribute default="false"     required="false"   name="editMode" />
     <cc:attribute default="false"     required="false"   name="editingRow" />
@@ -25,7 +26,7 @@
     <cc:attribute default="single"    required="false"   name="sortMode" />
     <cc:attribute default="false"     required="false"   name="stickyHeader" />
     <cc:attribute default="false"     required="false"   name="transient" />
-    <cc:attribute default="widgetcareers"     required="false"   name="widgetVar" />
+    <cc:attribute default="widgetWebMenus"     required="false"   name="widgetVar" />
     <cc:attribute default=":pageForm" required="false" name="update" />
     <cc:attribute  required="false" name="tableStyle" />
 </cc:interface>
@@ -33,11 +34,11 @@
 <!-- IMPLEMENTATION -->
 <cc:implementation>
     <h:form onkeypress="if (event.keyCode == 13) {return false; }">
-        <p:dataTable id="careersGrid"
-                     var="careersVar"
+        <p:dataTable id="webMenusGrid"
+                     var="webMenusVar"
 
                      filterEvent="enter"
-                     value="#{careersDao.all}"
+                     value="#{webMenusDao.menus}"
                      emptyMessage=" #{msg['global_no_data']}"
                      paginatorTemplate=" {FirstPageLink}
                  {PreviousPageLink} 
@@ -45,8 +46,10 @@
                  {LastPageLink} "
 
                      draggableColumns="#{cc.attrs.draggableColumns}"
+                     draggableRows="#{cc.attrs.draggableRows}"
 
                      editable="#{cc.attrs.editable}"
+                     editMode="#{cc.attrs.editMode}"
                      expandedRow="#{cc.attrs.expandedRow}"
 
                      paginator="#{cc.attrs.paginator}"
@@ -68,47 +71,56 @@
                      transient="#{cc.attrs.transient}"
                      widgetVar="#{cc.attrs.widgetVar}"
 
-                     selection="#{careersDao.item}"
-                     rowKey="#{careersVar.tid}"
                      tableStyle="#{cc.attrs.tableStyle}"
+
+                     selection="#{webMenusDao.item}"
                      selectionMode="single"
+                     rowKey="#{webMenusVar.tid}"
 
                 >
             <p:ajax event="rowDblselect" update="#{cc.attrs.update}"
                     onstart="PF('blockUIWidget1').block()"
                     oncomplete="PF('blockUIWidget1').unblock();PF('formDialogWidget').show();"
                     process="@all"
-                    listener="#{careersDao.select}"
+                    listener="#{webMenusDao.select}"
                     />
 
-            <p:ajax event="rowReorder" listener="#{careersDao.onRowReorder}" update=":messages careersGrid" />
+            <p:ajax event="rowReorder" listener="#{webMenusDao.onRowReorder}" update=":messages webMenusGrid" />
 
             <f:facet name="header">
-                #{msg.careers}
+                #{msg.webmenus}
             </f:facet>
 
-            <p:column headerText="#{msg.global_id}" width="3" rendered="true"  >
-                #{careersVar.tid}
+            <p:column headerText="#{msg.global_id}" width="20" rendered="true"  style="display: none">
+                #{webMenusVar.tid}
             </p:column>
 
-            <p:column headerText="Kimlik No" width="120" filterBy="#{careersVar.mernisno}">
-                #{careersVar.mernisno}  </p:column>
-
-            <p:column headerText="Adı" style="width:160px;"
-                      filterBy="#{careersVar.name}"  > #{careersVar.name} </p:column>
-
-            <p:column headerText="Soyadı" width="160" filterBy="#{careersVar.surname}">
-                #{careersVar.surname}  </p:column>
-            <p:column headerText="Okundu" width="50" >
-                <p:selectBooleanCheckbox value="#{careersVar.readen}" >
-                    <p:ajax event="valueChange"  listener="#{careersDao.checkboxChange(careersVar)}"
-                            update=":messages" global="false"/>
-                </p:selectBooleanCheckbox>
+            <p:column headerText="Resim" width="15" rendered="false">
+                <p:outputPanel style="height:70px; text-align: center;">
+                    <p:graphicImage height="70"   cache="false"
+                                value="/images/weblinks/#{webMenusVar.tid}.#{webMenusVar.refImage.extension}"
+                        />
+                </p:outputPanel>
             </p:column>
-            <p:column headerText="Tarih" width="60" rendered="true" sortBy="#{careersVar.created}">
-                <h:outputText value="#{careersVar.created}">
-                    <f:convertDateTime pattern="dd/MM/yyyy" />
-                </h:outputText>
+            <p:column headerText="#{msg.global_name}" width="50" filterBy="#{webMenusVar.nameTr}">
+                #{webMenusVar.nameTr}
+            </p:column>
+            <p:column headerText="#{msg.address}" width="130" filterBy="#{webMenusVar.form}">
+                #{webMenusVar.form}
+            </p:column>
+            <p:column headerText="#{msg.global_rank}" width="10">
+                #{webMenusVar.rank}
+            </p:column>
+            <p:column headerText="#{msg.parent_menu}" width="50">
+                #{webMenusVar.mainId.nameTr}
+            </p:column>
+
+            <p:column width="40" rendered="false">
+                <p:commandButton value="" update=" :messages webMenusGrid"
+                                 icon="ui-icon-trash"
+                                 style="height: 36px; width: 36px;"
+                                 actionListener="#{webMenusDao.delete(webMenusVar)}">
+                </p:commandButton>
             </p:column>
 
         </p:dataTable>

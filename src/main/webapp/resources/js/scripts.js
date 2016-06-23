@@ -47,28 +47,21 @@ tpj(document).ready(function() {
                 }
                 ,
 
-                thumbnails: {
-                    style:"gyges",
+                bullets: {
                     enable:true,
-                    width:120,
-                    height:60,
-                    min_width:60,
-                    wrapper_padding:0,
-                    wrapper_color:"transparent",
-                    wrapper_opacity:"1",
-                    tmp:'<span class="tp-thumb-img-wrap"> <span class="tp-thumb-image"> <span class="tp-tab-title"></span></span></span>',
-                    visibleAmount:5,
-                    hide_onmobile:true,
-                    hide_under:800,
+                    hide_onmobile:false,
+                    hide_under:600,
+                    style:"metis",
                     hide_onleave:true,
+                    hide_delay:200,
+                    hide_delay_mobile:1200,
                     direction:"horizontal",
-                    span:false,
-                    position:"inner",
-                    space:5,
                     h_align:"center",
                     v_align:"bottom",
                     h_offset:0,
-                    v_offset:20
+                    v_offset:30,
+                    space:10,
+                    tmp:'<span class="tp-bullet-img-wrap">  <span class="tp-bullet-image"></span></span><span class="tp-bullet-title">{{title}}</span>'
                 }
             },
             viewPort: {

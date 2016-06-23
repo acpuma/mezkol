@@ -60,14 +60,16 @@ public class ArticlesDao extends BaseGridDao<Articles> implements Serializable {
     public List<Articles> findArchive(Integer month, Integer year) {
         List list=null;
         try {
-            String hql = "SELECT A FROM Articles A " + " where month(date)=:month and year(date)=:year"
-                    + " and publish=true and refArticleType=" + Constants.ARTICLETYPE_EVENTS
-                    +" order by date";
-            Query query = getSession().createQuery(hql);
-            query.setInteger("month",month);
-            query.setInteger("year",year);
-            list=query.list();
-            webitems=list;
+            if ((month!=null) && (year!=null)){
+                String hql = "SELECT A FROM Articles A " + " where month(date)=:month and year(date)=:year"
+                        + " and publish=true and refArticleType=" + Constants.ARTICLETYPE_EVENTS
+                        + " order by date desc";
+                Query query = getSession().createQuery(hql);
+                query.setInteger("month", month);
+                query.setInteger("year", year);
+                list = query.list();
+                webitems = list;
+            }
         } catch (Exception e) {
             Util.catchException(e);
         }

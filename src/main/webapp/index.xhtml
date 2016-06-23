@@ -28,9 +28,53 @@
                     <ui:repeat value="#{slidesDao.slides}" var="slide">
                         <li data-transition="fade" data-slotamount="default"
                             data-thumb="images/#{imagesDao.findFolder(slide.refImage)}/SMALL/#{slide.refImage.tid}.#{slide.refImage.extension}"
-                            data-title="#{slide.titleTr}" data-description="#{slide.subtitleTr}">
+                            data-title="#{slide.titleTr}" data-description="#{slide.subtitleTr}" data-link="#{slide.url}">
+                            <p:graphicImage value="#{imagesDao.findImagePath(slide.refImage)}" style="width: 100%"/>
 
-                        <p:graphicImage value="#{imagesDao.findImagePath(slide.refImage)}"/>
+                            <div class="tp-caption tp-resizeme rs-parallaxlevel-0"
+                                 data-x="center" data-hoffset="0"
+                                 data-y="top" data-voffset="400"
+                                 data-whitespace="nowrap"
+                                 data-transform_idle="o:1;"
+                                 data-transform_in="o:0"
+                                 data-transform_out="o:0"
+                                 data-start="500"
+                                 data-width="auto"
+                                 style="font-size:40px;line-height:66px; color:#fff;text-shadow: 0px 0px 1px #444;"
+                            >#{slide.titleTr}
+                            </div>
+                            <div class="tp-caption tp-resizeme rs-parallaxlevel-0"
+                                 data-x="center" data-hoffset="0"
+                                 data-y="top" data-voffset="470"
+                                 data-whitespace="nowrap"
+                                 data-transform_idle="o:1;"
+                                 data-transform_in="o:0"
+                                 data-transform_out="o:0"
+                                 data-start="500"
+                                 data-width="auto"
+                                 style="font-size:24px;line-height:36px; color:#fff;text-shadow: 0px 0px 1px #444;"
+                            >#{slide.subtitleTr}
+                            </div>
+                            <ui:fragment rendered="#{not empty slide.youtube}">
+                                <div class="tp-caption   tp-resizeme fullscreenvideo tp-videolayer"
+                                     id="slide-107-layer-3"
+                                     data-x="0"
+                                     data-y="0"
+                                     data-width="['auto']"
+                                     data-height="['auto']"
+                                     data-transform_idle="o:1;"
+
+                                     data-transform_in="s:1000;e:Power1.easeInOut;"
+                                     data-transform_out="s:1000;s:1000;"
+                                     data-start="1000"
+                                     data-responsive_offset="on"
+
+                                     data-ytid="#{slide.youtube}" data-videoattributes="version=3&amp;enablejsapi=1&amp;html5=1&amp;volume=100&amp;hd=1&amp;wmode=opaque&amp;showinfo=0&amp;ref=0;;origin=http://server.local;" data-videorate="1" data-videowidth="100%" data-videoheight="100%" data-videocontrols="controls" data-videoloop="none" data-forceCover="1" data-aspectratio="16:9"			data-autoplay="on"
+                                     data-nextslideatend="true"
+                                     data-volume="100" data-forcerewind="on"
+                                     style="z-index: 5;">
+                                </div>
+                            </ui:fragment>
                         </li><!-- /slide -->
                     </ui:repeat>
                 </ul>
@@ -54,11 +98,11 @@
                         <div class="row" style="display: table;">
 
                             <ui:repeat value="#{schoolsDao.findOutSchools()}" var="school">
-                            <div class="col-md-4 wow zoomIn" data-wow-delay="0.1s">
+                            <div class="col-md-5 wow zoomIn" data-wow-delay="0.1s">
                                 <div class="tour_container">
                                     <div class="img_container">
                                         <a href="">
-                                            <p:graphicImage width="360" height="240"
+                                            <p:graphicImage height="170"
                                                             value="#{imagesDao.findImagePath(school.refImage)}"
                                                             styleClass="img-responsive"
                                             />

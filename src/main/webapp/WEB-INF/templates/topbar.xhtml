@@ -31,6 +31,63 @@
                         </a>
                     </li>
 
+                    <ui:fragment rendered="#{sessionInfo.user.refRole.tid.equals(1)}">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="icon-bubbles4"></i>
+                                <span class="visible-xs-inline-block position-right">Messages</span>
+                                <ui:fragment rendered="#{careersDao.findItemsUnread().size() + contactFormsDao.findItemsUnread().size() gt 0}">
+                                <span class="badge bg-warning-400">
+                                    #{careersDao.findItemsUnread().size() + contactFormsDao.findItemsUnread().size()}
+                                </span>
+                                </ui:fragment>
+                            </a>
+
+
+                            <div class="dropdown-menu dropdown-content width-350">
+                                <div class="dropdown-content-heading">
+                                    Mesajlar
+
+                                </div>
+
+                                <ul class="media-list dropdown-content-body">
+                                    <ui:repeat value="#{contactFormsDao.findItemsUnread()}" var="message">
+                                        <li class="media">
+
+
+                                            <div class="media-body">
+                                                <span  class="media-heading">
+                                                    <span class="text-semibold">#{message.name}</span>
+                                                    <span class="media-annotation pull-right">#{message.created}</span>
+                                                </span>
+
+                                                <span class="text-muted">#{message.message}</span>
+                                            </div>
+                                        </li>
+                                    </ui:repeat>
+                                    <ui:repeat value="#{careersDao.findItemsUnread()}" var="message">
+                                        <li class="media">
+
+                                            <div class="media-body">
+                                                <span class="media-heading">
+                                                    <span class="text-semibold">#{message.name} #{message.surname}</span>
+                                                    <span class="media-annotation pull-right">#{message.created}</span>
+                                                </span>
+
+                                                <span class="text-muted">Kariyer Başvurusu</span>
+                                            </div>
+                                        </li>
+                                    </ui:repeat>
+                                </ul>
+
+                                <div class="dropdown-content-footer">
+                                    <div href="#" data-popup="tooltip"><i class="icon-menu display-block"></i></div>
+                                </div>
+                            </div>
+
+                        </li>
+                    </ui:fragment>
+
                     <li class="dropdown dropdown-user">
                         <a class="dropdown-toggle" data-toggle="dropdown">
                             <p:graphicImage value="/images/user/#{sessionInfo.user.tid}.#{sessionInfo.user.refImage.extension}" alt=""/>

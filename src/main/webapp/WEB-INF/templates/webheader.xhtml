@@ -33,11 +33,39 @@
                 </a>
                 <ul id="nav-main">
                     <ui:repeat value="#{schoolsMenusDao.findBySchool(null)}" var="schoolmenu" >
+
                         <ui:fragment rendered="#{schoolmenu.refMenu.form eq view.viewId.substring(0, view.viewId.length()-6)}">
-                            <li class="current-menu-item"><h:link outcome="#{schoolmenu.refMenu.form}">#{schoolmenu.refMenu.nameTr}</h:link></li>
+                            <li class="current-menu-item">
+                                <h:link outcome="#{schoolmenu.refMenu.form}" rendered="#{not schoolmenu.refMenu.custom}">#{schoolmenu.refMenu.nameTr}</h:link>
+                                <h:link outcome="/pages/custom" rendered="#{schoolmenu.refMenu.custom}">
+                                    <f:param name="cid" value="#{schoolmenu.refMenu.tid}" />
+                                    #{schoolmenu.refMenu.nameTr}
+                                </h:link>
+                            </li>
                         </ui:fragment>
                         <ui:fragment rendered="#{schoolmenu.refMenu.form ne view.viewId.substring(0, view.viewId.length()-6)}">
-                            <li ><h:link outcome="#{schoolmenu.refMenu.form}">#{schoolmenu.refMenu.nameTr}</h:link></li>
+                            <li>
+                                <h:link outcome="#{schoolmenu.refMenu.form}" rendered="#{not schoolmenu.refMenu.custom}">#{schoolmenu.refMenu.nameTr}</h:link>
+                                <h:link outcome="/pages/custom" rendered="#{schoolmenu.refMenu.custom}">
+                                    <f:param name="cid" value="#{schoolmenu.refMenu.tid}" />
+                                    #{schoolmenu.refMenu.nameTr}
+                                </h:link>
+
+                                <ui:fragment rendered="#{not empty menusDao.getSubmenus(schoolmenu.refMenu.tid)}">
+                                <ul>
+                                    <ui:repeat value="#{menusDao.getSubmenus(schoolmenu.refMenu.tid)}" var="submenu" >
+                                        <li>
+                                            <h:link outcome="#{submenu.form}" rendered="#{not submenu.custom}">#{submenu.nameTr}</h:link>
+                                            <h:link outcome="/pages/custom" rendered="#{submenu.custom}">
+                                                <f:param name="cid" value="#{submenu.tid}" />
+                                                #{submenu.nameTr}
+                                            </h:link>
+                                        </li>
+                                    </ui:repeat>
+                                </ul>
+                                </ui:fragment>
+
+                            </li>
                         </ui:fragment>
 
                     </ui:repeat>

@@ -5,6 +5,7 @@ package net.yazsoft.entities;
 import java.io.Serializable;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import net.yazsoft.frame.hibernate.BaseEntity;
 import java.util.Date;
 import javax.persistence.*;
@@ -17,6 +18,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Careers.findAll", query = "SELECT c FROM Careers c")})
 @Data
+@EqualsAndHashCode(callSuper=false)
 public class Careers extends BaseEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -26,6 +28,7 @@ public class Careers extends BaseEntity implements Serializable {
     private Long tid;
     private Boolean active;
     private Boolean publish;
+    private Boolean readen;
     @Basic(optional = false)
     @NotNull
     @Column(nullable = false)

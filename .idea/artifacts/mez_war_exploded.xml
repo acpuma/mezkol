@@ -147,7 +147,7 @@
           <element id="library" level="project" name="Maven: org.apache.poi:poi-ooxml:3.11" />
           <element id="library" level="project" name="Maven: org.apache.poi:poi-ooxml-schemas:3.11" />
           <element id="library" level="project" name="Maven: org.apache.xmlbeans:xmlbeans:2.6.0" />
-          <element id="library" level="project" name="Maven: com.sun.mail:javax.mail:1.5.3" />
+          <element id="library" level="project" name="Maven: com.sun.mail:javax.mail:1.5.5" />
           <element id="library" level="project" name="Maven: javax.activation:activation:1.1" />
           <element id="library" level="project" name="Maven: com.thoughtworks.xstream:xstream:1.4.8" />
           <element id="library" level="project" name="Maven: xmlpull:xmlpull:1.1.3.1" />

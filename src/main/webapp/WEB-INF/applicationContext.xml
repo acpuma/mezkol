@@ -83,10 +83,10 @@
 
     <!-- SET default mail properties -->
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl" >
-        <property name="host" value="webmail.yazsoft.net" />
+        <property name="host" value="smtp-mail.outlook.com" />
         <property name="port" value="587" />
-        <property name="username" value="info@yazsoft.net" />
-        <property name="password" value="yazsoft"/>
+        <property name="username" value="cumanji@hotmail.com" />
+        <property name="password" value="Cj9512acpuma0234"/>
         <property name="javaMailProperties">
             <props>
                 <prop key="mail.transport.protocol">smtp</prop>

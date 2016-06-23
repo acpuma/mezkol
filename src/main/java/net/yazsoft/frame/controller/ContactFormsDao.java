@@ -37,6 +37,7 @@ public class ContactFormsDao extends BaseGridDao<ContactForms> implements Serial
         try {
             getItem().setActive(true);
             getItem().setCreated(Util.getNow());
+            getItem().setReaden(Boolean.FALSE);
             create();
             String body=" İletişim Formu - Yeni Mesaj : "
                     +"\nAd : "  + getItem().getName()
@@ -65,9 +66,21 @@ public class ContactFormsDao extends BaseGridDao<ContactForms> implements Serial
             list = c.list();
             itemsChanged=false;
         } catch (Exception e) {
-            logger.error(e.getMessage());
-            Util.setFacesMessage(e.getMessage());
-            e.printStackTrace();
+            Util.catchException(e);
+        }
+        return list;
+    }
+
+    public List<ContactForms> findItemsUnread() {
+        List list=null;
+        try {
+            Criteria c = getCriteria();
+            c.add(Restrictions.eq("active", true));
+            c.add(Restrictions.eq("readen", false));
+            list = c.list();
+            logger.info("UNREADEN : " + list);
+        } catch (Exception e) {
+            Util.catchException(e);
         }
         return list;
     }

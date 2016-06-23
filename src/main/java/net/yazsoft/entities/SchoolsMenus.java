@@ -3,6 +3,7 @@
 package net.yazsoft.entities;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import net.yazsoft.frame.hibernate.BaseEntity;
 
 import javax.persistence.*;
@@ -16,6 +17,7 @@ import java.util.Date;
 @NamedQueries({
     @NamedQuery(name = "SchoolsMenus.findAll", query = "SELECT sm FROM SchoolsMenus sm")})
 @Data
+@EqualsAndHashCode(callSuper=false)
 public class SchoolsMenus extends BaseEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

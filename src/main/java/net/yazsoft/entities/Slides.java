@@ -50,6 +50,9 @@ public class Slides extends BaseEntity implements Serializable {
     @Size(max = 255)
     @Column(name = "subtitle_en", length = 255)
     private String subtitleEn;
+    @Size(max = 255)
+    @Column(name = "youtube", length = 255)
+    private String youtube;
 
     @JoinColumn(name = "ref_image", referencedColumnName = "tid")
     @ManyToOne(fetch = FetchType.LAZY)
@@ -173,6 +176,14 @@ public class Slides extends BaseEntity implements Serializable {
 
     public void setRefSchool(Schools refSchool) {
         this.refSchool = refSchool;
+    }
+
+    public String getYoutube() {
+        return youtube;
+    }
+
+    public void setYoutube(String youtube) {
+        this.youtube = youtube;
     }
 
     @Override

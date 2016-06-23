@@ -35,7 +35,8 @@
 .img_container {
     position: relative;
     overflow: hidden;
-    border: 1px solid #fff
+    border: 1px solid #fff;
+    /*height:220px;*/
 }
 
 .tour_container .tour_title {
@@ -61,10 +62,25 @@
 }
 
 .col-md-4 {
-    width: 33.3333%;
+    width: 25%;
     min-height: 1px;
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+    position: relative;
+    box-sizing: border-box;
+    float: left;
+
+}
+.col-md-5.plan:first-child {
+    margin-right: -30px;
+    margin-left: 30px
+}
+
+.col-md-5 {
+    width: 20%;
+    min-height: 1px;
+    padding-left: 10px;
+    padding-right: 10px;
     position: relative;
     box-sizing: border-box;
     float: left;

@@ -79,12 +79,12 @@ public class LoginSer implements Serializable{
             if (savedRequest!=null) {
                 logger.info("LOGIN REQUEST PAGE : " + savedRequest.getRedirectUrl());
             }
-            /*
-            if ((savedRequest != null) && (!savedRequest.getRedirectUrl().contains("login"))) {
-                // redirect to the page requested before login
-                ec.redirect(savedRequest.getRedirectUrl());
-            } else {
-              */
+//
+//            if ((savedRequest != null) && (!savedRequest.getRedirectUrl().contains("login"))) {
+//                // redirect to the page requested before login
+//                ec.redirect(savedRequest.getRedirectUrl());
+//            } else {
+
                 // login page requested directly, redirect to index after login
                 //ec.redirect("/index.html");
                 ec.redirect(ec.getRequestContextPath() + "/admin/dashboard.html");
