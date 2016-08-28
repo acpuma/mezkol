@@ -71,6 +71,12 @@ public class ImagesDao extends BaseGridDao<Images> implements Serializable{
             } else if (selectDao instanceof CoursesDao) {
                 logger.info("image select coursesdao : " + selectDao);
                 ((CoursesDao) selectDao).getItem().setRefImage(image);
+            } else if (selectDao instanceof WebLinksDao) {
+                logger.info("image select weblinksdao : " + selectDao);
+                ((WebLinksDao) selectDao).getItem().setRefImage(image);
+            } else if (selectDao instanceof TeamsDao) {
+                logger.info("image select teamsdao : " + selectDao);
+                ((TeamsDao) selectDao).getItem().setRefImage(image);
             }
             logger.info("SELECTED IMAGE : " + image);
             logger.info("UPDATING : " + selectUpdate);

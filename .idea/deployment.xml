@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData">
+  <component name="PublishConfigData" serverName="mez">
     <serverData>
       <paths name="mez">
         <serverdata>
           <mappings>
-            <mapping deploy="/home/admin" local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/tomcat/webapps/ROOT" local="$PROJECT_DIR$/src/main/webapp" web="/" />
           </mappings>
         </serverdata>
       </paths>

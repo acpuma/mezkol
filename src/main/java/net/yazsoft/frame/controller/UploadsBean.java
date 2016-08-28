@@ -33,6 +33,7 @@ public class UploadsBean extends BaseDao implements Serializable{
     public static final String IMAGE_USER ="user";
     public static final String IMAGE_STUDENT ="student";
     public static final String IMAGE_SLIDE ="slide";
+    public static final String IMAGE_TEAM ="team";
     public static final String IMAGE_PRODUCT ="product";
     public static final String IMAGE_WEBLINK ="weblink";
     private UploadedFile uploadedFile;
@@ -54,6 +55,7 @@ public class UploadsBean extends BaseDao implements Serializable{
     @Inject SchoolsDao schoolsDao;
     @Inject UsersDao usersDao;
     @Inject SlidesDao slidesDao;
+    @Inject TeamsDao teamsDao;
 
     @PostConstruct
     public void init() {
@@ -71,6 +73,7 @@ public class UploadsBean extends BaseDao implements Serializable{
             case IMAGE_SCHOOL: tid=schoolsDao.getItem().getTid();break;
             case IMAGE_USER: tid=usersDao.getItem().getTid();break;
             case IMAGE_SLIDE: tid=slidesDao.getItem().getTid();break;
+            case IMAGE_TEAM: tid=teamsDao.getItem().getTid();break;
         }
 
         ExternalContext extContext = FacesContext.getCurrentInstance().getExternalContext();
@@ -108,12 +111,10 @@ public class UploadsBean extends BaseDao implements Serializable{
 
             ImagesType imagesType=null;
             switch (imageType) {
-                case (IMAGE_USER) :
-                    imagesType=(ImagesType)getSession().load(ImagesType.class,1L);break;
-                case (IMAGE_SCHOOL) :
-                    imagesType=(ImagesType)getSession().load(ImagesType.class,2L);break;
-                case (IMAGE_SLIDE) :
-                    imagesType=(ImagesType)getSession().load(ImagesType.class,3L);break;
+                case (IMAGE_USER) : imagesType=(ImagesType)getSession().load(ImagesType.class,1L);break;
+                case (IMAGE_SCHOOL) : imagesType=(ImagesType)getSession().load(ImagesType.class,2L);break;
+                case (IMAGE_SLIDE) : imagesType=(ImagesType)getSession().load(ImagesType.class,3L);break;
+                case (IMAGE_TEAM) : imagesType=(ImagesType)getSession().load(ImagesType.class,7L);break;
             }
 
             Images image=null;
@@ -130,12 +131,10 @@ public class UploadsBean extends BaseDao implements Serializable{
 
             imagesDao.saveOrUpdate(image);
             switch (imageType) {
-                case (IMAGE_USER) :
-                    usersDao.getItem().setRefImage(image); usersDao.update();break;
-                case (IMAGE_SCHOOL) :
-                    schoolsDao.getItem().setRefImage(image); schoolsDao.update();break;
-                case (IMAGE_SLIDE) :
-                    slidesDao.getItem().setRefImage(image); slidesDao.update();break;
+                case (IMAGE_USER) : usersDao.getItem().setRefImage(image); usersDao.update();break;
+                case (IMAGE_SCHOOL) : schoolsDao.getItem().setRefImage(image); schoolsDao.update();break;
+                case (IMAGE_SLIDE) : slidesDao.getItem().setRefImage(image); slidesDao.update();break;
+                case (IMAGE_TEAM) : teamsDao.getItem().setRefImage(image); teamsDao.update();break;
             }
         } catch (Exception e) {
             logger.error("EXCEPTION: ", e);

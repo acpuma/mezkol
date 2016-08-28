@@ -48,6 +48,9 @@ public class Contents extends BaseEntity implements Serializable {
     @OneToMany(mappedBy = "refContent", fetch = FetchType.LAZY)
     private Collection<Menus> menusCollection;
 
+    @OneToMany(mappedBy = "refContent", fetch = FetchType.LAZY)
+    private Collection<Teams> teamsCollection;
+
     public Contents() {
     }
 
@@ -139,6 +142,14 @@ public class Contents extends BaseEntity implements Serializable {
 
     public void setRefContentType(ContentsType refContentType) {
         this.refContentType = refContentType;
+    }
+
+    public Collection<Teams> getTeamsCollection() {
+        return teamsCollection;
+    }
+
+    public void setTeamsCollection(Collection<Teams> teamsCollection) {
+        this.teamsCollection = teamsCollection;
     }
 
     @Override

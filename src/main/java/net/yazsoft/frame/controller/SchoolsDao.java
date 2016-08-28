@@ -13,6 +13,7 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.File;
@@ -31,6 +32,15 @@ public class SchoolsDao extends BaseGridDao<Schools> implements Serializable{
     @Inject UsersDao usersDao;
     @Inject ZlogLoginDao zlogLoginDao;
     @Inject AlbumsDao albumsDao;
+
+    Long schoolId;
+
+    public void initSelected() {
+        if (!FacesContext.getCurrentInstance().isPostback()) {
+            if (schoolId==null) schoolId=1L;
+            selected = getById(schoolId);
+        }
+    }
 
     public SchoolsDao() {
         super(Schools.class);
@@ -137,4 +147,11 @@ public class SchoolsDao extends BaseGridDao<Schools> implements Serializable{
         this.selected = selected;
     }
 
+    public Long getSchoolId() {
+        return schoolId;
+    }
+
+    public void setSchoolId(Long schoolId) {
+        this.schoolId = schoolId;
+    }
 }

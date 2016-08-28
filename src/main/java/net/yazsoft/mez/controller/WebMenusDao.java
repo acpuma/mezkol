@@ -1,10 +1,9 @@
 package net.yazsoft.mez.controller;
 
-import net.yazsoft.entities.Contents;
-import net.yazsoft.entities.ContentsType;
-import net.yazsoft.entities.Menus;
+import net.yazsoft.entities.*;
 import net.yazsoft.frame.controller.ContentsDao;
 import net.yazsoft.frame.controller.MenusTypeDao;
+import net.yazsoft.frame.controller.SchoolsMenusDao;
 import net.yazsoft.frame.controller.scopes.ViewScoped;
 import net.yazsoft.frame.hibernate.BaseGridDao;
 import net.yazsoft.frame.utils.Constants;
@@ -32,15 +31,27 @@ public class WebMenusDao extends BaseGridDao<Menus> implements Serializable{
     Boolean listChanged=true;
     Contents content;
 
+    List<Schools> menuSchools;
+
     Long menuId;
 
     @Inject ContentsDao contentsDao;
     @Inject MenusTypeDao menusTypeDao;
+    @Inject SchoolsMenusDao schoolsMenusDao;
 
     public void initSelected() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
             selected=getById(menuId);
         }
+    }
+
+    public void findSchoolsByMenu(){
+        menuSchools=schoolsMenusDao.findSchoolsByMenu(getItem());
+    }
+
+    public void select() {
+        menuSchools=schoolsMenusDao.findSchoolsByMenu(getItem());
+        super.select();
     }
 
     @PostConstruct
@@ -115,6 +126,16 @@ public class WebMenusDao extends BaseGridDao<Menus> implements Serializable{
                 content.setRefTid(pk);
                 //contentsDao.update();
             }
+            logger.info("SAVING MENU SCHOOLS : " + menuSchools);
+            schoolsMenusDao.deleteSchoolsByMenu(getItem());
+            for (Schools mschool:menuSchools) {
+                SchoolsMenus smenu=new SchoolsMenus();
+                smenu.setRefMenu(getItem());
+                smenu.setRefSchool(mschool);
+                smenu.setActive(true);
+                schoolsMenusDao.create(smenu);
+            }
+
             reset();
         } catch (Exception e) {
             Util.catchException(e);
@@ -185,5 +206,13 @@ public class WebMenusDao extends BaseGridDao<Menus> implements Serializable{
 
     public void setMenuId(Long menuId) {
         this.menuId = menuId;
+    }
+
+    public List<Schools> getMenuSchools() {
+        return menuSchools;
+    }
+
+    public void setMenuSchools(List<Schools> menuSchools) {
+        this.menuSchools = menuSchools;
     }
 }

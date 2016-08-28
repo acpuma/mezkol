@@ -12,8 +12,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Articles.findAll", query = "SELECT a FROM Articles a")})
-public class Articles extends BaseEntity implements Serializable {
+    @NamedQuery(name = "Teams.findAll", query = "SELECT t FROM Teams t")})
+public class Teams extends BaseEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,52 +28,43 @@ public class Articles extends BaseEntity implements Serializable {
     private int version;
     private int rank;
     @Size(max = 500)
-    @Column(name = "title_tr", length = 500)
-    private String titleTr;
-    @Size(max = 500)
-    @Column(name = "title_en", length = 500)
-    private String titleEn;
-    @Size(max = 500)
-    @Column(name = "location", length = 500)
-    private String location;
+    @Column(name = "name", length = 500)
+    private String name;
+    private String title;
+
+    private String email;
+    private String facebook;
+    private String twitter;
+    private String linkedin;
+
+
     @JoinColumn(name = "ref_content", referencedColumnName = "tid")
     @ManyToOne(fetch = FetchType.LAZY)
     private Contents refContent;
-    @JoinColumn(name = "ref_article_type", referencedColumnName = "tid")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private ArticlesType refArticleType;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date date;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date endDate;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date created;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updated;
+    @JoinColumn(name = "ref_team_type", referencedColumnName = "tid")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private TeamsType refTeamType;
 
     @JoinColumn(name = "ref_image", referencedColumnName = "tid")
     @ManyToOne(fetch = FetchType.LAZY)
     private Images refImage;
-    @JoinColumn(name = "ref_album", referencedColumnName = "tid")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Albums refAlbum;
 
     @JoinColumn(name = "ref_school", referencedColumnName = "tid")
     @ManyToOne(fetch = FetchType.LAZY)
     private Schools refSchool;
 
-    public Articles() {
+    public Teams() {
     }
 
-    public Articles(Long tid) {
+    public Teams(Long tid) {
         this.tid = tid;
     }
 
-    public Articles(Long tid, int version, String titleTr) {
+    public Teams(Long tid, int version, String name) {
         this.tid = tid;
         this.version = version;
-        this.titleTr = titleTr;
+        this.name = name;
     }
 
     public Long getTid() {
@@ -101,28 +92,12 @@ public class Articles extends BaseEntity implements Serializable {
     }
 
 
-    public Date getDate() {
-        return date;
+    public Boolean getPublish() {
+        return publish;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public Date getCreated() {
-        return created;
-    }
-
-    public void setCreated(Date created) {
-        this.created = created;
-    }
-
-    public Date getUpdated() {
-        return updated;
-    }
-
-    public void setUpdated(Date updated) {
-        this.updated = updated;
+    public void setPublish(Boolean publish) {
+        this.publish = publish;
     }
 
     public int getRank() {
@@ -133,20 +108,12 @@ public class Articles extends BaseEntity implements Serializable {
         this.rank = rank;
     }
 
-    public String getTitleTr() {
-        return titleTr;
+    public String getName() {
+        return name;
     }
 
-    public void setTitleTr(String titleTr) {
-        this.titleTr = titleTr;
-    }
-
-    public String getTitleEn() {
-        return titleEn;
-    }
-
-    public void setTitleEn(String titleEn) {
-        this.titleEn = titleEn;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Contents getRefContent() {
@@ -157,20 +124,12 @@ public class Articles extends BaseEntity implements Serializable {
         this.refContent = refContent;
     }
 
-    public Boolean getPublish() {
-        return publish;
+    public TeamsType getRefTeamType() {
+        return refTeamType;
     }
 
-    public void setPublish(Boolean publish) {
-        this.publish = publish;
-    }
-
-    public ArticlesType getRefArticleType() {
-        return refArticleType;
-    }
-
-    public void setRefArticleType(ArticlesType refArticleType) {
-        this.refArticleType = refArticleType;
+    public void setRefTeamType(TeamsType refTeamType) {
+        this.refTeamType = refTeamType;
     }
 
     public Images getRefImage() {
@@ -181,36 +140,44 @@ public class Articles extends BaseEntity implements Serializable {
         this.refImage = refImage;
     }
 
-    public String getLocation() {
-        return location;
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public Albums getRefAlbum() {
-        return refAlbum;
-    }
-
-    public void setRefAlbum(Albums refAlbum) {
-        this.refAlbum = refAlbum;
-    }
-
     public Schools getRefSchool() {
         return refSchool;
     }
 
     public void setRefSchool(Schools refSchool) {
         this.refSchool = refSchool;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getFacebook() {
+        return facebook;
+    }
+
+    public void setFacebook(String facebook) {
+        this.facebook = facebook;
+    }
+
+    public String getTwitter() {
+        return twitter;
+    }
+
+    public void setTwitter(String twitter) {
+        this.twitter = twitter;
+    }
+
+    public String getLinkedin() {
+        return linkedin;
+    }
+
+    public void setLinkedin(String linkedin) {
+        this.linkedin = linkedin;
     }
 
     @Override
@@ -223,14 +190,21 @@ public class Articles extends BaseEntity implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Articles)) {
+        if (!(object instanceof Teams)) {
             return false;
         }
-        Articles other = (Articles) object;
+        Teams other = (Teams) object;
         if ((this.tid == null && other.tid != null) || (this.tid != null && !this.tid.equals(other.tid))) {
             return false;
         }
         return true;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 }

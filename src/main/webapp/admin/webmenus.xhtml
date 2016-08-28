@@ -40,7 +40,7 @@
         <p:outputPanel id="formPanel" >
             <h:form id="pageForm">
 
-                <p:panelGrid columns="8" id="pagePanel">
+                <p:panelGrid columns="9" id="pagePanel">
 
                     <h:outputLabel value="#{msg.global_name}:" for="name" />
                     <h:inputText id="name" value="#{webMenusDao.item.nameTr}" size="30"
@@ -59,6 +59,11 @@
                     <h:outputLabel value="#{msg.custom} #{msg.content}" for="custom"/>
                     <h:selectBooleanCheckbox value="#{webMenusDao.item.custom}" id="custom"/>
 
+                    <p:selectCheckboxMenu id="menu" value="#{webMenusDao.menuSchools}" label="#{msg.schools}" style="margin: 3px 10px;"
+                                          panelStyle="width:250px;" converter="entityConverter">
+                        <f:selectItems value="#{schoolsDao.all}" var="school"
+                                       itemLabel="#{school.name}" itemValue="#{school}" />
+                    </p:selectCheckboxMenu>
 
                 </p:panelGrid>
                 <p:outputPanel style="height:460px; width: 1000px; margin: 20px 0 5px; ">

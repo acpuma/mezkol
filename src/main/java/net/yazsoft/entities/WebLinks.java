@@ -14,8 +14,8 @@ import java.util.Date;
 @Entity
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "ContactForms.findAll", query = "SELECT c FROM ContactForms c")})
-public class ContactForms extends BaseEntity implements Serializable {
+    @NamedQuery(name = "WebLinks.findAll", query = "SELECT w FROM WebLinks w")})
+public class WebLinks extends BaseEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +23,6 @@ public class ContactForms extends BaseEntity implements Serializable {
     @Column(nullable = false)
     private Long tid;
     private Boolean active;
-    private Boolean readen;
     @Basic(optional = false)
     @NotNull
     @Column(nullable = false)
@@ -33,34 +32,31 @@ public class ContactForms extends BaseEntity implements Serializable {
     @Size(min = 1, max = 255)
     @Column(nullable = false, length = 255)
     private String name;
-    // @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Invalid phone/fax format, should be as xxx-xxx-xxxx")//if the field contains phone or fax number consider using this annotation to enforce field validation
-    @Size(max = 50)
-    @Column(length = 50)
-    private String phone;
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Size(max = 255)
     @Column(length = 255)
-    private String email;
-    @Size(max = 1000)
-    @Column(length = 1000)
-    private String message;
+    private String url;
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
     @Temporal(TemporalType.TIMESTAMP)
     private Date updated;
+    @JoinColumn(name = "ref_image", referencedColumnName = "tid")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Images refImage;
+    private Integer rank;
 
     @JoinColumn(name = "ref_school", referencedColumnName = "tid")
     @ManyToOne(fetch = FetchType.LAZY)
     private Schools refSchool;
 
-    public ContactForms() {
+
+    public WebLinks() {
     }
 
-    public ContactForms(Long tid) {
+    public WebLinks(Long tid) {
         this.tid = tid;
     }
 
-    public ContactForms(Long tid, int version, String name) {
+    public WebLinks(Long tid, int version, String name) {
         this.tid = tid;
         this.version = version;
         this.name = name;
@@ -98,28 +94,12 @@ public class ContactForms extends BaseEntity implements Serializable {
         this.name = name;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getUrl() {
+        return url;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public Date getCreated() {
@@ -138,12 +118,20 @@ public class ContactForms extends BaseEntity implements Serializable {
         this.updated = updated;
     }
 
-    public Boolean getReaden() {
-        return readen;
+    public Images getRefImage() {
+        return refImage;
     }
 
-    public void setReaden(Boolean readen) {
-        this.readen = readen;
+    public void setRefImage(Images refImage) {
+        this.refImage = refImage;
+    }
+
+    public Integer getRank() {
+        return rank;
+    }
+
+    public void setRank(Integer rank) {
+        this.rank = rank;
     }
 
     public Schools getRefSchool() {
@@ -164,10 +152,10 @@ public class ContactForms extends BaseEntity implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ContactForms)) {
+        if (!(object instanceof WebLinks)) {
             return false;
         }
-        ContactForms other = (ContactForms) object;
+        WebLinks other = (WebLinks) object;
         if ((this.tid == null && other.tid != null) || (this.tid != null && !this.tid.equals(other.tid))) {
             return false;
         }

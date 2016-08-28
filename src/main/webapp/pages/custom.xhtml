@@ -11,7 +11,10 @@
     <f:metadata>
         <f:viewParam name="cid" value="#{webMenusDao.menuId}" />
         <f:viewAction action="#{webMenusDao.initSelected}" />
+        <f:viewParam name="sid" value="#{schoolsDao.schoolId}" />
+        <f:viewAction action="#{schoolsDao.initSelected}" />
     </f:metadata>
+
     <ui:composition template="/WEB-INF/templates/webtemplate.xhtml">
 
 <p:outputPanel style=" margin:0px auto 10px; " >

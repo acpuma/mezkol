@@ -105,7 +105,22 @@
             <p:column headerText="#{msg.message}" width="100" filterBy="#{contactFormsVar.message}">
                 #{contactFormsVar.message}
             </p:column>
-            <p:column headerText="Okundu" width="50" >
+            <p:column headerText="#{msg.school}" width="60" filterBy="#{contactFormsVar.refSchool}" rendered="false">
+                #{contactFormsVar.refSchool}
+            </p:column>
+
+            <p:column headerText="#{msg.school}" width="60" filterBy="#{contactFormsVar.refSchool}">
+                <f:facet name="filter">
+                    <p:selectOneMenu onchange="PF('#{cc.attrs.widgetVar}').filter()" >
+                        <f:selectItem itemLabel="#{msg.global_all}" itemValue="#{null}"
+                                      noSelectionOption="true" />
+                        <f:selectItems value="#{schoolsDao.findActiveUserSchools()}" var="man"
+                                       itemLabel="#{man.name}" itemValue="#{man}"/>
+                    </p:selectOneMenu>
+                </f:facet>
+                #{contactFormsVar.refSchool.name}
+            </p:column>
+            <p:column headerText="Okundu" width="30" >
                 <p:selectBooleanCheckbox value="#{contactFormsVar.readen}" >
                     <p:ajax event="valueChange"  listener="#{contactFormsDao.checkboxChange(contactFormsVar)}"
                             update=":messages" global="false"/>

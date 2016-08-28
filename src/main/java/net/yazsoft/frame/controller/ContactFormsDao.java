@@ -7,6 +7,7 @@ import net.yazsoft.frame.utils.Constants;
 import net.yazsoft.frame.utils.Util;
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import javax.inject.Inject;
@@ -21,8 +22,10 @@ public class ContactFormsDao extends BaseGridDao<ContactForms> implements Serial
     ContactForms selected;
     List<ContactForms> items;
     Boolean itemsChanged=true;
+    public List<ContactForms> unreadenForms;
 
     @Inject Email email;
+    @Inject SchoolsDao schoolsDao;
 
     public void checkboxChange(ContactForms cform) {
         try {
@@ -38,6 +41,7 @@ public class ContactFormsDao extends BaseGridDao<ContactForms> implements Serial
             getItem().setActive(true);
             getItem().setCreated(Util.getNow());
             getItem().setReaden(Boolean.FALSE);
+            getItem().setRefSchool(schoolsDao.getSelected());
             create();
             String body=" İletişim Formu - Yeni Mesaj : "
                     +"\nAd : "  + getItem().getName()
@@ -63,6 +67,7 @@ public class ContactFormsDao extends BaseGridDao<ContactForms> implements Serial
             Criteria c = getCriteria();
             c.add(Restrictions.eq("active", true));
             //c.add(Restrictions.eq("isDeleted", false));
+            c.addOrder(Order.desc("created"));
             list = c.list();
             itemsChanged=false;
         } catch (Exception e) {
@@ -82,6 +87,7 @@ public class ContactFormsDao extends BaseGridDao<ContactForms> implements Serial
         } catch (Exception e) {
             Util.catchException(e);
         }
+        unreadenForms=list;
         return list;
     }
 
@@ -108,5 +114,14 @@ public class ContactFormsDao extends BaseGridDao<ContactForms> implements Serial
         this.items = items;
     }
 
+    public List<ContactForms> getUnreadenForms() {
+        if (unreadenForms==null) {
+            findItemsUnread();
+        }
+        return unreadenForms;
+    }
 
+    public void setUnreadenForms(List<ContactForms> unreadenForms) {
+        this.unreadenForms = unreadenForms;
+    }
 }

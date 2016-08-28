@@ -1,9 +1,6 @@
 package net.yazsoft.frame.controller;
 
-import net.yazsoft.entities.Articles;
-import net.yazsoft.entities.ArticlesType;
-import net.yazsoft.entities.Contents;
-import net.yazsoft.entities.ContentsType;
+import net.yazsoft.entities.*;
 import net.yazsoft.frame.controller.scopes.ViewScoped;
 import net.yazsoft.frame.hibernate.BaseGridDao;
 import net.yazsoft.frame.utils.Constants;
@@ -41,6 +38,7 @@ public class ArticlesDao extends BaseGridDao<Articles> implements Serializable {
 
     @Inject ContentsDao contentsDao;
     @Inject ArticlesTypeDao articlesTypeDao;
+    @Inject SchoolsDao schoolsDao;
 
     public void initSelected() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
@@ -63,6 +61,7 @@ public class ArticlesDao extends BaseGridDao<Articles> implements Serializable {
             if ((month!=null) && (year!=null)){
                 String hql = "SELECT A FROM Articles A " + " where month(date)=:month and year(date)=:year"
                         + " and publish=true and refArticleType=" + Constants.ARTICLETYPE_EVENTS
+                        + " and refSchool="+schoolsDao.getSelected()
                         + " order by date desc";
                 Query query = getSession().createQuery(hql);
                 query.setInteger("month", month);
@@ -106,12 +105,12 @@ public class ArticlesDao extends BaseGridDao<Articles> implements Serializable {
 
     public List<Articles> findNews() {
         ArticlesType atype=articlesTypeDao.getById(Constants.ARTICLETYPE_NEWS);
-        return findArticlesByType(atype);
+        return findArticlesByType(atype,schoolsDao.getSelected());
     }
 
     public List<Articles> findNews5() {
         ArticlesType atype=articlesTypeDao.getById(Constants.ARTICLETYPE_NEWS);
-        List<Articles> list=findArticlesByType(atype);
+        List<Articles> list=findArticlesByType(atype,schoolsDao.getSelected());
         if (list.size()>5) {
             return list.subList(0,4);
         }
@@ -120,23 +119,24 @@ public class ArticlesDao extends BaseGridDao<Articles> implements Serializable {
 
     public List<Articles> findEvents() {
         ArticlesType atype=articlesTypeDao.getById(Constants.ARTICLETYPE_EVENTS);
-        return findArticlesByType(atype);
+        return findArticlesByType(atype,schoolsDao.getSelected());
     }
     public List<Articles> findEvents5() {
         ArticlesType atype=articlesTypeDao.getById(Constants.ARTICLETYPE_EVENTS);
-        List<Articles> list=findArticlesByType(atype);
+        List<Articles> list=findArticlesByType(atype,schoolsDao.getSelected());
         if (list.size()>5) {
             return list.subList(0,4);
         }
         return list;
     }
 
-    public List<Articles> findArticlesByType(ArticlesType articleType) {
+    public List<Articles> findArticlesByType(ArticlesType articleType, Schools school) {
         List list = null;
         try {
             Criteria c = getCriteria();
             c.add(Restrictions.eq("active", true));
             c.add(Restrictions.eq("refArticleType",articleType));
+            c.add(Restrictions.eq("refSchool",school));
             //c.add(Restrictions.eq("isDeleted", false));
             c.add(Restrictions.eq("publish",true));
             c.addOrder(Order.desc("date"));
@@ -201,6 +201,7 @@ public class ArticlesDao extends BaseGridDao<Articles> implements Serializable {
             itemsChanged = true;
             content.setActive(true);
             if (getItem().getTid() == null) {
+                getItem().setRefSchool(Util.getActiveSchool());
                 getItem().setActive(true);
                 getItem().setRank(items.size() + 1);
                 content.setRefContentType((ContentsType) getSession().load(
@@ -247,6 +248,7 @@ public class ArticlesDao extends BaseGridDao<Articles> implements Serializable {
         try {
             Criteria c = getCriteria();
             c.add(Restrictions.eq("active", true));
+            c.add(Restrictions.eq("refSchool", Util.getActiveSchool()));
             //c.add(Restrictions.eq("isDeleted", false));
             //c.add(Restrictions.eq("publish",true));
             c.addOrder(Order.desc("date"));

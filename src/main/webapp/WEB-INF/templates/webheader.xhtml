@@ -13,10 +13,34 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </a>
-                <a href="#" id="logo">
-                    <p:graphicImage library="images" name="logo.png"
-                                    alt="Mezopotamya Okullari" />
-                </a>
+                <p:outputPanel rendered="#{schoolsDao.selected.tid eq 1}">
+                    <a href="#" id="logo">
+                        <p:graphicImage library="images" name="logo.png"
+                                        alt="Mezopotamya Okullari" />
+                    </a>
+                </p:outputPanel>
+                <p:outputPanel rendered="#{schoolsDao.selected.tid ne 1}" >
+                    <a href="#" id="logo" >
+                        <p:graphicImage library="images" name="logo.png" styleClass="subschoolLogo"
+                                        alt="Mezopotamya Okullari" id="schoolLogoImg"/>
+                    </a>
+                    <p:outputPanel layout="inline" id="logoName"
+                                   style="font-size: 24px; float:left; margin:17px 10px;">
+                        |  #{schoolsDao.selected.name}
+                    </p:outputPanel>
+                    <h:outputStylesheet>
+                        #header-content {
+                            height: 65px;
+                        }
+                        #header {height:65px;}
+                        .subschoolLogo {
+                            height: 60px !important;
+                        }
+                    </h:outputStylesheet>
+
+                </p:outputPanel>
+
+
 
                 <aside id="header-content">
                     <h2 id="slogan"><i>"Yeni bir güneş doğuyor"</i></h2>
@@ -32,22 +56,30 @@
                     <span class="icon-bar"></span>
                 </a>
                 <ul id="nav-main">
-                    <ui:repeat value="#{schoolsMenusDao.findBySchool(null)}" var="schoolmenu" >
+                    <ui:repeat value="#{schoolsMenusDao.findBySchool(schoolsDao.selected)}" var="schoolmenu" >
 
                         <ui:fragment rendered="#{schoolmenu.refMenu.form eq view.viewId.substring(0, view.viewId.length()-6)}">
                             <li class="current-menu-item">
-                                <h:link outcome="#{schoolmenu.refMenu.form}" rendered="#{not schoolmenu.refMenu.custom}">#{schoolmenu.refMenu.nameTr}</h:link>
+                                <h:link outcome="#{schoolmenu.refMenu.form}" rendered="#{not schoolmenu.refMenu.custom}">
+                                    <f:param name="sid" value="#{schoolsDao.selected.tid}" />
+                                    #{schoolmenu.refMenu.nameTr}
+                                </h:link>
                                 <h:link outcome="/pages/custom" rendered="#{schoolmenu.refMenu.custom}">
                                     <f:param name="cid" value="#{schoolmenu.refMenu.tid}" />
+                                    <f:param name="sid" value="#{schoolsDao.selected.tid}" />
                                     #{schoolmenu.refMenu.nameTr}
                                 </h:link>
                             </li>
                         </ui:fragment>
                         <ui:fragment rendered="#{schoolmenu.refMenu.form ne view.viewId.substring(0, view.viewId.length()-6)}">
                             <li>
-                                <h:link outcome="#{schoolmenu.refMenu.form}" rendered="#{not schoolmenu.refMenu.custom}">#{schoolmenu.refMenu.nameTr}</h:link>
+                                <h:link outcome="#{schoolmenu.refMenu.form}" rendered="#{not schoolmenu.refMenu.custom}">
+                                    <f:param name="sid" value="#{schoolsDao.selected.tid}" />
+                                    #{schoolmenu.refMenu.nameTr}
+                                </h:link>
                                 <h:link outcome="/pages/custom" rendered="#{schoolmenu.refMenu.custom}">
                                     <f:param name="cid" value="#{schoolmenu.refMenu.tid}" />
+                                    <f:param name="sid" value="#{schoolsDao.selected.tid}" />
                                     #{schoolmenu.refMenu.nameTr}
                                 </h:link>
 
@@ -55,9 +87,13 @@
                                 <ul>
                                     <ui:repeat value="#{menusDao.getSubmenus(schoolmenu.refMenu.tid)}" var="submenu" >
                                         <li>
-                                            <h:link outcome="#{submenu.form}" rendered="#{not submenu.custom}">#{submenu.nameTr}</h:link>
+                                            <h:link outcome="#{submenu.form}" rendered="#{not submenu.custom}">
+                                                <f:param name="sid" value="#{schoolsDao.selected.tid}" />
+                                                #{submenu.nameTr}
+                                            </h:link>
                                             <h:link outcome="/pages/custom" rendered="#{submenu.custom}">
                                                 <f:param name="cid" value="#{submenu.tid}" />
+                                                <f:param name="sid" value="#{schoolsDao.selected.tid}" />
                                                 #{submenu.nameTr}
                                             </h:link>
                                         </li>

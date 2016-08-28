@@ -36,9 +36,9 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="icon-bubbles4"></i>
                                 <span class="visible-xs-inline-block position-right">Messages</span>
-                                <ui:fragment rendered="#{careersDao.findItemsUnread().size() + contactFormsDao.findItemsUnread().size() gt 0}">
+                                <ui:fragment rendered="#{careersDao.unreadenCareers.size() + contactFormsDao.unreadenForms.size() gt 0}">
                                 <span class="badge bg-warning-400">
-                                    #{careersDao.findItemsUnread().size() + contactFormsDao.findItemsUnread().size()}
+                                    #{careersDao.unreadenCareers.size() + contactFormsDao.unreadenForms.size()}
                                 </span>
                                 </ui:fragment>
                             </a>
@@ -51,7 +51,7 @@
                                 </div>
 
                                 <ul class="media-list dropdown-content-body">
-                                    <ui:repeat value="#{contactFormsDao.findItemsUnread()}" var="message">
+                                    <ui:repeat value="#{contactFormsDao.unreadenForms}" var="message">
                                         <li class="media">
 
 
@@ -65,7 +65,7 @@
                                             </div>
                                         </li>
                                     </ui:repeat>
-                                    <ui:repeat value="#{careersDao.findItemsUnread()}" var="message">
+                                    <ui:repeat value="#{careersDao.unreadenCareers}" var="message">
                                         <li class="media">
 
                                             <div class="media-body">

@@ -25,7 +25,7 @@
     <cc:attribute default="single"    required="false"   name="sortMode" />
     <cc:attribute default="false"     required="false"   name="stickyHeader" />
     <cc:attribute default="false"     required="false"   name="transient" />
-    <cc:attribute default="widgetArticles"     required="false"   name="widgetVar" />
+    <cc:attribute default="widgetTeams"     required="false"   name="widgetVar" />
     <cc:attribute default=":pageForm" required="false" name="update" />
     <cc:attribute  required="false" name="tableStyle" />
 </cc:interface>
@@ -33,11 +33,11 @@
 <!-- IMPLEMENTATION -->
 <cc:implementation>
     <h:form onkeypress="if (event.keyCode == 13) {return false; }">
-        <p:dataTable id="articlesGrid"
-                     var="articlesVar"
+        <p:dataTable id="teamsGrid"
+                     var="teamsVar"
 
                      filterEvent="enter"
-                     value="#{articlesDao.items}"
+                     value="#{teamsDao.items}"
                      emptyMessage=" #{msg['global_no_data']}"
                      paginatorTemplate=" {FirstPageLink}
                  {PreviousPageLink} 
@@ -68,8 +68,8 @@
                      transient="#{cc.attrs.transient}"
                      widgetVar="#{cc.attrs.widgetVar}"
 
-                     selection="#{articlesDao.item}"
-                     rowKey="#{articlesVar.tid}"
+                     selection="#{teamsDao.item}"
+                     rowKey="#{teamsVar.tid}"
                      tableStyle="#{cc.attrs.tableStyle}"
                      selectionMode="single"
 
@@ -78,55 +78,51 @@
                     onstart="PF('blockUIWidget1').block()"
                     oncomplete="PF('blockUIWidget1').unblock();PF('formDialogWidget').show();"
                     process="@all"
-                    listener="#{articlesDao.select}"
+                    listener="#{teamsDao.select}"
                     />
 
-            <p:ajax event="rowReorder" listener="#{articlesDao.onRowReorder}" update=":messages articlesGrid" />
+            <p:ajax event="rowReorder" listener="#{teamsDao.onRowReorder}" update=":messages teamsGrid" />
 
             <f:facet name="header">
-                #{msg.articles}
+                #{msg.teams}
             </f:facet>
 
             <p:column headerText="#{msg.global_id}" width="5" rendered="true"  >
-                #{articlesVar.tid}
+                #{teamsVar.tid}
             </p:column>
-            <p:column headerText="Resim" rendered="true" width="30">
-                <p:outputPanel style="height: 50px; width:100px;">
-                    <p:graphicImage height="50" width="100" style="height:50px; width: 100px;" cache="false"
+            <p:column headerText="Resim" rendered="true" width="20" style="text-align: center;">
+                <p:outputPanel style="height: 50px; width:50px;">
+                    <p:graphicImage height="50" width="50" style="height:50px; width: 50px;" cache="false"
                                     rendered="true"
-                                    value="#{imagesDao.findImagePath(articlesVar.refImage)}"
+                                    value="#{imagesDao.findImagePath(teamsVar.refImage)}"
 
                     />
                 </p:outputPanel>
             </p:column>
 
-            <p:column headerText="#{msg.global_title}" width="150" filterBy="#{articlesVar.titleTr}">
-                #{articlesVar.titleTr}
+            <p:column headerText="#{msg.global_name_surname}" width="150" filterBy="#{teamsVar.name}">
+                #{teamsVar.name}
             </p:column>
+
             <p:column headerText="#{msg.publish}" width="25" >
-                <p:selectBooleanCheckbox value="#{articlesVar.publish}" >
-                    <p:ajax event="valueChange"  listener="#{articlesDao.checkboxChange(articlesVar)}"
+                <p:selectBooleanCheckbox value="#{teamsVar.publish}" >
+                    <p:ajax event="valueChange"  listener="#{teamsDao.checkboxChange(teamsVar)}"
                             update=":messages" global="false"/>
                 </p:selectBooleanCheckbox>
             </p:column>
-            <p:column headerText="Tür" width="60" filterBy="#{articlesVar.refArticleType}">
+            <p:column headerText="Tür" width="60" filterBy="#{teamsVar.refTeamType}">
                 <f:facet name="filter">
                     <p:selectOneMenu onchange="PF('#{cc.attrs.widgetVar}').filter()" >
                         <f:selectItem itemLabel="#{msg.global_all}" itemValue="#{null}"
                                       noSelectionOption="true" />
-                        <f:selectItems value="#{articlesTypeDao.all}" var="man"
+                        <f:selectItems value="#{teamsTypeDao.all}" var="man"
                                        itemLabel="#{man.name}" itemValue="#{man}"/>
                     </p:selectOneMenu>
                 </f:facet>
-                #{articlesVar.refArticleType.name}
+                #{teamsVar.refTeamType.name}
             </p:column>
             <p:column headerText="Sıra" width="6" rendered="true">
-                #{articlesVar.rank}
-            </p:column>
-            <p:column headerText="Tarih" width="60" rendered="true" sortBy="#{articlesVar.date}">
-                <h:outputText value="#{articlesVar.date}">
-                    <f:convertDateTime pattern="dd/MM/yyyy" />
-                </h:outputText>
+                #{teamsVar.rank}
             </p:column>
 
         </p:dataTable>

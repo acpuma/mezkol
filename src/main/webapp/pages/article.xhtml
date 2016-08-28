@@ -11,6 +11,8 @@
     <f:metadata>
         <f:viewParam name="aid" value="#{articlesDao.articleId}" />
         <f:viewAction action="#{articlesDao.initSelected}" />
+        <f:viewParam name="sid" value="#{schoolsDao.schoolId}" />
+        <f:viewAction action="#{schoolsDao.initSelected}" />
     </f:metadata>
     <ui:composition template="/WEB-INF/templates/webtemplate.xhtml">
 

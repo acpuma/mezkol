@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+>
+<f:view>
+    <f:metadata>
+        <f:viewParam name="sid" value="#{schoolsDao.schoolId}" />
+        <f:viewAction action="#{schoolsDao.initSelected}" />
+        <f:viewParam name="tid" value="#{teamsDao.teamId}" />
+        <f:viewAction action="#{teamsDao.initSelected}" />
+    </f:metadata>
+
+    <ui:composition template="/WEB-INF/templates/webtemplate.xhtml">
+
+        <div id="content-container">
+        <div id="content" class="clearfix">
+        <div id="main-content">
+
+            <div id="breadcrumbs" class="clearfix">
+                <div>
+                    <a href="index.html" itemprop="url" class="icon-home">
+                        <span itemprop="title">ANASAYFA</span>
+                    </a> <span class="arrow">&gt;</span>
+                </div>
+                <div>
+                    <a href="#" itemprop="url">
+                        <span itemprop="title">KADROMUZ</span>
+                    </a> <span class="arrow">&gt;</span>
+                </div>
+                <div>
+                    <a href="#" itemprop="url">
+                        <span itemprop="title">#{teamsDao.selected.refTeamType.name}</span>
+                    </a> <span class="arrow">&gt;</span>
+                </div>
+                <span class="last-breadcrumbs">
+                        #{teamsDao.selected.name}
+                    </span>
+            </div>
+            <article class="static-page" style="min-width: 1000px;">
+                <div id="profile-team">
+                    <p:graphicImage height="180" width="180" style="height:180px; width: 180px;" cache="false"
+                                    rendered="true"
+                                    value="#{imagesDao.findImagePath(teamsDao.selected.refImage)}"
+
+                    />
+                    <ul id="list-social-team">
+                        <ui:fragment rendered="#{not empty teamsDao.selected.facebook}">
+                            <li class="facebook-team"><a href="#{teamsDao.selected.facebook}"><span></span>Facebook</a></li>
+                        </ui:fragment>
+                        <ui:fragment rendered="#{not empty teamsDao.selected.twitter}">
+                            <li class="twitter-team"><a href="#{teamsDao.selected.twitter}"><span></span>Twitter</a></li>
+                        </ui:fragment>
+                        <ui:fragment rendered="#{not empty teamsDao.selected.linkedin}">
+                            <li class="linkedin-team"><a href="#{teamsDao.selected.linkedin}"><span></span>Linkedin</a></li>
+                        </ui:fragment>
+
+                        <li class="position-team">#{teamsDao.selected.refTeamType.name}</li>
+
+                        <ui:fragment rendered="#{not empty teamsDao.selected.email}">
+                            <li class="email-team">#{teamsDao.selected.email}</li>
+                        </ui:fragment>
+                    </ul>
+                </div>
+                <h1 id="main-title">#{teamsDao.selected.name}</h1>
+                <h:outputText value="#{teamsDao.selected.refContent.contentTr}" escape="false" />
+            </article>
+        </div>
+        </div>
+        </div>
+    </ui:composition>
+</f:view>
+</html>
+

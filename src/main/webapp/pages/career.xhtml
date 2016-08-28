@@ -8,6 +8,10 @@
       xmlns:p="http://primefaces.org/ui"
 >
 <f:view>
+    <f:metadata>
+        <f:viewParam name="sid" value="#{schoolsDao.schoolId}" />
+        <f:viewAction action="#{schoolsDao.initSelected}" />
+    </f:metadata>
 
     <h:outputStylesheet library="primefaces-bootstrap" name="theme.css" rendered="true"/>
     <h:outputStylesheet library="css" name="core.css" rendered="true"/>

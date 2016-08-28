@@ -19,6 +19,7 @@
         <cc:attribute default="@this" required="false"   name="update" />
 
         <cc:attribute default=""     required="false"   name="oncomplete" />
+        <cc:attribute default=""     required="false"   name="printerTarget" />
         <cc:attribute default="#{p:component('pageForm')}" name="resetfields" />
         <cc:attribute name="daobean" /> 
     </cc:interface>
@@ -80,7 +81,9 @@
                            icon="ui-icon-alert"/>
             </p:commandButton>
             <p:commandButton icon="toolbar-print toolbar-icon" styleClass="toolbar-button"
-                             value="#{msg.toolbar_print}" rendered="#{cc.attrs.print}" disabled=""/>
+                             value="#{msg.toolbar_print}" rendered="#{cc.attrs.print}" disabled="">
+                <p:printer target="#{cc.attrs.printerTarget}" />
+                    </p:commandButton>
             <p:commandButton icon="toolbar-help toolbar-icon" styleClass="toolbar-button"
                              value="#{msg.toolbar_help}" rendered="#{cc.attrs.help}"
                              disabled="#{not authsDao.auths.preport}"/>

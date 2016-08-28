@@ -21,6 +21,7 @@ public class Constants extends BaseDao{
     public static final Long CONTENT_MENU = 1L;
     public static final Long CONTENT_ARTICLE = 2L;
     public static final Long CONTENT_COURSE = 3L;
+    public static final Long CONTENT_TEAM = 4L;
     public static final String EMAIL_NOTIFICATION ="mezopotamyakoleji@hotmail.com";
     public static final Integer PAGE_ARTICLES = 5;
     public static Long ARTICLETYPE_NEWS = 1L;

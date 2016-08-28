@@ -25,19 +25,19 @@
     <cc:attribute default="single"    required="false"   name="sortMode" />
     <cc:attribute default="false"     required="false"   name="stickyHeader" />
     <cc:attribute default="false"     required="false"   name="transient" />
-    <cc:attribute default="widgetArticles"     required="false"   name="widgetVar" />
+    <cc:attribute default="widgetTeamsType"     required="false"   name="widgetVar" />
     <cc:attribute default=":pageForm" required="false" name="update" />
     <cc:attribute  required="false" name="tableStyle" />
 </cc:interface>
 
 <!-- IMPLEMENTATION -->
 <cc:implementation>
-    <h:form onkeypress="if (event.keyCode == 13) {return false; }">
-        <p:dataTable id="articlesGrid"
-                     var="articlesVar"
+    <h:form onkeypress="if (event.keyCode == 13) {return false; }" id="teamTypeForm">
+        <p:dataTable id="teamsTypeGrid"
+                     var="teamsTypeVar"
 
                      filterEvent="enter"
-                     value="#{articlesDao.items}"
+                     value="#{teamsTypeDao.all}"
                      emptyMessage=" #{msg['global_no_data']}"
                      paginatorTemplate=" {FirstPageLink}
                  {PreviousPageLink} 
@@ -68,68 +68,80 @@
                      transient="#{cc.attrs.transient}"
                      widgetVar="#{cc.attrs.widgetVar}"
 
-                     selection="#{articlesDao.item}"
-                     rowKey="#{articlesVar.tid}"
+                     selection="#{teamsTypeDao.item}"
+                     rowKey="#{teamsTypeVar.tid}"
                      tableStyle="#{cc.attrs.tableStyle}"
-                     selectionMode="single"
 
                 >
             <p:ajax event="rowDblselect" update="#{cc.attrs.update}"
                     onstart="PF('blockUIWidget1').block()"
                     oncomplete="PF('blockUIWidget1').unblock();PF('formDialogWidget').show();"
                     process="@all"
-                    listener="#{articlesDao.select}"
+                    listener="#{teamsTypeDao.select}"
                     />
 
-            <p:ajax event="rowReorder" listener="#{articlesDao.onRowReorder}" update=":messages articlesGrid" />
+            <p:ajax event="rowEdit" listener="#{teamsTypeDao.onRowEdit}"
+                    update=":messages "  />
+            <p:ajax event="rowEditCancel" listener="#{teamsTypeDao.onRowCancel}"
+                    update=":messages " />
+
+            <p:ajax event="rowReorder" listener="#{teamsTypeDao.onRowReorder}" update=":messages teamsTypeGrid" />
 
             <f:facet name="header">
-                #{msg.articles}
+                #{msg.department}
             </f:facet>
 
-            <p:column headerText="#{msg.global_id}" width="5" rendered="true"  >
-                #{articlesVar.tid}
-            </p:column>
-            <p:column headerText="Resim" rendered="true" width="30">
-                <p:outputPanel style="height: 50px; width:100px;">
-                    <p:graphicImage height="50" width="100" style="height:50px; width: 100px;" cache="false"
-                                    rendered="true"
-                                    value="#{imagesDao.findImagePath(articlesVar.refImage)}"
-
-                    />
-                </p:outputPanel>
+            <p:column headerText="#{msg.global_id}" width="5" rendered="false"  >
+                #{teamsTypeVar.tid}
             </p:column>
 
-            <p:column headerText="#{msg.global_title}" width="150" filterBy="#{articlesVar.titleTr}">
-                #{articlesVar.titleTr}
+            <p:column headerText="#{msg.department}" width="60" filterBy="#{teamsTypeVar.name}">
+                <p:cellEditor>
+                    <f:facet name="output"><p:outputLabel value="#{teamsTypeVar.name}" /></f:facet>
+                    <f:facet name="input"><p:inputText value="#{teamsTypeVar.name}"
+                                                       style="width:100%"/></f:facet>
+                </p:cellEditor>
             </p:column>
-            <p:column headerText="#{msg.publish}" width="25" >
-                <p:selectBooleanCheckbox value="#{articlesVar.publish}" >
-                    <p:ajax event="valueChange"  listener="#{articlesDao.checkboxChange(articlesVar)}"
-                            update=":messages" global="false"/>
-                </p:selectBooleanCheckbox>
-            </p:column>
-            <p:column headerText="Tür" width="60" filterBy="#{articlesVar.refArticleType}">
-                <f:facet name="filter">
-                    <p:selectOneMenu onchange="PF('#{cc.attrs.widgetVar}').filter()" >
-                        <f:selectItem itemLabel="#{msg.global_all}" itemValue="#{null}"
-                                      noSelectionOption="true" />
-                        <f:selectItems value="#{articlesTypeDao.all}" var="man"
-                                       itemLabel="#{man.name}" itemValue="#{man}"/>
-                    </p:selectOneMenu>
-                </f:facet>
-                #{articlesVar.refArticleType.name}
-            </p:column>
+
             <p:column headerText="Sıra" width="6" rendered="true">
-                #{articlesVar.rank}
+                <p:cellEditor>
+                    <f:facet name="output"><p:outputLabel value="#{teamsTypeVar.rank}" /></f:facet>
+                    <f:facet name="input"><p:inputText value="#{teamsTypeVar.rank}"
+                                                       style="width:100%"/></f:facet>
+                </p:cellEditor>
             </p:column>
-            <p:column headerText="Tarih" width="60" rendered="true" sortBy="#{articlesVar.date}">
-                <h:outputText value="#{articlesVar.date}">
-                    <f:convertDateTime pattern="dd/MM/yyyy" />
-                </h:outputText>
+
+            <p:column width="10">
+                <p:rowEditor />
             </p:column>
+
+            <p:column width="10" rendered="true">
+                <p:commandButton value="" update=" :messages teamsTypeGrid" process="@this"
+                                 icon="ui-icon-trash"
+                                 style="height: 36px; width: 36px;"
+                                 actionListener="#{teamsTypeDao.delete(teamsTypeVar)}"
+                                 disabled="#{not authsDao.auths.pdelete}" >
+                </p:commandButton>
+            </p:column>
+
+            <f:facet name="footer">
+                <p:column style="width:24px">
+                    <h:outputLabel for="addname" value="Ad: " />
+                    <h:inputText id="addname" value="#{teamsTypeDao.newtypename}"
+                                 style="font-weight:bold"
+                                 required="true" requiredMessage="Ad alanı boş" />
+                    <p:commandButton update="teamsTypeGrid"
+                                     value="Ekle" actionListener="#{teamsTypeDao.create}"
+                                     disabled="#{not authsDao.auths.padd}" >
+                    </p:commandButton>
+                </p:column>
+            </f:facet>
+
 
         </p:dataTable>
+
+
+
     </h:form>
     <p:ajaxStatus  onstart="PF('blockUIWidget1').block()" oncomplete="PF('blockUIWidget1').unblock();" />
 

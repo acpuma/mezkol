@@ -8,6 +8,10 @@
       xmlns:p="http://primefaces.org/ui"
 >
 <f:view>
+    <f:metadata>
+        <f:viewParam name="sid" value="#{schoolsDao.schoolId}" />
+        <f:viewAction action="#{schoolsDao.initSelected}" />
+    </f:metadata>
     <ui:composition template="/WEB-INF/templates/webtemplate.xhtml">
 
         <div id="content-container">
@@ -40,6 +44,7 @@
                                     <h2>
                                         <h:link outcome="/pages/article" styleClass="">
                                             <f:param name="aid" value="#{article.tid}" />
+                                            <f:param name="sid" value="#{schoolsDao.selected.tid}" />
                                             #{article.titleTr}
                                         </h:link>
                                     </h2>
@@ -60,6 +65,7 @@
                             <h2 class="title-news">
                                 <h:link outcome="/pages/article" styleClass="">
                                     <f:param name="aid" value="#{article.tid}" />
+                                    <f:param name="sid" value="#{schoolsDao.selected.tid}" />
                                     #{article.titleTr}
                                 </h:link>
                             </h2>

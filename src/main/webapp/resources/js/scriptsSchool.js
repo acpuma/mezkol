@@ -7,7 +7,7 @@ tpj(document).ready(function() {
         revapi4 = tpj("#rev_slider_4_1").show().revolution({
             sliderType:"standard",
             jsFileLocation:"revolution/js/",
-            sliderLayout:"fullwidth",
+            sliderLayout:"auto",
             dottedOverlay:"none",
             delay:9000,
             navigation: {

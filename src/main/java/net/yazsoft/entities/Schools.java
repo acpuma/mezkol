@@ -42,6 +42,21 @@ public class Schools extends BaseEntity implements Serializable {
     @Size(max = 50)
     @Column(name = "meb_code", length = 50)
     private String mebCode;
+
+
+    private String telephone;
+    private String fax;
+    private String email;
+    private String address;
+    private String mapx;
+    private String mapy;
+    private String facebook;
+    private String linkedin;
+    private String twitter;
+    private String youtube;
+
+
+
     @JoinTable(name = "UsersSchools", joinColumns = {
         @JoinColumn(name = "ref_school", referencedColumnName = "tid", nullable = false)}, inverseJoinColumns = {
         @JoinColumn(name = "ref_user", referencedColumnName = "tid", nullable = false)})
@@ -75,6 +90,19 @@ public class Schools extends BaseEntity implements Serializable {
 
     @OneToMany(mappedBy = "refSchool", fetch = FetchType.LAZY)
     private Collection<Slides> slidesCollection;
+
+
+    @OneToMany(mappedBy = "refSchool", fetch = FetchType.LAZY)
+    private Collection<Articles> articlesCollection;
+
+    @OneToMany(mappedBy = "refSchool", fetch = FetchType.LAZY)
+    private Collection<WebLinks> webLinksCollection;
+
+    @OneToMany(mappedBy = "refSchool", fetch = FetchType.LAZY)
+    private Collection<ContactForms> contactFormsCollection;
+
+    @OneToMany(mappedBy = "refSchool", fetch = FetchType.LAZY)
+    private Collection<Teams> teamsCollection;
 
     public Schools() {
     }
@@ -239,6 +267,127 @@ public class Schools extends BaseEntity implements Serializable {
 
     public void setSlidesCollection(Collection<Slides> slidesCollection) {
         this.slidesCollection = slidesCollection;
+    }
+
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    public String getFax() {
+        return fax;
+    }
+
+    public void setFax(String fax) {
+        this.fax = fax;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getMapx() {
+        return mapx;
+    }
+
+    public void setMapx(String mapx) {
+        this.mapx = mapx;
+    }
+
+    public String getMapy() {
+        return mapy;
+    }
+
+    public void setMapy(String mapy) {
+        this.mapy = mapy;
+    }
+
+    public String getFacebook() {
+        return facebook;
+    }
+
+    public void setFacebook(String facebook) {
+        this.facebook = facebook;
+    }
+
+    public String getLinkedin() {
+        return linkedin;
+    }
+
+    public void setLinkedin(String linkedin) {
+        this.linkedin = linkedin;
+    }
+
+    public String getTwitter() {
+        return twitter;
+    }
+
+    public void setTwitter(String twitter) {
+        this.twitter = twitter;
+    }
+
+    public String getYoutube() {
+        return youtube;
+    }
+
+    public void setYoutube(String youtube) {
+        this.youtube = youtube;
+    }
+
+    public Collection<Articles> getArticlesCollection() {
+        return articlesCollection;
+    }
+
+    public void setArticlesCollection(Collection<Articles> articlesCollection) {
+        this.articlesCollection = articlesCollection;
+    }
+
+    public Collection<WebLinks> getWebLinksCollection() {
+        return webLinksCollection;
+    }
+
+    public void setWebLinksCollection(Collection<WebLinks> webLinksCollection) {
+        this.webLinksCollection = webLinksCollection;
+    }
+
+    public Collection<SchoolsMenus> getSchoolsMenusCollection() {
+        return schoolsMenusCollection;
+    }
+
+    public void setSchoolsMenusCollection(Collection<SchoolsMenus> schoolsMenusCollection) {
+        this.schoolsMenusCollection = schoolsMenusCollection;
+    }
+
+    public Collection<ContactForms> getContactFormsCollection() {
+        return contactFormsCollection;
+    }
+
+    public void setContactFormsCollection(Collection<ContactForms> contactFormsCollection) {
+        this.contactFormsCollection = contactFormsCollection;
+    }
+
+    public Collection<Teams> getTeamsCollection() {
+        return teamsCollection;
+    }
+
+    public void setTeamsCollection(Collection<Teams> teamsCollection) {
+        this.teamsCollection = teamsCollection;
     }
 
     @Override

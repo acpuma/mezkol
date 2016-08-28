@@ -12,20 +12,24 @@
         <f:viewParam name="sid" value="#{schoolsDao.schoolId}" />
         <f:viewAction action="#{schoolsDao.initSelected}" />
     </f:metadata>
-    <!-- RS5.0 Main Stylesheet -->
-    <link rel="stylesheet" type="text/css" href="revolution/css/settings.css" />
-    <!-- RS5.0 Layers and Navigation Styles -->
-    <link rel="stylesheet" type="text/css" href="revolution/css/layers.css" />
-    <link rel="stylesheet" type="text/css" href="revolution/css/navigation.css" />
+    <h:head>
+        <title>MEZOPOTAMYA #{schoolsDao.selected.name}</title>
+        <!-- RS5.0 Main Stylesheet -->
+        <link rel="stylesheet" type="text/css" href="revolution/css/settings.css" />
+        <!-- RS5.0 Layers and Navigation Styles -->
+        <link rel="stylesheet" type="text/css" href="revolution/css/layers.css" />
+        <link rel="stylesheet" type="text/css" href="revolution/css/navigation.css" />
 
-    <h:outputStylesheet library="css" name="pages/index.css" />
+        <h:outputStylesheet library="css" name="pages/index.css" />
+
+    </h:head>
+
 
     <ui:composition template="/WEB-INF/templates/webtemplate.xhtml">
-        #{schoolsDao.setSelected(schoolsDao.getById(1))}
 
         <!-- START REVOLUTION SLIDER 5.0 -->
         <div id="rev_slider_4_1_wrapper" class="rev_slider_wrapper fullwidthbanner-container" data-alias="classicslider1"
-             style="margin:0px auto;background-color:transparent;padding:0px;margin-top:0px;margin-bottom:0px;">
+             style="margin:0px auto;background-color:transparent;padding:0px;margin-top:0px;margin-bottom:10px;">
             <div id="rev_slider_4_1" class="rev_slider fullwidthabanner" style="display:none;" data-version="5.0.7">
                 <ul>
                     <ui:repeat value="#{slidesDao.findSchoolSlides(schoolsDao.selected)}" var="slide">
@@ -89,42 +93,6 @@
 
         <div id="content-container">
             <div id="content" class="clearfix">
-                <div id="banner-homepage">
-                    <div class="container">
-
-                        <div class="main_title">
-                            <h2> <span style="color: #e04f67; ">OKULLARIMIZ</span> </h2>
-                            <!--<p>Quisque at tortor a libero posuere laoreet vitae sed arcu. Curabitur consequat.</p>-->
-                        </div>
-
-
-                        <div class="row" style="display: table;">
-
-                            <ui:repeat value="#{schoolsDao.findOutSchools()}" var="school">
-                                <h:link outcome="/school" styleClass="">
-                                    <f:param name="sid" value="#{school.tid}" />
-                                    <div class="col-md-5 wow zoomIn" data-wow-delay="0.1s">
-                                        <div class="tour_container">
-                                            <div class="img_container">
-
-                                                    <p:graphicImage height="170"
-                                                                    value="#{imagesDao.findImagePath(school.refImage)}"
-                                                                    styleClass="img-responsive"
-                                                    />
-
-                                            </div>
-                                            <div class="tour_title">
-                                                <h3><strong>#{school.name}</strong></h3>
-                                            </div>
-                                        </div><!-- End box tour -->
-                                    </div><!-- End col-md-4 -->
-                                </h:link>
-
-                            </ui:repeat>
-
-                        </div><!-- End row -->
-                    </div>
-                </div>
 
                 <div id="main-content">
 

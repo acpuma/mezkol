@@ -4,7 +4,6 @@ import net.yazsoft.entities.Careers;
 import net.yazsoft.frame.controller.Email;
 import net.yazsoft.frame.controller.scopes.ViewScoped;
 import net.yazsoft.frame.hibernate.BaseGridDao;
-import net.yazsoft.frame.utils.Constants;
 import net.yazsoft.frame.utils.Util;
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
@@ -20,6 +19,7 @@ import java.util.List;
 public class CareersDao extends BaseGridDao<Careers> implements Serializable {
     private static final Logger logger = Logger.getLogger(CareersDao.class);
     Careers selected;
+    List<Careers> unreadenCareers;
 
     @Inject Email email;
 
@@ -59,10 +59,11 @@ public class CareersDao extends BaseGridDao<Careers> implements Serializable {
             c.add(Restrictions.eq("active", true));
             c.add(Restrictions.eq("readen", Boolean.FALSE));
             list = c.list();
-            logger.info("UNREADEN CAREERS: " + list);
+            //logger.info("UNREADEN CAREERS: " + list);
         } catch (Exception e) {
             Util.catchException(e);
         }
+        unreadenCareers =list;
         return list;
     }
 
@@ -78,4 +79,14 @@ public class CareersDao extends BaseGridDao<Careers> implements Serializable {
         this.selected = selected;
     }
 
+    public List<Careers> getUnreadenCareers() {
+        if (unreadenCareers==null) {
+            findItemsUnread();
+        }
+        return unreadenCareers;
+    }
+
+    public void setUnreadenCareers(List<Careers> unreadenCareers) {
+        this.unreadenCareers = unreadenCareers;
+    }
 }

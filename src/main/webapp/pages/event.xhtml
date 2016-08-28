@@ -11,6 +11,8 @@
     <f:metadata>
         <f:viewParam name="aid" value="#{articlesDao.articleId}" />
         <f:viewAction action="#{articlesDao.initSelected}" />
+        <f:viewParam name="sid" value="#{schoolsDao.schoolId}" />
+        <f:viewAction action="#{schoolsDao.initSelected}" />
     </f:metadata>
     <ui:composition template="/WEB-INF/templates/webtemplate.xhtml">
 
@@ -78,6 +80,7 @@
                                     <article>
                                         <h:link outcome="/pages/event">
                                             <f:param name="aid" value="#{eventt.tid}" />
+                                            <f:param name="sid" value="#{schoolsDao.selected.tid}" />
                                             <h4>#{eventt.titleTr}</h4>
                                             <p><h:outputText value="#{eventt.date}" converter="javax.faces.DateTime"/>
                                                 <ui:fragment rendered="#{not empty eventt.endDate}">

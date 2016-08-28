@@ -65,8 +65,10 @@ public class Menus extends BaseEntity implements Serializable {
     private MenusType refMenutype;
     @OneToMany(mappedBy = "refMenu", fetch = FetchType.LAZY)
     private Collection<UsersMenus> usersMenusCollection;
+
     @OneToMany(mappedBy = "refMenu", fetch = FetchType.LAZY)
     private Collection<SchoolsMenus> schoolsMenusCollection;
+
     @Size(max = 255)
     @Column(length = 255)
     private String icon;

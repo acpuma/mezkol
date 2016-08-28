@@ -18,12 +18,13 @@
                     <aside class="widget-container">
                         <div class="widget-wrapper clearfix">
                             <h3 class="widget-title">Bağlantılar</h3>
-                                <a href="http://www.meb.gov.tr">
-                                    <p:graphicImage library="images" width="150" name="clients/1.png" />
-                                </a>
-                            <a href="http://www.meb.gov.tr">
-                                <p:graphicImage library="images" width="150" name="clients/2.png" />
+                        <ui:repeat value="#{webLinksDao.findLinks(schoolsDao.selected)}" var="weblink">
+                            <a href="#{weblink.url}" title="#{weblink.name}">
+                                <p:graphicImage width="150" style="width: 150px;" cache="false"
+                                                value="#{imagesDao.findImagePath(weblink.refImage)}"
+                                />
                             </a>
+                        </ui:repeat>
 
                         </div>
                     </aside>
@@ -33,22 +34,45 @@
                         <div class="widget-wrapper clearfix">
                             <h3 class="widget-title">Lokasyon</h3>
                             <article class="text-widget ">
-                                <iframe class="map-area" src="http://maps.google.com/?ie=UTF8&amp;ll=37.9435372,40.1683929&amp;spn=11.79095,12.150879&amp;t=m&amp;z=16&amp;output=embed"></iframe><br />                                   </article>
+                                <ui:fragment rendered="#{not empty schoolsDao.selected.mapx}" >
+                                <iframe class="map-area" src="http://maps.google.com/?ie=UTF8&amp;ll=#{schoolsDao.selected.mapx},#{schoolsDao.selected.mapy}&amp;spn=11.79095,12.150879&amp;t=m&amp;z=16&amp;output=embed">
+
+                                </iframe><br />
+                                </ui:fragment>
+                            </article>
                         </div>
                     </aside>
                 </div>
                 <article id="footer-address" class="clearfix">
                     <h3 id="title-footer-address"><span>İletişim</span></h3>
                     <p><strong></strong></p>
-                    <p><strong>Telefon :</strong>+90 (412) 257 2438 <br/>
-                        <strong>Faks :</strong> +90 (412) 257 2438 <br/>
-                        <strong>Email :</strong> mezopotamyakoleji@hotmail.com<br/>
-                        <strong>Adres :</strong> Mezopotamya mah.288 sk. KAYAPINAR / DİYARBAKIR </p>
+                    <p>
+                        <ui:fragment rendered="#{not empty schoolsDao.selected.telephone}" >
+                            <strong>Telefon :</strong>#{schoolsDao.selected.telephone}<br/>
+                        </ui:fragment>
+                        <ui:fragment rendered="#{not empty schoolsDao.selected.fax}">
+                            <strong>Faks :</strong>#{schoolsDao.selected.fax} <br/>
+                        </ui:fragment>
+                        <ui:fragment rendered="#{not empty schoolsDao.selected.email}">
+                            <strong>Email :</strong>#{schoolsDao.selected.email} <br/>
+                        </ui:fragment>
+                        <ui:fragment rendered="#{not empty schoolsDao.selected.address}">
+                            <strong>Adres :</strong> #{schoolsDao.selected.address}
+                        </ui:fragment>
+                    </p>
                     <ul id="list-social" class="clearfix">
-                        <li id="icon-facebook"><a href="#">Facebook</a></li>
-                        <li id="icon-twitter"><a href="#">Twitter</a></li>
-                        <li id="icon-linkedin"><a href="#">Linkedin</a></li>
-                        <li id="icon-youtube"><a href="#">Youtube</a></li>
+                        <ui:fragment rendered="#{not empty schoolsDao.selected.facebook}" >
+                            <li id="icon-facebook"><a href="#{schoolsDao.selected.facebook}">Facebook</a></li>
+                        </ui:fragment>
+                        <ui:fragment rendered="#{not empty schoolsDao.selected.twitter}" >
+                            <li id="icon-twitter"><a href="#{schoolsDao.selected.twitter}">Twitter</a></li>
+                        </ui:fragment>
+                        <ui:fragment rendered="#{not empty schoolsDao.selected.linkedin}" >
+                            <li id="icon-linkedin"><a href="#{schoolsDao.selected.linkedin}">Linkedin</a></li>
+                        </ui:fragment>
+                        <ui:fragment rendered="#{not empty schoolsDao.selected.youtube}" >
+                            <li id="icon-youtube"><a href="#{schoolsDao.selected.youtube}">Youtube</a></li>
+                        </ui:fragment>
                     </ul>
                 </article>
             </div>

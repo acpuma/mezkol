@@ -64,6 +64,38 @@
                     <f:selectItems value="#{citiesDao.towns}" var="sitem"
                                    itemValue="#{sitem}" itemLabel="#{sitem.name}"/>
                 </p:selectOneMenu>
+
+                <h:outputLabel value="#{msg.telephone}:" for="telephone" />
+                <h:inputText id="telephone" value="#{schoolsDao.item.telephone}" title="#{msg.telephone}" size="40"/>
+
+                <h:outputLabel value="#{msg.fax}:" for="fax" />
+                <h:inputText id="fax" value="#{schoolsDao.item.fax}" title="#{msg.fax}" size="40"/>
+
+                <h:outputLabel value="#{msg.email}:" for="email" />
+                <h:inputText id="email" value="#{schoolsDao.item.email}" title="#{msg.email}" size="40"/>
+
+                <h:outputLabel value="#{msg.address}:" for="address" />
+                <h:inputText id="address" value="#{schoolsDao.item.address}" title="#{msg.address}" size="40"/>
+
+                <h:outputLabel value="Facebook :" for="facebook" />
+                <h:inputText id="facebook" value="#{schoolsDao.item.facebook}" title="Facebook" size="40"/>
+
+                <h:outputLabel value="Twitter :" for="twitter" />
+                <h:inputText id="twitter" value="#{schoolsDao.item.twitter}" title="Twitter" size="40"/>
+
+                <h:outputLabel value="Linkedin :" for="Linkedin" />
+                <h:inputText id="Linkedin" value="#{schoolsDao.item.linkedin}" title="Linkedin" size="40"/>
+
+                <h:outputLabel value="Youtube :" for="Youtube" />
+                <h:inputText id="Youtube" value="#{schoolsDao.item.youtube}" title="Youtube" size="40"/>
+
+                <h:outputLabel value="Harita koordinatı X :" for="mapx" />
+                <h:inputText id="mapx" value="#{schoolsDao.item.mapx}" title="mapx" size="40"/>
+
+                <h:outputLabel value="Harita koordinatı Y :" for="mapy" />
+                <h:inputText id="mapy" value="#{schoolsDao.item.mapy}" title="mapy" size="40"/>
+
+
                 <h:outputLabel value="Kullanıcı Adı Kimlik No ?" for="usemernis" rendered="false"/>
                 <p:selectBooleanCheckbox value="#{schoolsDao.item.useMernis}" id="usemernis" rendered="false"/>
 

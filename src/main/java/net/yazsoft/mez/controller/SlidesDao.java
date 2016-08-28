@@ -4,6 +4,7 @@ import net.yazsoft.entities.Images;
 import net.yazsoft.entities.Schools;
 import net.yazsoft.entities.Slides;
 import net.yazsoft.frame.controller.ImagesDao;
+import net.yazsoft.frame.controller.SchoolsDao;
 import net.yazsoft.frame.controller.scopes.ViewScoped;
 import net.yazsoft.frame.hibernate.BaseGridDao;
 import net.yazsoft.frame.utils.Util;
@@ -27,9 +28,10 @@ public class SlidesDao extends BaseGridDao<Slides> implements Serializable{
     Slides selected;
     List<Slides> slides;
     Boolean listChanged=true;
-    Schools school;
+
 
     @Inject ImagesDao imagesDao;
+    @Inject SchoolsDao schoolsDao;
 
     public void setSelectedById(Long tid) {
         selected=getById(tid);
@@ -87,11 +89,15 @@ public class SlidesDao extends BaseGridDao<Slides> implements Serializable{
     }
 
     public List<Slides> findSlides() {
+        return findSchoolSlides(Util.getActiveSchool());
+    }
+
+    public List<Slides> findSchoolSlides(Schools school) {
         List list=null;
         logger.info("SLIDE SCHOOL : " + school);
         try {
             if (school==null) {
-                school=Util.getActiveSchool();
+                return null;
             }
             Criteria c = getCriteria();
             c.add(Restrictions.eq("active", true));
@@ -132,11 +138,4 @@ public class SlidesDao extends BaseGridDao<Slides> implements Serializable{
         this.slides = slides;
     }
 
-    public Schools getSchool() {
-        return school;
-    }
-
-    public void setSchool(Schools school) {
-        this.school = school;
-    }
 }

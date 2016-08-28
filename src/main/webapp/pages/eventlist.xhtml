@@ -8,6 +8,10 @@
       xmlns:p="http://primefaces.org/ui"
 >
 <f:view>
+    <f:metadata>
+        <f:viewParam name="sid" value="#{schoolsDao.schoolId}" />
+        <f:viewAction action="#{schoolsDao.initSelected}" />
+    </f:metadata>
     <ui:composition template="/WEB-INF/templates/webtemplate.xhtml">
 
         <div id="content-container">
@@ -29,7 +33,8 @@
                     <li>
                         <div class="panel-slider-event clearfix">
                             <h:link outcome="/pages/event">
-                            <f:param name="aid" value="#{eventt.tid}" />
+                                <f:param name="aid" value="#{eventt.tid}" />
+                                <f:param name="sid" value="#{schoolsDao.selected.tid}" />
                             <h2 style="color:white;">#{eventt.titleTr}</h2>
                             <time datetime="#{eventt.date}"><strong>
                                 <h:outputText value="#{eventt.date}">
@@ -70,7 +75,8 @@
                         <ui:repeat value="#{articlesDao.findArchive(archives.month,archives.year)}" var="eventt">
                         <div class="event-container clearfix" style="margin: 5px;">
                             <h:link outcome="/pages/event" >
-                            <f:param name="aid" value="#{eventt.tid}" />
+                                <f:param name="aid" value="#{eventt.tid}" />
+                                <f:param name="sid" value="#{schoolsDao.selected.tid}" />
                                 <p:graphicImage value="#{imagesDao.findImagePath(eventt.refImage)}"/>
                             <h4 itemprop="summary">#{eventt.titleTr}</h4>
                             <div class="panel-event-info">
