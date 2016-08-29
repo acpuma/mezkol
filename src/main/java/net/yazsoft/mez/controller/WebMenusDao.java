@@ -45,6 +45,21 @@ public class WebMenusDao extends BaseGridDao<Menus> implements Serializable{
         }
     }
 
+
+    public Menus findByName(String name) {
+        Menus menu=null;
+        try {
+            Criteria c = getCriteria();
+            c.add(Restrictions.eq("active", true));
+            c.add(Restrictions.eq("nameEn",name));
+            menu=(Menus)c.uniqueResult();
+            listChanged=false;
+        } catch (Exception e) {
+            Util.catchException(e);
+        }
+        return menu;
+    }
+
     public void findSchoolsByMenu(){
         menuSchools=schoolsMenusDao.findSchoolsByMenu(getItem());
     }

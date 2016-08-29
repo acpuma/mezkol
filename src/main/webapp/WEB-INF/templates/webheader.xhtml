@@ -107,7 +107,11 @@
                     </ui:repeat>
 
                 </ul>
-                <a href="#" id="button-registration">KAYIT</a>
+                <h:link outcome="/pages/custom"  id="button-registration">
+                    <f:param name="cid" value="#{webMenusDao.findByName('Register').tid}" />
+                    <f:param name="sid" value="#{schoolsDao.selected.tid}" />
+                    KAYIT
+                </h:link>
             </div>
         </nav>
     </header>

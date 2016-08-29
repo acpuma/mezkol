@@ -233,6 +233,10 @@
 
             </div>
         </div>
+
+
+
+
         <!-- RS5.0 Core JS Files -->
         <script type="text/javascript" src="revolution/js/jquery.themepunch.tools.min.js?rev=5.0"></script>
         <script type="text/javascript" src="revolution/js/jquery.themepunch.revolution.min.js?rev=5.0"></script>
@@ -247,8 +251,28 @@
         <script type="text/javascript" src="revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
         <script type="text/javascript" src="revolution/js/extensions/revolution.extension.video.min.js"></script>
 
-
         <h:outputScript library="js" name="scripts.js" />
+
+        <ui:fragment rendered="#{not empty webMenusDao.findByName('Home').refContent.contentTr}">
+        <p:dialog id="splashDialog" widgetVar="splashDialogWidget" showHeader="false" style="background-color: white"
+                  modal="true" resizable="true" dynamic="true" appendTo="@(body)" closable="true" closeOnEscape="true"
+        >
+            <p:outputPanel style="width: 100%; text-align: right;">
+                <h:commandButton value="X" onclick="PF('splashDialogWidget').hide();"
+                                 immediate="true" style="padding: 4px; margin: 5px;"/>
+            </p:outputPanel>
+            <p:outputPanel>
+                <h:outputText value="#{webMenusDao.findByName('Home').refContent.contentTr}" escape="false" />
+            </p:outputPanel>
+        </p:dialog>
+
+        <h:outputScript library="primefaces" name="jquery/jquery.js" />
+        <h:outputScript>
+            jQuery(document).ready(function() {
+                PF('splashDialogWidget').show();
+            });
+        </h:outputScript>
+        </ui:fragment>
     </ui:composition>
 </f:view>
 </html>
