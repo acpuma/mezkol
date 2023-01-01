@@ -7,7 +7,7 @@ services:
      environment:
        MYSQL_ROOT_PASSWORD: root
        MYSQL_DATABASE: mezdb
-       MYSQL_USER: mezko
+       MYSQL_USER: mez
        MYSQL_PASSWORD: mezkol21
      ports:
        - 3306:3306
