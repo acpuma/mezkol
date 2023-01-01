@@ -1,0 +1,14 @@
+services:
+  db:
+     image: mysql:5.7
+     volumes:
+       - /opt/test:/var/lib/mysql
+       - ./init/mezdb.sql:/docker-entrypoint-initdb.d/datadump.sql 
+     environment:
+       MYSQL_ROOT_PASSWORD: root
+       MYSQL_DATABASE: mezdb
+       MYSQL_USER: mezko
+       MYSQL_PASSWORD: mezkol21
+     ports:
+       - 3306:3306
+     network_mode: "host"

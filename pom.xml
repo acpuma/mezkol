@@ -115,16 +115,19 @@
     <artifactId>tomcat-embed-logging-juli</artifactId>
     <version>${tomcat.version}</version>
   </dependency>
+  <!--
   <dependency>
     <groupId>org.apache.tomcat.embed</groupId>
     <artifactId>tomcat-embed-jasper</artifactId>
     <version>${tomcat.version}</version>
   </dependency>
+  -->
   <dependency>
     <groupId>org.apache.tomcat</groupId>
     <artifactId>tomcat-jasper</artifactId>
     <version>${tomcat.version}</version>
   </dependency>
+  
   <dependency>
     <groupId>org.apache.tomcat</groupId>
     <artifactId>tomcat-jasper-el</artifactId>
@@ -471,6 +474,16 @@
       <version>2.3.1</version>
   </dependency>
 
+  <dependency>
+    <groupId>javax.enterprise</groupId>
+    <artifactId>cdi-api</artifactId>
+    <version>1.2</version>
+  </dependency>
+  <dependency>
+    <groupId>org.glassfish.jersey.ext.cdi</groupId>
+    <artifactId>jersey-cdi1x-servlet</artifactId>
+    <version>3.0.2</version>
+  </dependency>
 </dependencies>
 <build>
   <finalName>${project.artifactId}</finalName>
